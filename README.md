@@ -29,6 +29,6 @@ There is then a test program ``<build_directory>/test/test_prog`` which links wi
 
 # Supported Platforms
 
-Currently slibc only supports ``Linux x86_64``, but plans to supports ``x86`` and other ``Aarch64`` potentially in the future.
+Currently slibc only supports ``Linux x86_64``, but plans to supports ``x86`` and maybe ``Aarch64`` potentially in the future.
 
 Other OSes will probably not be supported.
