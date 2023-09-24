@@ -4,22 +4,12 @@
 // temp
 int write(int fd, const char *buf, int length)
 {
-    struct __syscall_t syscall;
-    syscall.syscall = (uint64_t)SYS_WRITE;
-    syscall.first   = (uint64_t)fd;
-    syscall.second  = (uint64_t)buf;
-    syscall.third   = (uint64_t)length;
-
-    return __syscall(syscall);
+    return __syscall_3(SYS_WRITE, fd, (uint64_t)buf, length);
 }
 
 void __attribute__((noreturn)) _Exit(int status) {
 
-    struct __syscall_t syscall;
-    syscall.syscall = SYS_EXIT;
-    syscall.first = status;
-
-    __syscall(syscall);
+    __syscall_1(SYS_EXIT, status);
 
     __builtin_unreachable();
 }
