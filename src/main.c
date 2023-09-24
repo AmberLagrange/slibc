@@ -1,16 +1,17 @@
 
-#include "../include/stdlib.h"
-#include "../include/string.h"
+#include "../include/stdio.h"
 
 int main(int argc, char *argv[]) {
 
     if (argc == 1) {
-        write(0, "Please supply an argument!\n", 27);
+        printf("Please supply an argument!\n");
         return 1;
     }
 
-    write(0, argv[1], strlen(argv[1]));
-    write(0, "\n", 1);
+    for (int i = 1; i < argc; ++i) {
+        printf(argv[i]);
+        printf("\n");
+    }
 
     return 0;
 }
