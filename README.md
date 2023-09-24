@@ -6,6 +6,7 @@ Shatter Libc (slibc) is C89 compliant Standard Library written for educational p
 - [slibc](#shatter-libc)
 - [Building](#building)
 - [Running](#running)
+- [Supported Platforms](#supported-platforms)
 
 # Building
 
@@ -25,3 +26,9 @@ slibc should be installed in your specified library path (``/usr/local/lib`` by 
 
 There is then a test program ``<build_directory>/test/test_prog`` which links with libslibc.so, which you can verify with
 ``ldd <build_directory>/test/test_prog``.
+
+# Supported Platforms
+
+Currently slibc only supports ``Linux x86_64``, but plans to supports ``x86`` and other ``Aarch64`` potentially in the future.
+
+Other OSes will probably not be supported.
