@@ -3,15 +3,86 @@
 #include "../include/stdlib.h"
 #include "../include/string.h"
 
+int fputchar(FILE *file, char c) {
+    return write(file->fd, &c, 1);
+}
+
 int vfprintf(FILE *file, const char *fmt, va_list args) {
 
-    char *str = va_arg(args, char*);
+    int ret;
+    char c;
 
-    if (fmt && *fmt == '\n') { // Just to not access varargs without any of them
-        return write(file->fd, "\n", 1);
+    int count;
+
+    char  va_char;
+    char *va_str;
+    int   va_int;
+
+    char number[MAX_INT_LENGTH];
+
+    ret = 0;
+    count = 0;
+
+    while ((c = *fmt) != '\0') {
+
+        if (c == '%') {
+
+            ++fmt;
+
+            switch ((c = *fmt)) {
+            case '%':
+                ret = fputchar(file, '%');
+                if (ret < 0) return ret;
+                count += ret;
+                break;
+
+            case 'c':
+                va_char = va_arg(args, int);
+                ret = fputchar(file, va_char);
+                if (ret < 0) return ret;
+                count += ret;
+                break;
+
+            case 's':
+                va_str = va_arg(args, char*);
+                ret = write(file->fd, va_str, strlen(va_str)); // TODO: fputs
+                if (ret < 0) return ret;
+                count += ret;
+                break;
+
+            case 'd':
+                va_int = va_arg(args, int);
+                va_str = &number[MAX_INT_LENGTH - 1];
+                *va_str = '\0';
+
+                if (va_int < 0) {
+                    va_int = -va_int;
+                    ret = fputchar(file, '-');
+                    if (ret < 0) return ret;
+                    count += ret;
+                }
+
+                while (va_int) {
+                    --va_str;
+                    *va_str = '0' + (va_int % 10);
+                    va_int /= 10;
+                }
+
+                ret = write(file->fd, va_str, strlen(va_str));
+                if (ret < 0) return ret;
+                count += ret;
+                break;
+            }
+        } else {
+            ret = fputchar(file, c);
+            if (ret < 0) return ret;
+            count += ret;
+        }
+
+        ++fmt;
     }
 
-    return write(file->fd, str, strlen(str));
+    return count;
 }
 
 int fprintf(FILE *file, const char *fmt, ...) {

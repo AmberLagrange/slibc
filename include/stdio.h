@@ -9,12 +9,15 @@ typedef struct __FILE_IO {
 } FILE;
 
 #define FOPEN_MAX 16
+#define MAX_INT_LENGTH 16
 
 extern FILE *_Files[FOPEN_MAX];
 
 #define stdin  _Files[0]
 #define stdout _Files[1]
 #define stderr _Files[2]
+
+int fputchar(FILE *file, char c);
 
 int vfprintf(FILE *file, const char* fmt, va_list args);
 int fprintf(FILE *file, const char* fmt, ...);
