@@ -27,6 +27,8 @@ target_link_options(slibc
         -nostdlib
 )
 
+target_compile_options(slibc PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
 install(FILES ${CMAKE_BINARY_DIR}/slibc.pc
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
 
