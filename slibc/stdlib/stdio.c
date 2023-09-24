@@ -3,8 +3,20 @@
 #include "../include/stdlib.h"
 #include "../include/string.h"
 
-int fputchar(FILE *file, char c) {
-    return write(file->fd, &c, 1);
+int fputs(const char *str, FILE *file) {
+    return write(file->fd, str, strlen(str));
+}
+
+int puts(const char *str) {
+    return fputs(str, stdout);
+}
+
+int fputchar(int c, FILE *file) {
+    return write(file->fd, (char *)&c, 1);
+}
+
+int putchar(int c) {
+    return fputchar(c, stdout);
 }
 
 int vfprintf(FILE *file, const char *fmt, va_list args) {
@@ -31,21 +43,21 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
 
             switch ((c = *fmt)) {
             case '%':
-                ret = fputchar(file, '%');
+                ret = fputchar('%', file);
                 if (ret < 0) return ret;
                 count += ret;
                 break;
 
             case 'c':
                 va_char = va_arg(args, int);
-                ret = fputchar(file, va_char);
+                ret = fputchar(va_char, file);
                 if (ret < 0) return ret;
                 count += ret;
                 break;
 
             case 's':
                 va_str = va_arg(args, char*);
-                ret = write(file->fd, va_str, strlen(va_str)); /* TODO: fputs */
+                ret = fputs(va_str, file);
                 if (ret < 0) return ret;
                 count += ret;
                 break;
@@ -57,7 +69,7 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
 
                 if (va_int < 0) {
                     va_int = -va_int;
-                    ret = fputchar(file, '-');
+                    ret = fputchar('-', file);
                     if (ret < 0) return ret;
                     count += ret;
                 }
@@ -68,13 +80,13 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
                     va_int /= 10;
                 }
 
-                ret = write(file->fd, va_str, strlen(va_str));
+                ret = fputs(va_str, file);
                 if (ret < 0) return ret;
                 count += ret;
                 break;
             }
         } else {
-            ret = fputchar(file, c);
+            ret = fputchar(c, file);
             if (ret < 0) return ret;
             count += ret;
         }

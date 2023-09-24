@@ -1,6 +1,6 @@
 #include "../include/syscall.h"
 
-__attribute__((always_inline)) int __syscall_0(reg64 syscall) {
+int __syscall_0(reg64 syscall) {
     
     int ret;
     __asm__ volatile ("movq %1, %%rax\n\t"
@@ -13,7 +13,7 @@ __attribute__((always_inline)) int __syscall_0(reg64 syscall) {
     return ret;
 }
 
-__attribute__((always_inline)) int __syscall_1(reg64 syscall, reg64 rdi) {
+int __syscall_1(reg64 syscall, reg64 rdi) {
     
     int ret;
     __asm__ volatile ("movq %1, %%rax\n\t"
@@ -28,7 +28,7 @@ __attribute__((always_inline)) int __syscall_1(reg64 syscall, reg64 rdi) {
     return ret;
 }
 
-__attribute__((always_inline)) int __syscall_2(reg64 syscall, reg64 rdi, reg64 rsi) {
+int __syscall_2(reg64 syscall, reg64 rdi, reg64 rsi) {
     
     int ret;
     __asm__ volatile ("movq %1, %%rax\n\t"
@@ -45,7 +45,7 @@ __attribute__((always_inline)) int __syscall_2(reg64 syscall, reg64 rdi, reg64 r
     return ret;
 }
 
-__attribute__((always_inline)) int __syscall_3(reg64 syscall, reg64 rdi, reg64 rsi, reg64 rdx) {
+int __syscall_3(reg64 syscall, reg64 rdi, reg64 rsi, reg64 rdx) {
     
     int ret;
     __asm__ volatile ("movq %1, %%rax\n\t"
@@ -64,7 +64,7 @@ __attribute__((always_inline)) int __syscall_3(reg64 syscall, reg64 rdi, reg64 r
     return ret;
 }
 
-__attribute__((always_inline)) int __syscall_4(reg64 syscall, reg64 rdi, reg64 rsi, reg64 rdx, reg64 r10) {
+int __syscall_4(reg64 syscall, reg64 rdi, reg64 rsi, reg64 rdx, reg64 r10) {
     
     int ret;
     __asm__ volatile ("movq %1, %%rax\n\t"
@@ -85,7 +85,7 @@ __attribute__((always_inline)) int __syscall_4(reg64 syscall, reg64 rdi, reg64 r
     return ret;
 }
 
-__attribute__((always_inline)) int __syscall_5(reg64 syscall, reg64 rdi, reg64 rsi, reg64 rdx, reg64 r10, reg64 r8) {
+int __syscall_5(reg64 syscall, reg64 rdi, reg64 rsi, reg64 rdx, reg64 r10, reg64 r8) {
     
     int ret;
     __asm__ volatile ("movq %1, %%rax\n\t"
@@ -108,7 +108,7 @@ __attribute__((always_inline)) int __syscall_5(reg64 syscall, reg64 rdi, reg64 r
     return ret;
 }
 
-__attribute__((always_inline)) int __syscall_6(reg64 syscall, reg64 rdi, reg64 rsi, reg64 rdx, reg64 r10, reg64 r8, reg64 r9) {
+int __syscall_6(reg64 syscall, reg64 rdi, reg64 rsi, reg64 rdx, reg64 r10, reg64 r8, reg64 r9) {
     
     int ret;
     __asm__ volatile ("movq %1, %%rax\n\t"
