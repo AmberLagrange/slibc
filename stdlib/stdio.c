@@ -45,7 +45,7 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
 
             case 's':
                 va_str = va_arg(args, char*);
-                ret = write(file->fd, va_str, strlen(va_str)); // TODO: fputs
+                ret = write(file->fd, va_str, strlen(va_str)); /* TODO: fputs */
                 if (ret < 0) return ret;
                 count += ret;
                 break;

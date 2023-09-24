@@ -3,8 +3,10 @@
 
 #include "stdarg.h"
 
+/*
+    TODO: actually implement this properly
+*/
 typedef struct __FILE_IO {
-    // TODO: actually implement this properly
     int fd;
 } FILE;
 
@@ -23,4 +25,4 @@ int vfprintf(FILE *file, const char* fmt, va_list args);
 int fprintf(FILE *file, const char* fmt, ...);
 int printf(const char *fmt, ...);
 
-#endif // STDIO_H
+#endif /* STDIO_H */

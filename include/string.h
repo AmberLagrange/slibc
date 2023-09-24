@@ -3,4 +3,4 @@
 
 unsigned long strlen(const char *str);
 
-#endif // STRING_H
+#endif /* STRING_H */
