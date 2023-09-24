@@ -1,9 +1,6 @@
 
 #include "../include/stdlib.h"
-
-void foo(int syscall, ...) {
-    
-}
+#include "../include/string.h"
 
 int main(int argc, char *argv[]) {
 
@@ -12,14 +9,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    int i;
-    for (i = 0;; ++i) {
-        if (!argv[1][i]) {
-            break;
-        }
-    }
-
-    write(0, argv[1], i);
+    write(0, argv[1], strlen(argv[1]));
     write(0, "\n", 1);
 
     return 0;
