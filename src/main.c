@@ -6,12 +6,12 @@ int main(int argc, char *argv[]) {
     int i;
 
     if (argc == 1) {
-        printf("Please supply an argument!\n");
+        printf("%s", "Please supply an argument!\n");
         return 1;
     }
 
     for (i = 1; i < argc; ++i) {
-        printf(argv[i]);
+        printf("%s", argv[i]);
         printf("\n");
     }
 
