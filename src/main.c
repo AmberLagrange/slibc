@@ -1,6 +1,10 @@
 
 #include "../include/stdlib.h"
 
+void foo(int syscall, ...) {
+    
+}
+
 int main(int argc, char *argv[]) {
 
     if (argc == 1) {
