@@ -3,7 +3,7 @@
 
 extern int main(int argc, char *argv[]);
 
-void __attribute((naked)) _start() { /* naked attribute to ignore setting up the function's prologue */
+void __attribute((naked)) _start(void) { /* naked attribute to ignore setting up the function's prologue */
     __asm__ volatile (
         "movl (%rsp), %edi          \n\t" /* move argc into edi */
         "lea 8(%rsp), %rsi          \n\t" /* move the address of argv into rsi */

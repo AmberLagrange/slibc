@@ -4,7 +4,7 @@
 #define SYS_WRITE   1
 #define SYS_EXIT    60
 
-typedef unsigned long long int reg64;
+typedef unsigned long int reg64;
 
 int __syscall_0(reg64 syscall);
 int __syscall_1(reg64 syscall, reg64 rdi);
