@@ -3,20 +3,42 @@
 #include "../include/stdlib.h"
 #include "../include/string.h"
 
+int fputc(int c, FILE *file) {
+
+    unsigned char written;
+
+    written = (unsigned char)c;
+
+    write(file->fd, (char *)(&written), 1);
+
+    return written;
+}
+
+int putc(int c, FILE *file) {
+    return fputc(c, file);
+}
+
+int putchar(int c) {
+    return putc(c, stdout);
+}
+
 int fputs(const char *str, FILE *file) {
     return write(file->fd, str, strlen(str));
 }
 
 int puts(const char *str) {
-    return fputs(str, stdout);
-}
 
-int fputchar(int c, FILE *file) {
-    return write(file->fd, (char *)&c, 1);
-}
+    int ret_1;
+    int ret_2;
 
-int putchar(int c) {
-    return fputchar(c, stdout);
+    ret_1 = fputs(str, stdout);
+    if (ret_1 < 0) return ret_1;
+
+    ret_2 = putchar('\n');
+    if (ret_2 < 0) return ret_2;
+
+    return ret_1 + 1;
+
 }
 
 int vfprintf(FILE *file, const char *fmt, va_list args) {
@@ -43,14 +65,14 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
 
             switch ((c = *fmt)) {
             case '%':
-                ret = fputchar('%', file);
+                ret = fputc('%', file);
                 if (ret < 0) return ret;
                 count += ret;
                 break;
 
             case 'c':
                 va_char = va_arg(args, int);
-                ret = fputchar(va_char, file);
+                ret = fputc(va_char, file);
                 if (ret < 0) return ret;
                 count += ret;
                 break;
@@ -69,7 +91,7 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
 
                 if (va_int < 0) {
                     va_int = -va_int;
-                    ret = fputchar('-', file);
+                    ret = fputc('-', file);
                     if (ret < 0) return ret;
                     count += ret;
                 }
@@ -86,7 +108,7 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
                 break;
             }
         } else {
-            ret = fputchar(c, file);
+            ret = fputc(c, file);
             if (ret < 0) return ret;
             count += ret;
         }

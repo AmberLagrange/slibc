@@ -19,11 +19,12 @@ extern FILE *_Files[FOPEN_MAX];
 #define stdout _Files[1]
 #define stderr _Files[2]
 
+int fputc(int c, FILE *file);
+int putc(int c, FILE *file);
+int putchar(int c);
+
 int fputs(const char *str, FILE *file);
 int puts(const char *str);
-
-int fputchar(int c, FILE* file);
-int putchar(int c);
 
 int vfprintf(FILE *file, const char* fmt, va_list args);
 int fprintf(FILE *file, const char* fmt, ...);
