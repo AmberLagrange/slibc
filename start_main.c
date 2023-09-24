@@ -3,12 +3,12 @@
 
 extern int main(int argc, char *argv[]);
 
-void _start() {
-
+void __attribute((naked)) _start() { // naked attribute to ignore the stack frame
     __asm__ volatile (
-        "call __slibc_start_main"
+        "movl (%rsp), %edi      \n\t" // move argc into edi
+        "lea 8(%rsp), %rsi      \n\t" // move the address of argv rsi
+        "call __slibc_start_main\n\t" // call __slibc_start_main with argc and argv
     );
-
 }
 
 void __slibc_start_main(int argc, char *argv[]) {
