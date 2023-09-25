@@ -2,7 +2,9 @@
 #define SYSCALL_H
 
 #define SYS_WRITE   1
+#define SYS_GET_PID 39
 #define SYS_EXIT    60
+#define SYS_KILL    62
 
 typedef unsigned long int reg64;
 

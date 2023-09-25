@@ -8,6 +8,7 @@ add_library(slibc SHARED
     stdlib/stdlib.c
     stdlib/string.c
     stdlib/syscall.c
+    stdlib/signal.c
 )
 
 set_target_properties(slibc PROPERTIES
