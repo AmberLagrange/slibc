@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     }
 
     for (i = 1; i < argc; ++i) {
-        printf("Argument %ld: %s\n", (long)i, argv[i]);
+        printf("Argument %d: Address: %p, Value: %s\n", i, argv[i], argv[i]);
     }
 
     return 0;

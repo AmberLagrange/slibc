@@ -3,9 +3,89 @@
 #include "../include/stdlib.h"
 #include "../include/string.h"
 
-/* TODO: Remove code duplication */
-
 static const char NUMERALS[16] = "0123456789abcdef";
+
+static char * __itoa__internal(int i, char *buf, int len, int base, int is_unsigned) {
+
+    unsigned u;
+    int is_negative = 0;
+    char *str = &(buf[len - 1]);
+    buf[len] = '\0';
+
+    if (i == 0) {
+        *str = '0';
+        return str;
+    }
+
+    if (is_unsigned) {
+        u = (unsigned)i;
+
+        while (u) {
+            --str;
+            *str = NUMERALS[u % base];
+            u /= base;
+        }
+    } else {
+        if (i < 0) {
+            is_negative = 1;
+            i = -i;
+        }
+
+        while (i) {
+            --str;
+            *str = NUMERALS[i % base];
+            i /= base;
+        }
+
+        if (is_negative) {
+            --str;
+            *str = '-';
+        }
+    }
+
+    return str;
+}
+
+static char * __ltoa__internal(long l, char *buf, int len, int base, int is_unsigned) {
+
+    unsigned long lu;
+    int is_negative = 0;
+    char *str = &(buf[len - 1]);
+    buf[len] = '\0';
+
+    if (l == 0) {
+        *str = '0';
+        return str;
+    }
+
+    if (is_unsigned) {
+        lu = (unsigned long)l;
+
+        while (lu) {
+            --str;
+            *str = NUMERALS[lu % base];
+            lu /= base;
+        }
+    } else {
+        if (l < 0) {
+            is_negative = 1;
+            l = -l;
+        }
+
+        while (l) {
+            --str;
+            *str = NUMERALS[l % base];
+            l /= base;
+        }
+
+        if (is_negative) {
+            --str;
+            *str = '-';
+        }
+    }
+
+    return str;
+}
 
 /*
 static int __fputl_internal(unsigned long lu, int base, FILE *file) {
@@ -45,23 +125,7 @@ static int __fputlu_internal(long l, int base, FILE *file) {
     int count = 0;
 
     char buf[MAX_INT_LENGTH];
-    char *str;
-    
-    buf[0] = '\0';
-    str = &(buf[MAX_INT_LENGTH - 1]);
-
-    if (l < 0) {
-        l = -l;
-        ret = fputc('-', file);
-        if (ret < 0) return ret;
-        count += ret;
-    }
-
-    while (l) {
-        --str;
-        *str = NUMERALS[l % base];
-        l /= base;
-    }
+    char *str = __ltoa__internal(l, buf, MAX_INT_LENGTH, base, 1);
 
     ret = fputs(str, file);
     if (ret < 0) return ret;
@@ -76,23 +140,7 @@ static int __fputi_internal(int i, int base, FILE *file) {
     int count = 0;
 
     char buf[MAX_INT_LENGTH];
-    char *str;
-    
-    buf[0] = '\0';
-    str = &(buf[MAX_INT_LENGTH - 1]);
-
-    if (i < 0) {
-        i = -i;
-        ret = fputc('-', file);
-        if (ret < 0) return ret;
-        count += ret;
-    }
-
-    while (i) {
-        --str;
-        *str = NUMERALS[i % base];
-        i /= base;
-    }
+    char *str = __itoa__internal(i, buf, MAX_INT_LENGTH, base, 0);
 
     ret = fputs(str, file);
     if (ret < 0) return ret;
@@ -107,16 +155,7 @@ static int __fputu_internal(unsigned u, int base, FILE *file) {
     int count = 0;
 
     char buf[MAX_INT_LENGTH];
-    char *str;
-    
-    buf[0] = '\0';
-    str = &(buf[MAX_INT_LENGTH - 1]);
-
-    while (u) {
-        --str;
-        *str = NUMERALS[u % base];
-        u /= base;
-    }
+    char *str = __itoa__internal(u, buf, MAX_INT_LENGTH, base, 1);
 
     ret = fputs(str, file);
     if (ret < 0) return ret;
