@@ -3,6 +3,127 @@
 #include "../include/stdlib.h"
 #include "../include/string.h"
 
+/* TODO: Remove code duplication */
+
+static const char NUMERALS[16] = "0123456789abcdef";
+
+static int __fputl_internal(unsigned long lu, int base, FILE *file) {
+
+    int ret;
+    int count = 0;
+
+    char buf[MAX_INT_LENGTH];
+    char *str;
+    
+    buf[0] = '\0';
+    str = &(buf[MAX_INT_LENGTH - 1]);
+
+    if (lu < 0) {
+        lu = -lu;
+        ret = fputc('-', file);
+        if (ret < 0) return ret;
+        count += ret;
+    }
+
+    while (lu) {
+        --str;
+        *str = NUMERALS[lu % base];
+        lu /= base;
+    }
+
+    ret = fputs(str, file);
+    if (ret < 0) return ret;
+    count += ret;
+
+    return count;
+}
+
+static int __fputlu_internal(long l, int base, FILE *file) {
+
+    int ret;
+    int count = 0;
+
+    char buf[MAX_INT_LENGTH];
+    char *str;
+    
+    buf[0] = '\0';
+    str = &(buf[MAX_INT_LENGTH - 1]);
+
+    if (l < 0) {
+        l = -l;
+        ret = fputc('-', file);
+        if (ret < 0) return ret;
+        count += ret;
+    }
+
+    while (l) {
+        --str;
+        *str = NUMERALS[l % base];
+        l /= base;
+    }
+
+    ret = fputs(str, file);
+    if (ret < 0) return ret;
+    count += ret;
+
+    return count;
+}
+
+static int __fputi_internal(int i, int base, FILE *file) {
+
+    int ret;
+    int count = 0;
+
+    char buf[MAX_INT_LENGTH];
+    char *str;
+    
+    buf[0] = '\0';
+    str = &(buf[MAX_INT_LENGTH - 1]);
+
+    if (i < 0) {
+        i = -i;
+        ret = fputc('-', file);
+        if (ret < 0) return ret;
+        count += ret;
+    }
+
+    while (i) {
+        --str;
+        *str = NUMERALS[i % base];
+        i /= base;
+    }
+
+    ret = fputs(str, file);
+    if (ret < 0) return ret;
+    count += ret;
+
+    return count;
+}
+
+static int __fputu_internal(unsigned u, int base, FILE *file) {
+
+    int ret;
+    int count = 0;
+
+    char buf[MAX_INT_LENGTH];
+    char *str;
+    
+    buf[0] = '\0';
+    str = &(buf[MAX_INT_LENGTH - 1]);
+
+    while (u) {
+        --str;
+        *str = NUMERALS[u % base];
+        u /= base;
+    }
+
+    ret = fputs(str, file);
+    if (ret < 0) return ret;
+    count += ret;
+
+    return count;
+}
+
 int fputc(int c, FILE *file) {
 
     unsigned char written;
@@ -48,11 +169,12 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
 
     int count;
 
-    char  va_char;
-    char *va_str;
-    int   va_int;
-
-    char number[MAX_INT_LENGTH];
+    char            va_char;
+    char           *va_str;
+    int             va_int;
+    long            va_long;
+    unsigned        va_unsigned;
+    unsigned long   va_long_unsigned;
 
     ret = 0;
     count = 0;
@@ -85,26 +207,22 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
                 break;
 
             case 'd':
+            case 'i':
                 va_int = va_arg(args, int);
-                va_str = &number[MAX_INT_LENGTH - 1];
-                *va_str = '\0';
-
-                if (va_int < 0) {
-                    va_int = -va_int;
-                    ret = fputc('-', file);
-                    if (ret < 0) return ret;
-                    count += ret;
-                }
-
-                while (va_int) {
-                    --va_str;
-                    *va_str = '0' + (va_int % 10);
-                    va_int /= 10;
-                }
-
-                ret = fputs(va_str, file);
-                if (ret < 0) return ret;
-                count += ret;
+                count += __fputi_internal(va_int, 10, file);
+                break;
+            case 'u':
+                va_unsigned = va_arg(args, unsigned);
+                count += __fputu_internal(va_unsigned, 10, file);
+                break;
+            case 'l':
+                va_long = va_arg(args, long);
+                count += __fputl_internal(va_long, 10, file);
+                break;
+            case 'p':
+                va_long_unsigned = (unsigned long)(va_arg(args, void*));
+                count += fputs("0x", file);
+                count += __fputlu_internal(va_long_unsigned, 16, file);
                 break;
             }
         } else {
