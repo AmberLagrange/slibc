@@ -88,80 +88,56 @@ static char * __ltoa__internal(long l, char *buf, int len, int base, int is_unsi
 }
 
 /*
-static int __fputl_internal(unsigned long lu, int base, FILE *file) {
+static int __fputl_internal(int l, int base, FILE *file) {
 
     int ret;
-    int count = 0;
 
-    char buf[MAX_INT_LENGTH];
-    char *str;
-    
-    buf[0] = '\0';
-    str = &(buf[MAX_INT_LENGTH - 1]);
-
-    if (lu < 0) {
-        lu = -lu;
-        ret = fputc('-', file);
-        if (ret < 0) return ret;
-        count += ret;
-    }
-
-    while (lu) {
-        --str;
-        *str = NUMERALS[lu % base];
-        lu /= base;
-    }
+    char buf[MAX_INT_LENGTH] = {0};
+    char *str = __ltoa__internal(l, buf, MAX_INT_LENGTH, base, 0);
 
     ret = fputs(str, file);
     if (ret < 0) return ret;
-    count += ret;
 
-    return count;
-} */
+    return ret;
+}*/
 
 static int __fputlu_internal(long l, int base, FILE *file) {
 
     int ret;
-    int count = 0;
 
-    char buf[MAX_INT_LENGTH];
+    char buf[MAX_INT_LENGTH] = {0};
     char *str = __ltoa__internal(l, buf, MAX_INT_LENGTH, base, 1);
 
     ret = fputs(str, file);
     if (ret < 0) return ret;
-    count += ret;
 
-    return count;
+    return ret;
 }
 
 static int __fputi_internal(int i, int base, FILE *file) {
 
     int ret;
-    int count = 0;
 
-    char buf[MAX_INT_LENGTH];
+    char buf[MAX_INT_LENGTH] = {0};
     char *str = __itoa__internal(i, buf, MAX_INT_LENGTH, base, 0);
 
     ret = fputs(str, file);
     if (ret < 0) return ret;
-    count += ret;
 
-    return count;
+    return ret;
 }
 
 static int __fputu_internal(unsigned u, int base, FILE *file) {
 
     int ret;
-    int count = 0;
 
-    char buf[MAX_INT_LENGTH];
+    char buf[MAX_INT_LENGTH] = {0};
     char *str = __itoa__internal(u, buf, MAX_INT_LENGTH, base, 1);
 
     ret = fputs(str, file);
     if (ret < 0) return ret;
-    count += ret;
 
-    return count;
+    return ret;
 }
 
 int fputc(int c, FILE *file) {
