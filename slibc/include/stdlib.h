@@ -1,7 +1,8 @@
 #ifndef STDLIB_H
 #define STDLIB_H
 
-void __slibc_start_main(int argc, char *argv[]);
+void *malloc(unsigned long size);
+void free(void *ptr);
 
 int write(int fd, const char *buf, int length);
 

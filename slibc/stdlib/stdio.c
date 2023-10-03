@@ -257,6 +257,14 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
                 break;
             case 'p':
                 va_long_unsigned = (unsigned long)(va_arg(args, void*));
+
+                if (!va_long_unsigned) { /* NULL Pointer */
+
+                    count += fputs("(nil)", file);
+                    break;
+
+                }
+
                 count += fputs("0x", file);
                 count += __fputlu_internal(va_long_unsigned, 16, file);
                 break;
