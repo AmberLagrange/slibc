@@ -11,6 +11,7 @@ add_library(slibc_start_main STATIC
 
 set_target_properties(slibc_start_main PROPERTIES
     C_STANDARD 90
+    C_EXTENSIONS OFF
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
 )

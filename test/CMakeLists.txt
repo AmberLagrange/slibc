@@ -20,8 +20,11 @@ execute_process(
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${SHATTER_LIBC_LIBS} ${SHATTER_LIBC_START_MAIN_LIBS}")
 
 add_executable(test src/main.c)
-target_compile_options(test PRIVATE "${SHATTER_LIBC_CFLAGS} ${SHATTER_LIBC_START_MAIN_CFLAGS}")
-set_target_properties(test PROPERTIES C_STANDARD 90)
+target_compile_options(test PRIVATE ${SHATTER_LIBC_CFLAGS} ${SHATTER_LIBC_START_MAIN_CFLAGS} -Wall -Wextra -Wpedantic -Werror)
+set_target_properties(test PROPERTIES
+    C_STANDARD 90
+    C_EXTENSIONS OFF
+)
 
 target_link_directories(test PRIVATE ${SHATTER_LIBC_LIBRARY_DIRS} ${SHATTER_LIBC_START_MAIN_LIBRARY_DIRS})
 target_include_directories(test PRIVATE ${SHATTER_LIBC_INCLUDE_DIRS})

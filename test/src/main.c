@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[]) {
+int main(void) {
 
-    int *ptr = malloc(sizeof(int));
-    *ptr = 42;
-    printf("Address: %p, Value: %d\n", ptr, *ptr);
-    free(ptr);
+    int i;
+    i = (int)(sizeof(unsigned long));
+
+    printf("sizeof(unsigned long): %d\n", i);
 
     return 0;
 }

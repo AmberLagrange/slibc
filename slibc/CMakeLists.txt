@@ -18,6 +18,7 @@ set(SLIBC_HEADERS include/assert.h include/signal.h include/stdarg.h include/std
 
 set_target_properties(slibc PROPERTIES
     C_STANDARD 90
+    C_EXTENSIONS OFF
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
     PUBLIC_HEADER "${SLIBC_HEADERS}"
