@@ -2,51 +2,36 @@
 #include "../include/syscall.h"
 #include "../include/signal.h"
 
-/* VERY TEMPORARY */
-/* 8MB of memory for malloc for now */
-#define MAX_MALLOC_SIZE 1024 * 1024 * 8
-#define ALIGNMENT 16
-
-typedef unsigned char byte_t;
-
-static byte_t mem[MAX_MALLOC_SIZE]; 
-static unsigned long next_memory_block = 0;
+#include "../include/mman.h"
 
 void *malloc(unsigned long size) {
 
-    void *ptr;
-    int offset;
+    unsigned long *ptr;
+    unsigned long new_size;
 
     if (!size) {
         return NULL;
     }
 
-    if (MAX_MALLOC_SIZE - next_memory_block < size) {
-        return NULL;
-    }
+    new_size = size + sizeof(size);
 
-    ptr = mem + next_memory_block;
+    ptr = mmap(0, new_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    *ptr = new_size;
 
-    next_memory_block += size;
-    offset = size % ALIGNMENT;
-
-    /* Fix alignment */
-    /* Currently just align everything to ALIGNMENT */
-    if (offset) {
-        next_memory_block += (ALIGNMENT - offset);
-    }
-
-    return ptr;
+    return ptr + sizeof(size);
 }
 
 void free(void *ptr) {
+
+    unsigned long size;
 
     /* Freeing NULL shouldn't do anything */
     if (!ptr) {
         return;
     }
 
-    /* TODO: Actually implement free */
+    size = *((unsigned long *)ptr - sizeof(size)); /* Get the size stored before the pointer */
+    munmap(ptr, size);
 
     return;
 }
