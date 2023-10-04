@@ -1,7 +1,6 @@
 
-#include "../include/stdlib.h"
-
 extern int main(int argc, char *argv[]);
+extern void exit(int status);
 
 void __attribute((naked)) _start(void) { /* naked attribute to ignore setting up the function's prologue */
     __asm__ volatile (

@@ -1,14 +1,12 @@
 
-#include "../include/stdio.h"
-#include "../include/stdlib.h"
-
-#include "../include/mman.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int main(int argc, char *argv[]) {
 
     int *ptr = malloc(sizeof(int));
     *ptr = 42;
-    printf("%d\n", *ptr);
+    printf("Address: %p, Value: %d\n", ptr, *ptr);
     free(ptr);
 
     return 0;

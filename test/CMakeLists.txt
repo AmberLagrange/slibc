@@ -2,13 +2,27 @@ cmake_minimum_required(VERSION 3.24.2)
 project(test)
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(SHATTER_LIBC REQUIRED slibc)
+pkg_check_modules(SHATTER_LIBC            REQUIRED slibc)
+pkg_check_modules(SHATTER_LIBC_START_MAIN REQUIRED slibc_start_main)
 
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -nostdlib")
+execute_process(
+    COMMAND pkg-config slibc --libs
+    OUTPUT_VARIABLE SHATTER_LIBC_LIBS
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
 
-add_executable(test_prog src/main.c ${CMAKE_SOURCE_DIR}/slibc/stdlib/start_main.c)
+execute_process(
+    COMMAND pkg-config slibc_start_main --libs
+    OUTPUT_VARIABLE SHATTER_LIBC_START_MAIN_LIBS
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
 
-include_directories(${CMAKE_SOURCE_DIR}/slibc/include)
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${SHATTER_LIBC_LIBS} ${SHATTER_LIBC_START_MAIN_LIBS}")
 
-target_link_libraries(test_prog ${SHATTER_LIBC_LIBRARIES})
-target_include_directories(test_prog PUBLIC ${SHATTER_LIBC_LIBRARIES})
+add_executable(test src/main.c)
+target_compile_options(test PRIVATE "${SHATTER_LIBC_CFLAGS} ${SHATTER_LIBC_START_MAIN_CFLAGS}")
+set_target_properties(test PROPERTIES C_STANDARD 90)
+
+target_link_directories(test PRIVATE ${SHATTER_LIBC_LIBRARY_DIRS} ${SHATTER_LIBC_START_MAIN_LIBRARY_DIRS})
+target_include_directories(test PRIVATE ${SHATTER_LIBC_INCLUDE_DIRS})
+target_link_libraries(test PRIVATE ${SHATTER_LIBC_LIBRARIES} ${SHATTER_LIBC_START_MAIN_LIBRARIES})
