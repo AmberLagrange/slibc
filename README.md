@@ -5,26 +5,42 @@
 Shatter Libc (``slibc``) is C89 compliant Standard Library written for educational purposes.
 - [slibc](#shatter-libc)
 - [Building](#building)
+- [Installing](#installing)
 - [Running](#running)
 - [Supported Platforms](#supported-platforms)
 
 # Building
 
-To build, simply run ``cmake`` in a build directory, then run ``make install``
+To build, simply run ``cmake`` in a build directory, then run ``make``
 
 ``` bash
 $ cd slibc
 $ mkdir build
 $ cd build
 $ cmake -S .. -B .
+$ make
+```
+
+# Installing
+
+To install ``slibc``, you can run the ``install`` target
+
+``` bash
 $ make install
 ```
 
-This will install the library and header files onto your system default is (``/usr/local/lib/slibc`` and ``/usr/local/include/slibc`` by default)
+This will install the library and header files onto your system default is (``/usr/local/lib/slibc`` and ``/usr/local/include/slibc`` by default).
+
+To uninstall ``slibc``, you can either run
+``` bash
+$ make uninstall
+```
+
+or manually uninstall the files described in ``install_manifest.txt``, which is what ``make uninstall`` does by default.
 
 ### Note:
 
-``$ make install`` may require elevated permissions to install correctly.
+``make install`` and ``make uninstall`` may require elevated permissions to run correctly.
 
 # Running
 
