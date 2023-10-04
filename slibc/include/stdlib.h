@@ -1,6 +1,8 @@
 #ifndef STDLIB_H
 #define STDLIB_H
 
+#define NULL ((void*)0)
+
 void *malloc(unsigned long size);
 void free(void *ptr);
 

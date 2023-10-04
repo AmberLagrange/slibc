@@ -16,12 +16,6 @@ set_target_properties(slibc PROPERTIES
     C_STANDARD 90
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
-    PUBLIC_HEADER
-        include/stdarg.h
-        include/stdio.h
-        include/stdlib.h
-        include/string.h
-        include/syscall.h
 )
 
 target_link_options(slibc 

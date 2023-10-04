@@ -2,8 +2,6 @@
 #include "../include/syscall.h"
 #include "../include/signal.h"
 
-#define NULL ((void*)(0))
-
 /* VERY TEMPORARY */
 /* 8MB of memory for malloc for now */
 #define MAX_MALLOC_SIZE 1024 * 1024 * 8
