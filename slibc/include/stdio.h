@@ -1,7 +1,7 @@
 #ifndef STDIO_H
 #define STDIO_H
 
-#include "stdarg.h"
+#include <stdarg.h>
 
 /*
     TODO: actually implement this properly
@@ -11,7 +11,6 @@ typedef struct __FILE_IO {
 } FILE;
 
 #define FOPEN_MAX 16
-#define MAX_INT_LENGTH 256
 
 extern FILE *_Files[FOPEN_MAX];
 
