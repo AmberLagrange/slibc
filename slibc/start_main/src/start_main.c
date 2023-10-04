@@ -1,4 +1,3 @@
-
 extern int main(int argc, char *argv[]);
 extern void exit(int status);
 

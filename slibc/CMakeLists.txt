@@ -24,13 +24,8 @@ set_target_properties(slibc PROPERTIES
     PUBLIC_HEADER "${SLIBC_HEADERS}"
 )
 
-target_link_options(slibc 
-    PUBLIC
-        -nostdlib
-)
-
-target_compile_options(slibc PRIVATE -Wall -Wextra -Wpedantic -Werror)
-
+target_compile_options(slibc PRIVATE -Wall -Wextra -Wpedantic -Werror -nostdinc)
+target_link_options(slibc PUBLIC -nostdlib)
 install(FILES ${CMAKE_BINARY_DIR}/slibc.pc
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
 

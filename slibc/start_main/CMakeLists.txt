@@ -16,12 +16,8 @@ set_target_properties(slibc_start_main PROPERTIES
     SOVERSION 1
 )
 
-target_link_options(slibc_start_main 
-    PUBLIC
-        -nostdlib
-)
-
-target_compile_options(slibc_start_main PRIVATE -Wall -Wextra -Wpedantic -Werror)
+target_compile_options(slibc_start_main PRIVATE -Wall -Wextra -Wpedantic -Werror -nostdinc)
+target_link_options(slibc_start_main PUBLIC -nostdlib)
 
 install(FILES ${CMAKE_BINARY_DIR}/start_main/slibc_start_main.pc
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
