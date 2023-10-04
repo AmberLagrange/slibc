@@ -1,6 +1,6 @@
-#include "../include/signal.h"
+#include <signal.h>
 
-#include "../include/syscall.h"
+#include <syscall.h>
 
 int raise(int sig) {
     int ret;

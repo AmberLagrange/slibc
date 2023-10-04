@@ -1,4 +1,4 @@
-#include "../include/string.h"
+#include <string.h>
 
 unsigned long strlen(const char *str) {
     unsigned long i = 0;

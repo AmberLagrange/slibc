@@ -1,6 +1,6 @@
-#include "../include/mman.h"
+#include <mman.h>
 
-#include "../include/syscall.h"
+#include <syscall.h>
 
 void *mmap(void *addr, unsigned long len, unsigned long prot, unsigned long flags, unsigned long fd, unsigned long offset) {
     

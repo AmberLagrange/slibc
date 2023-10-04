@@ -1,7 +1,7 @@
-#include "../include/stdio.h"
+#include <stdio.h>
 
-#include "../include/stdlib.h"
-#include "../include/string.h"
+#include <stdlib.h>
+#include <string.h>
 
 static const char NUMERALS[16] = "0123456789abcdef";
 

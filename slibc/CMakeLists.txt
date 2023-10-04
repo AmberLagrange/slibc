@@ -6,12 +6,12 @@ include(GNUInstallDirs)
 configure_file(slibc.pc.in slibc.pc @ONLY)
 
 add_library(slibc SHARED
-    src/mman.c
-    src/signal.c
-    src/stdio.c
-    src/stdlib.c
-    src/string.c
-    src/syscall.c
+    src/mman/mman.c
+    src/signal/signal.c
+    src/stdio/stdio.c
+    src/stdlib/stdlib.c
+    src/string/string.c
+    src/syscall/syscall.c
 )
 
 set(SLIBC_HEADERS include/assert.h include/signal.h include/stdarg.h include/stdio.h include/stdlib.h include/string.h)
@@ -25,7 +25,8 @@ set_target_properties(slibc PROPERTIES
 )
 
 target_compile_options(slibc PRIVATE -Wall -Wextra -Wpedantic -Werror -nostdinc)
-target_link_options(slibc PUBLIC -nostdlib)
+target_link_options(slibc PRIVATE -nostdlib)
+target_include_directories(slibc PUBLIC ${CMAKE_SOURCE_DIR}/include)
 install(FILES ${CMAKE_BINARY_DIR}/slibc.pc
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
 

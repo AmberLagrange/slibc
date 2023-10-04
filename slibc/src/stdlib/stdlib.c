@@ -1,8 +1,8 @@
-#include "../include/stdlib.h"
-#include "../include/syscall.h"
-#include "../include/signal.h"
+#include <stdlib.h>
+#include <syscall.h>
+#include <signal.h>
 
-#include "../include/mman.h"
+#include <mman.h>
 
 #define MAX_ALIGNMENT 16
 

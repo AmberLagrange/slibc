@@ -1,4 +1,4 @@
-#include "../include/syscall.h"
+#include <syscall.h>
 
 unsigned long __syscall_0(reg64 syscall) {
     
