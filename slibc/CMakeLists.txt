@@ -57,4 +57,6 @@ install(TARGETS slibc
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/slibc
     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/slibc)
 
+add_custom_target(uninstall xargs rm < install_manifest.txt)
+
 add_subdirectory(start_main)
