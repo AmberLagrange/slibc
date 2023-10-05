@@ -81,7 +81,7 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
         } else {
             ret = fputc(c, file);
             if (ret < 0) return ret;
-            count += ret;
+            count += 1;
         }
 
         ++fmt;
