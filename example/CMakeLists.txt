@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.24.2)
-project(test)
+project(example)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(SHATTER_LIBC            REQUIRED slibc)
@@ -19,13 +19,13 @@ execute_process(
 
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${SHATTER_LIBC_LIBS} ${SHATTER_LIBC_START_MAIN_LIBS}")
 
-add_executable(test src/main.c)
-target_compile_options(test PRIVATE ${SHATTER_LIBC_CFLAGS} ${SHATTER_LIBC_START_MAIN_CFLAGS} -Wall -Wextra -Wpedantic -Werror)
-set_target_properties(test PROPERTIES
+add_executable(example src/main.c)
+target_compile_options(example PRIVATE ${SHATTER_LIBC_CFLAGS} ${SHATTER_LIBC_START_MAIN_CFLAGS} -Wall -Wextra -Wpedantic -Werror)
+set_target_properties(example PROPERTIES
     C_STANDARD 90
     C_EXTENSIONS OFF
 )
 
-target_link_directories(test PRIVATE ${SHATTER_LIBC_LIBRARY_DIRS} ${SHATTER_LIBC_START_MAIN_LIBRARY_DIRS})
-target_include_directories(test PRIVATE ${SHATTER_LIBC_INCLUDE_DIRS})
-target_link_libraries(test PRIVATE ${SHATTER_LIBC_LIBRARIES} ${SHATTER_LIBC_START_MAIN_LIBRARIES})
+target_link_directories(example PRIVATE ${SHATTER_LIBC_LIBRARY_DIRS} ${SHATTER_LIBC_START_MAIN_LIBRARY_DIRS})
+target_include_directories(example PRIVATE ${SHATTER_LIBC_INCLUDE_DIRS})
+target_link_libraries(example PRIVATE ${SHATTER_LIBC_LIBRARIES} ${SHATTER_LIBC_START_MAIN_LIBRARIES})

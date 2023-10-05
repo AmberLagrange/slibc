@@ -44,20 +44,20 @@ or manually uninstall the files described in ``install_manifest.txt``, which is 
 
 # Running
 
-There is a test program that can also be compiled and tested.
+There is an example program that can also be compiled and ran.
 
 ```bash
-$ cd test
+$ cd example
 $ mkdir build
 $ cd build
 $ cmake -S .. -B .
 $ make
-$ ./test
+$ ./example
 ```
 
 This creates a program that is linked against ``slibc``, which can be verified with
 ```bash
-$ ldd test
+$ ldd example
     linux-vdso.so.1 (...)
     libslibc.so.1 => <install_dir>/libslibc.so.1 (...)
 ```
@@ -72,7 +72,7 @@ An example command would be
 $ $CC -std=c89 -nostdlib -nostdinc -I<include_dir> -L<lib_dir> -lslibc -lslibc_start_main foo.c -o foo
 ```
 
-Alternatively, the provided ``CMakeLists.txt`` in the ``test`` directory provides a good starting point to build your own projects.
+Alternatively, the provided ``CMakeLists.txt`` in the ``example`` directory provides a good starting point to build your own projects.
 
 ### Note
 
