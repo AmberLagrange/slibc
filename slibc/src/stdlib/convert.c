@@ -1,6 +1,10 @@
-#include <stdio/itoa.h>
+#include <stdlib.h>
+#include <stdlib/convert.h>
 
 static const char NUMERALS[16] = "0123456789abcdef";
+
+/* TODO: Implement unused */
+#define UNUSED(x) (void)(x)
 
 char *__itoa__internal(int i, char *buf, int len, int base, int is_unsigned) {
 
@@ -83,4 +87,45 @@ char *__ltoa__internal(long l, char *buf, int len, int base, int is_unsigned) {
     }
 
     return str;
+}
+
+double atof(const char *str) {
+    UNUSED(str);
+
+    return 1234.5678;
+}
+
+int atoi(const char *str) {
+    UNUSED(str);
+
+    return 0x1234;
+}
+
+long atol(const char *str) {
+    UNUSED(str);
+    
+    return 0x1234;
+}
+
+long strtol(const char *str, char **str_end, int base) {
+    UNUSED(str);
+    UNUSED(str_end);
+    UNUSED(base);
+    
+    return 0x1234;
+}
+
+unsigned long strtoul(const char *str, char **str_end, int base) {
+    UNUSED(str);
+    UNUSED(str_end);
+    UNUSED(base);
+    
+    return 0x1234;
+}
+
+double strtod(const char *str, char **str_end) {
+    UNUSED(str);
+    UNUSED(str_end);
+    
+    return 1234.5678;
 }

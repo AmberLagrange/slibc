@@ -1,6 +1,6 @@
 #include <stdio/put_internal.h>
 
-#include <stdio/itoa.h>
+#include <stdlib/convert.h>
 
 /*
 int __fputl_internal(int l, int base, FILE *file) {

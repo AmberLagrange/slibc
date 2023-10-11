@@ -11,12 +11,12 @@ add_library(slibc SHARED
 
     src/signal/signal.c
 
-    src/stdio/itoa.c
     src/stdio/printf.c
     src/stdio/put_internal.c
     src/stdio/put.c
     src/stdio/stdio.c
 
+    src/stdlib/convert.c
     src/stdlib/malloc.c
     src/stdlib/stdlib.c
 
