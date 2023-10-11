@@ -18,4 +18,6 @@ unsigned long __syscall_4(reg64 syscall, reg64 rdi, reg64 rsi, reg64 rdx, reg64 
 unsigned long __syscall_5(reg64 syscall, reg64 rdi, reg64 rsi, reg64 rdx, reg64 r10, reg64 r8);
 unsigned long __syscall_6(reg64 syscall, reg64 rdi, reg64 rsi, reg64 rdx, reg64 r10, reg64 r8, reg64 r9);
 
+int write(int fd, const char *buf, int length);
+
 #endif /* SYSCALL_H */

@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#include <stdlib.h>
 #include <string.h>
+#include <syscall/syscall.h>
 
 int fputc(int c, FILE *file) {
 
