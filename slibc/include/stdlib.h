@@ -12,6 +12,7 @@ unsigned long strtoul(const char *str, char **str_end, int base);
 double        strtod(const char *str, char **str_end);
 
 void *malloc(unsigned long size);
+void *realloc(void *ptr, unsigned long size);
 void free(void *ptr);
 
 __attribute__((noreturn)) void abort(void);

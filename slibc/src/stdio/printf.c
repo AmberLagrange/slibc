@@ -74,6 +74,11 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
                 count += __fputlu_internal(va_long_unsigned, 16, file);
                 break;
 
+            case 'x':
+                va_int = va_arg(args, int);
+                count += __fputi_internal(va_int, 16, file);
+                break;
+
             case 'l':
                 fputs("Format l not supported.\n", stderr);
                 abort();
