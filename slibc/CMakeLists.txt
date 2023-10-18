@@ -14,6 +14,7 @@ add_library(slibc SHARED
     src/stdio/printf.c
     src/stdio/put_internal.c
     src/stdio/put.c
+    src/stdio/scanf.c
     src/stdio/stdio.c
 
     src/stdlib/convert.c

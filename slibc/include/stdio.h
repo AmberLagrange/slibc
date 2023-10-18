@@ -29,4 +29,6 @@ int vfprintf(FILE *file, const char* fmt, va_list args);
 int fprintf(FILE *file, const char* fmt, ...);
 int printf(const char *fmt, ...);
 
+int scanf(const char *fmt, ...);
+
 #endif /* STDIO_H */
