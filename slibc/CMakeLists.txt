@@ -23,6 +23,7 @@ add_library(slibc SHARED
 
     src/string/string.c
 
+    src/syscall/read.c
     src/syscall/syscall.c
     src/syscall/write.c
 )

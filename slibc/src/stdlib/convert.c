@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include <stdlib/convert.h>
 
 static const char NUMERALS[16] = "0123456789abcdef";
@@ -96,9 +97,20 @@ double atof(const char *str) {
 }
 
 int atoi(const char *str) {
-    UNUSED(str);
 
-    return 0x1234;
+    int num;
+    int len;
+    int i;
+
+    num = 0;
+    len = strlen(str);
+
+    for (i = 0; i < len; ++i) {
+        num *= 10;
+        num += str[i] - '0';
+    }
+
+    return num;
 }
 
 long atol(const char *str) {

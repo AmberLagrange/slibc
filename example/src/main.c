@@ -5,6 +5,7 @@ int main(void) {
 
     int *ptr_1;
     int *ptr_2;
+    int user_input;
 
     ptr_1 = malloc(sizeof(int) * 1);
     *ptr_1 = 42;
@@ -16,6 +17,10 @@ int main(void) {
     free(ptr_2);
     /* printf("This might segfault: 0x%x\n", *ptr_1); */
     /* printf("This might also segfault: %d\n", ptr_2[0]); */
+
+    printf("Enter a number: ");
+    scanf("%d", &user_input);
+    printf("User Input: %d\n", user_input);
 
     return 0;
 }
