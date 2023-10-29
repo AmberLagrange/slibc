@@ -6,11 +6,14 @@ include(GNUInstallDirs)
 configure_file(slibc.pc.in slibc.pc @ONLY)
 
 add_library(slibc SHARED
+    src/ctype/ctype.c
+
     src/mman/mmap.c
     src/mman/munmap.c
 
     src/signal/signal.c
 
+    src/stdio/getc.c
     src/stdio/printf.c
     src/stdio/put_internal.c
     src/stdio/put.c
@@ -30,6 +33,7 @@ add_library(slibc SHARED
 
 set(SLIBC_HEADERS
     include/assert.h
+    include/ctype.h
     include/signal.h
     include/stdarg.h
     include/stdio.h

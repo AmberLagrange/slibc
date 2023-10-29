@@ -3,6 +3,8 @@
 
 #include <stdarg.h>
 
+#define EOF (-1)
+
 /*
     TODO: actually implement this properly
 */
@@ -28,6 +30,9 @@ int puts(const char *str);
 int vfprintf(FILE *file, const char* fmt, va_list args);
 int fprintf(FILE *file, const char* fmt, ...);
 int printf(const char *fmt, ...);
+
+int getc(FILE *file);
+int getchar(void);
 
 int scanf(const char *fmt, ...);
 
