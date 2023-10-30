@@ -35,4 +35,12 @@ target_link_directories     (test_ctype PRIVATE    ${TARGET_LINK_DIRECTORIES})
 target_include_directories  (test_ctype PRIVATE    ${TARGET_INCLUDE_DIRECTORIES})
 target_link_libraries       (test_ctype PRIVATE    ${TARGET_LINK_LIBRARIES})
 
-add_test(test_ctype test_ctype)
+add_executable              (test_ctype_upper_lower test_ctype_upper_lower.c)
+
+target_compile_options      (test_ctype_upper_lower PRIVATE    ${COMPILE_OPTIONS})
+set_target_properties       (test_ctype_upper_lower PROPERTIES ${TARGET_PROPERTIES})
+target_link_directories     (test_ctype_upper_lower PRIVATE    ${TARGET_LINK_DIRECTORIES})
+target_include_directories  (test_ctype_upper_lower PRIVATE    ${TARGET_INCLUDE_DIRECTORIES})
+target_link_libraries       (test_ctype_upper_lower PRIVATE    ${TARGET_LINK_LIBRARIES})
+
+add_test(test_ctype_upper_lower test_ctype_upper_lower)

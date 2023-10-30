@@ -81,9 +81,9 @@ int ispunct(int c) {
 }
 
 int toupper(int c) {
-    return isupper(c) ? c : c - 32;
+    return islower(c) ? c - 32 : c;
 }
 
 int tolower(int c) {
-    return islower(c) ? c : c + 32;
+    return isupper(c) ? c + 32: c;
 }
