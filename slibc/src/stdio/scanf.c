@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#include <ctype.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <syscall/syscall.h>
@@ -9,22 +10,33 @@ TODO: Properly implement scanf, currently doesn't use
       fmt and only returns a digit read.
 */
 
+#define MAX_READ 256
+
 int scanf(const char *fmt, ...) {
 
     va_list args;
-    char buf[256];
+    char buf[MAX_READ];
     int *va_int_ptr;
-    int count;
+    int c;
+    int count = 0;
 
     va_start(args, fmt);
 
-    count = read(stdin->fd, buf, 256);
-    buf[count - 1] = '\0'; /* count includes newline, so remove the trailing newline and replace it with NULL */
+    while ((c = getchar()) != EOF && count < MAX_READ) {
+
+        if (!isdigit(c)) {
+            break;
+        }
+
+        buf[count++] = (char)c;
+    }
+
+    buf[count] = '\0';
 
     va_int_ptr = va_arg(args, int *);
     *va_int_ptr = atoi(buf);
 
     va_end(args);
 
-    return 0;
+    return 1;
 }
