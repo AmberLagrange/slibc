@@ -22,7 +22,7 @@ int scanf(const char *fmt, ...) {
 
     va_start(args, fmt);
 
-    while ((c = getchar()) != EOF && count < MAX_READ) {
+    while ((c = getchar()) != EOF && count < MAX_READ - 1) {
 
         if (!isdigit(c)) {
             break;
