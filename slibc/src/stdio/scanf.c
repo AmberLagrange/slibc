@@ -12,17 +12,13 @@ TODO: Properly implement scanf, currently doesn't use
 
 #define MAX_READ 256
 
-int scanf(const char *fmt, ...) {
+__attribute__((always_inline)) void scan_int(FILE *file, int *dest) {
 
-    va_list args;
     char buf[MAX_READ];
-    int *va_int_ptr;
-    int c;
+    char c;
     int count = 0;
 
-    va_start(args, fmt);
-
-    while ((c = getchar()) != EOF && count < MAX_READ - 1) {
+    while ((c = getc(file)) != EOF && count < MAX_READ - 1) {
 
         if (!isdigit(c)) {
             break;
@@ -31,12 +27,48 @@ int scanf(const char *fmt, ...) {
         buf[count++] = (char)c;
     }
 
-    buf[count] = '\0';
+    buf[count] = '\n';
+    *dest = atoi(buf);
+}
+
+/*
+    internal only, not technically part of ths spec
+*/
+int vfscanf(FILE *file, const char *fmt, va_list args) {
+
+    int *va_int_ptr;
+    (void)fmt;
 
     va_int_ptr = va_arg(args, int *);
-    *va_int_ptr = atoi(buf);
+    scan_int(file, va_int_ptr);
+
+    return 1;
+}
+
+int fscanf(FILE *file, const char *fmt, ...) {
+
+    va_list args;
+    int ret;
+
+    va_start(args, fmt);
+
+    ret = vfscanf(file, fmt, args);
 
     va_end(args);
 
-    return 1;
+    return ret;
+}
+
+int scanf(const char *fmt, ...) {
+
+    va_list args;
+    int ret;
+
+    va_start(args, fmt);
+
+    ret = vfscanf(stdin, fmt, args);
+
+    va_end(args);
+
+    return ret;
 }

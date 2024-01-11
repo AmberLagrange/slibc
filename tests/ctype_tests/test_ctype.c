@@ -19,7 +19,7 @@ void print_expected(int expected) {
 
 }
 
-int test(int c) {
+int test_char(int c) {
 
     int i;
     int val = 0;
@@ -53,7 +53,7 @@ int test_range(int start, int stop, int expected) {
     if (start == stop) {
         printf("%d:\n", start);
 
-        val = test(start);
+        val = test_char(start);
 
         if (val == expected) {
             printf("\t%sPassed!%s\n", GREEN, RESET);
@@ -69,7 +69,7 @@ int test_range(int start, int stop, int expected) {
 
         for (i = start; i <= stop; ++i) {
 
-            val = test(i);
+            val = test_char(i);
 
             if (val == expected) {
                 printf("\t%sPassed!%s\n", GREEN, RESET);
@@ -85,7 +85,7 @@ int test_range(int start, int stop, int expected) {
     return failed;
 }
 
-int tests(void) {
+int test_all_chars(void) {
 
     int failed = 0;
 
@@ -154,5 +154,5 @@ int tests(void) {
 
 int main(void) {
 
-    return tests();
+    return test_all_chars();
 }

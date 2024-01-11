@@ -34,6 +34,7 @@ int printf(const char *fmt, ...);
 int getc(FILE *file);
 int getchar(void);
 
+int fscanf(FILE *file, const char *fmt, ...);
 int scanf(const char *fmt, ...);
 
 #endif /* STDIO_H */
