@@ -34,7 +34,7 @@ __attribute__((always_inline)) void scan_int(FILE *file, int *dest) {
 /*
     internal only, not technically part of ths spec
 */
-int vfscanf(FILE *file, const char *fmt, va_list args) {
+int __vfscanf_internal(FILE *file, const char *fmt, va_list args) {
 
     int *va_int_ptr;
     char c;
@@ -69,7 +69,7 @@ int fscanf(FILE *file, const char *fmt, ...) {
 
     va_start(args, fmt);
 
-    ret = vfscanf(file, fmt, args);
+    ret = __vfscanf_internal(file, fmt, args);
 
     va_end(args);
 
@@ -83,7 +83,7 @@ int scanf(const char *fmt, ...) {
 
     va_start(args, fmt);
 
-    ret = vfscanf(stdin, fmt, args);
+    ret = __vfscanf_internal(stdin, fmt, args);
 
     va_end(args);
 
