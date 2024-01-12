@@ -27,7 +27,7 @@ __attribute__((always_inline)) void scan_int(FILE *file, int *dest) {
         buf[count++] = (char)c;
     }
 
-    buf[count] = '\n';
+    buf[count] = '\0';
     *dest = atoi(buf);
 }
 
@@ -37,10 +37,27 @@ __attribute__((always_inline)) void scan_int(FILE *file, int *dest) {
 int vfscanf(FILE *file, const char *fmt, va_list args) {
 
     int *va_int_ptr;
-    (void)fmt;
+    char c;
 
-    va_int_ptr = va_arg(args, int *);
-    scan_int(file, va_int_ptr);
+    while ((c = *fmt) != '\0') {
+        if (c == '%') {
+
+            ++fmt;
+
+            switch ((c = *fmt)) {
+            case 'd':
+                va_int_ptr = va_arg(args, int *);
+                scan_int(file, va_int_ptr);
+                break;
+
+            default:
+                fprintf(stderr, "Format %%%c not supported yet!\n", c);
+                abort();
+            }
+        }
+
+        ++fmt;
+    }
 
     return 1;
 }
