@@ -12,7 +12,7 @@ TODO: Properly implement scanf, currently doesn't use
 
 #define MAX_READ 256
 
-__attribute__((always_inline)) void scan_int(FILE *file, int *dest) {
+void scan_int(FILE *file, int *dest) {
 
     char buf[MAX_READ];
     char c;
