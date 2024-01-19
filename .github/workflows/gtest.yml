@@ -2,9 +2,13 @@ name: gtest
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - main
+      - github-actions
   pull_request:
-    branches: [ master ]
+    branches:
+      - main
+      - github-actions
 
 jobs:
   build:
