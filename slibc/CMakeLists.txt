@@ -56,7 +56,6 @@ target_include_directories(slibc PUBLIC
     ${CMAKE_SOURCE_DIR}/include
 )
 
-
 install(FILES ${CMAKE_BINARY_DIR}/slibc.pc
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
 
@@ -64,6 +63,13 @@ install(TARGETS slibc
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/slibc
     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/slibc)
 
-add_custom_target(uninstall xargs rm < install_manifest.txt)
+install(FILES ${CMAKE_SOURCE_DIR}/slibc.conf
+    DESTINATION /etc/ld.so.conf.d)
+
+install(CODE "execute_process(COMMAND ldconfig)")
+
+add_custom_target(uninstall
+    xargs rm < install_manifest.txt
+    COMMAND ldconfig)
 
 add_subdirectory(start_main)
