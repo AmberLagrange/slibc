@@ -1,6 +1,6 @@
 
 extern "C" {
-    #include "../slibc/include/ctype.h"
+    #include "../../slibc/include/ctype.h"
 }
 
 #include <gtest/gtest.h>
