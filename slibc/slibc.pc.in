@@ -10,3 +10,6 @@ Version: @PROJECT_VERSION@
 Requires:
 Libs: -nostdlib -L${libdir} -lslibc
 Cflags: -nostdinc -I${includedir}
+
+TLibs: -L${libdir} -lslibc
+TCFlags: -I${includedir}

@@ -1,8 +1,4 @@
-
-extern "C" {
-    #include "../../slibc/include/ctype.h"
-}
-
+#include <ctype.h>
 #include <gtest/gtest.h>
 
 #define PRINT_FLAG  (0x0001)
@@ -212,9 +208,4 @@ TEST(ctype, toupper) {
     for (i = 0; i < sizeof(lower_arr); ++i) {
         ASSERT_EQ(upper_arr[i], toupper(lower_arr[i]));
     }
-}
-
-int main(int argc, char **argv) {
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
 }
