@@ -23,13 +23,14 @@ $ make
 
 # Installing
 
-To install ``slibc``, you can run the ``install`` target
+To install ``slibc``, you can run the ``install`` target.
 
 ``` bash
 $ make install
 ```
 
-This will install the library and header files onto your system default is (``/usr/local/lib/slibc`` and ``/usr/local/include/slibc`` by default).
+This will install the library and header files onto your system (``/usr/local/lib/slibc`` and ``/usr/local/include/slibc`` by default).
+It will also install a ``slibc.conf`` into ``/etc/ld.so.conf.d`` and run ``ldconfig``. 
 
 To uninstall ``slibc``, you can either run
 ``` bash
@@ -84,8 +85,21 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -nostdlib")
 
 to not link with ``stdlib``. The ``execute_process`` is there in the event additional linker flags are added.
 
+# Tests
+
+In the ``tests`` directory there is a series of tests using the [GoogleTest](https://github.com/google/googletest) framework. Testing these yourself is done similary to building and executing the example program.
+
+```bash
+$ cd tests
+$ mkdir build
+$ cd build
+$ cmake -S .. -B .
+$ make
+$ ./tests
+```
+
 # Supported Platforms
 
-Currently slibc only supports ``Linux x86_64``, but plans to supports ``x86`` and maybe ``Aarch64`` potentially in the future.
+Currently slibc only supports ``Linux x86_64``, but plans to supports ``x86``, and potentially ``Aarch64`` in the future.
 
-Other OSes will probably not be supported.
+Other OSes will most likely not be supported.
