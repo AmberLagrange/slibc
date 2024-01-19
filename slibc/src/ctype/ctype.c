@@ -55,12 +55,10 @@ int isupper(int c) {
 #include <stdio.h>
 
 int isdigit(int c) {
-    printf("isdigit\n");
     return ctypes[c] & DIGIT_MASK;
 }
 
 int isxdigit(int c) {
-    printf("isxdigit\n");
     return ctypes[c] & XDIGIT_MASK;
 }
 

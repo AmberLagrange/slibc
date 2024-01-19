@@ -15,15 +15,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Install Clang
-      run: sudo apt-get install clang
-    - name: Configure
-      run: export CC=clang && export CXX=clang++
+      run: sudo apt-get install clang && export CC=clang && export CXX=clang++
     - name: Install GTest
       run: sudo apt-get install libgtest-dev && cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make && sudo cp lib/*.a /usr/lib && sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a && sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
+      env:
+        CC: clang
+        CXX: clang++
     - uses: actions/checkout@v1
     - name: Install slibc
       run: mkdir -p slibc/build && cd slibc/build && cmake -S .. -B . && sudo make install
+      env:
+        CC: clang
+        CXX: clang++
     - name: Make Tests
       run: mkdir -p tests/build && cd tests/build && cmake -S .. -B . && make
+      env:
+        CC: clang
+        CXX: clang++
     - name: Run Tests
       run: tests/build/tests
+      env:
+        CC: clang
+        CXX: clang++
