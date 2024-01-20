@@ -3,12 +3,10 @@ name: gtest
 on:
   push:
     branches:
-      - main
-      - github-actions
+      - master
   pull_request:
     branches:
-      - main
-      - github-actions
+      - master
 
 jobs:
   build:
