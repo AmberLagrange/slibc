@@ -1,8 +1,42 @@
 #ifndef STRING_H
 #define STRING_H
 
-unsigned long strlen(const char *str);
-void *memset(void *str, int c, unsigned long n);
-void *memcpy(void *dst, const void *src, unsigned long num);
+typedef unsigned long size_t;
+
+#define NULL ((void*)0)
+
+/* String Manip */
+
+char  *strcpy (char *dst, const char *src);
+char  *strncpy(char *dst, const char *src, size_t count);
+char  *strcat (char *dst, const char *src);
+char  *strncat(char *dst, const char *src, size_t count);
+size_t strxfrm(char *dst, const char *src, size_t count);
+
+/* String Exam */
+
+size_t strlen (const char *str);
+int    strcmp (const char *lhs, const char *rhs);
+int    strncmp(const char *lhs, const char *rhs, size_t count);
+int    strcoll(const char *lhs, const char *rhs);
+char  *strchar(const char *str, int ch);
+char  *strrchr(const char *str, int ch);
+size_t strspn (const char *dst, const char *src);
+size_t strcspn(const char *dst, const char *src);
+char  *strpbrk(const char *dst, const char *brk);
+char  *strstr (const char *str, const char *substr);
+char  *strtok (char *str,       const char *token);
+
+/* Char Array Manip */
+
+void *memchr (const void *ptr, int ch,          size_t count);
+int   memcmp (const void *lhs, const void *rhs, size_t count);
+void *memset (void *str,       int ch,          size_t count);
+void *memmove(void *dst,       const void *src, size_t count);
+void *memcpy (void *dst,       const void *src, size_t count);
+
+/* Misc */
+
+char *strerror(int errno);
 
 #endif /* STRING_H */

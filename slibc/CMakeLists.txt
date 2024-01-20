@@ -24,7 +24,10 @@ add_library(slibc SHARED
     src/stdlib/malloc.c
     src/stdlib/stdlib.c
 
-    src/string/string.c
+    src/string/char_array_manip.c
+    src/string/misc.c
+    src/string/string_exam.c
+    src/string/string_manip.c
 
     src/syscall/read.c
     src/syscall/syscall.c
