@@ -27,7 +27,8 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${SHATTER_LIBC_TLIBS}")
 enable_testing()
 
 add_executable(tests src/tests.cc
-                     src/ctype_tests.cc)
+                     src/ctype_tests.cc
+                     src/string_tests.cc)
 
 
 target_compile_options(tests PRIVATE ${SHATTER_LIBC_TCFLAGS} -Wall -Wextra -Wpedantic -Werror)
