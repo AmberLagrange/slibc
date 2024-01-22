@@ -1,7 +1,12 @@
 #ifndef STRING_H
 #define STRING_H
 
-typedef unsigned long size_t;
+#ifndef SIZE_T
+#define SIZE_T
+
+    typedef unsigned long size_t;
+
+#endif
 
 #define NULL ((void*)0)
 
