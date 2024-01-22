@@ -57,7 +57,7 @@ TEST(string, strcat) {
     ASSERT_EQ(strcmp(buf, hello_world), 0); 
 }
 
-TEST(string, strxfrm) {
+TEST(string, DISABLED_strxfrm) {
 
     FAIL();
 }
@@ -208,7 +208,7 @@ TEST(string, strstr) {
     ASSERT_EQ(strstr(str, missing), (char *)(NULL));
 }
 
-TEST(string, strtok) {
+TEST(string, DISABLED_strtok) {
     
     FAIL();
 }
@@ -292,4 +292,11 @@ TEST(string, memcpy) {
     memcpy(buf_1, buf_2, size);
     ASSERT_EQ(memcmp(buf_1, buf_2, size), 0);
     
+}
+
+/* Misc Tests */
+
+TEST(string, DISABLED_strerror) {
+
+    FAIL();
 }
