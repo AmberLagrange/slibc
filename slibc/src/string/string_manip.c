@@ -58,6 +58,10 @@ char *strncat(char *dst, const char *src, size_t count) {
     return dst;
 }
 
+/*
+TODO: Implement Locale
+*/
+
 size_t strxfrm(char *dst, const char *src, size_t count) {
 
     UNUSED(dst);

@@ -19,11 +19,11 @@ size_t strlen (const char *str);
 int    strcmp (const char *lhs, const char *rhs);
 int    strncmp(const char *lhs, const char *rhs, size_t count);
 int    strcoll(const char *lhs, const char *rhs);
-char  *strchar(const char *str, int ch);
+char  *strchr (const char *str, int ch);
 char  *strrchr(const char *str, int ch);
 size_t strspn (const char *dst, const char *src);
 size_t strcspn(const char *dst, const char *src);
-char  *strpbrk(const char *dst, const char *brk);
+char  *strpbrk(const char *dst, const char *set);
 char  *strstr (const char *str, const char *substr);
 char  *strtok (char *str,       const char *token);
 
