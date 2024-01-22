@@ -59,7 +59,7 @@ TEST(string, strcat) {
 
 TEST(string, strxfrm) {
 
-    /* FAIL(); */
+    FAIL();
 }
 
 /*
@@ -210,7 +210,7 @@ TEST(string, strstr) {
 
 TEST(string, strtok) {
     
-    /* FAIL(); */
+    FAIL();
 }
 
 /*
