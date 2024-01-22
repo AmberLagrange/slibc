@@ -4,12 +4,27 @@
 
 char *strcpy(char *dst, const char *src) {
 
-    return memcpy(dst, src, strlen(src));
+    return memcpy(dst, src, strlen(src) + 1); /* Copy the NULL terminator */
 }
 
 char *strncpy(char *dst, const char *src, size_t count) {
 
-    return memcpy(dst, src, count);
+    size_t len = strlen(src);
+    char * orig_dst = memcpy(dst, src, count);
+
+    if (count < len) {
+        return orig_dst;
+    }
+
+    count -= len;
+    dst += len;
+
+    while (count > 0) {
+        *dst = '\0';
+        --count;
+    }
+
+    return orig_dst;
 }
 
 char *strcat(char *dst, const char *src) {
