@@ -2,21 +2,20 @@
 
 #include <stdlib.h>
 
-#define UNUSED(x) ((void)x);
-
 void *memchr(const void *ptr, int ch, size_t count) {
 
     unsigned i;
-    unsigned char *arr = (unsigned char*)ptr;
+    unsigned char *arr = NULL;
 
     for (i = 0; i < count; ++i) {
-        if (arr[i] == (unsigned char)ch) {
-            return (void*)arr;
+
+        if (((unsigned char *)(ptr))[i] == (unsigned char)(ch)) {
+
+            arr = ((unsigned char *)(ptr) + i);
         }
-        arr++;
     }
 
-    return NULL;
+    return (void *)(arr);
 }
 
 int memcmp(const void *lhs, const void *rhs, size_t count) {
@@ -26,10 +25,12 @@ int memcmp(const void *lhs, const void *rhs, size_t count) {
     for (i = 0; i < count; ++i) {
 
         if (((char*)lhs)[i] < ((char*)rhs)[i]) {
+
             return -1;
         }
 
         if (((char*)lhs)[i] > ((char*)rhs)[i]) {
+
             return 1;
         }
     }
@@ -43,11 +44,13 @@ void *memset(void *str, int c, size_t count) {
     char *addr = str;
 
     for (i = 0; i < count; ++i) {
+
         addr[i] = c;
     }
 
     return str;
 }
+
 
 void *memmove(void *dst, const void *src, size_t count) {
 
@@ -64,7 +67,8 @@ void *memcpy(void *dst, const void *src, size_t count) {
     size_t i;
 
     for (i = 0; i < count; ++i) {
-        ((char *)dst)[i] = ((char *)src)[i];
+
+        ((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
     }
     
     return dst;

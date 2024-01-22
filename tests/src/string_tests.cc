@@ -213,6 +213,43 @@ TEST(string, strtok) {
     /* FAIL(); */
 }
 
+/*
+Char Array Manipulation Tests
+*/
+
+TEST(string, memchr) {
+
+    char buf[16] = {
+        '0', '1', '2', '3',
+        '4', '5', '6', '7',
+        '8', '9', 'a', 'b',
+        'c', 'd', 'e', 'f'
+    };
+
+    unsigned size = sizeof(buf) / sizeof(buf[0]);
+
+    ASSERT_EQ(memchr(buf, '0', size    ), (char *)(buf + 0));
+    ASSERT_EQ(memchr(buf, '8', size    ), (char *)(buf + 8));
+    ASSERT_EQ(memchr(buf, 'f', size    ), (char *)(buf + 15));
+    ASSERT_EQ(memchr(buf, 'f', size - 1), (char *)(NULL));
+    ASSERT_EQ(memchr(buf, ' ', size    ), (char *)(NULL));
+}
+
+TEST(string, memcmp) {
+
+    char buf_1[4] = { 0, 1, 2, 3 };
+    char buf_2[4] = { 0, 1, 2, 3 };
+    char buf_3[4] = { 0, 0, 0, 0 };
+
+    size_t size = sizeof(buf_1) / sizeof(buf_1[0]);
+
+    ASSERT_EQ(memcmp(buf_1, buf_2, size), 0);
+    ASSERT_GT(memcmp(buf_1, buf_3, size), 0);
+    ASSERT_LT(memcmp(buf_3, buf_2, size), 0);
+
+    ASSERT_EQ(memcmp(buf_1, buf_3, 1), 0);
+}
+
 TEST(string, memset) {
 
     unsigned i;
@@ -232,23 +269,27 @@ TEST(string, memset) {
 
 }
 
+TEST(string, memmove) {
+
+    char buf_1[4] = { 0, 1, 2, 3 };
+    char buf_2[4] = { 1, 2, 3, 3 };
+
+    size_t size = sizeof(buf_1) / sizeof(buf_1[0]);
+
+    ASSERT_NE(memcmp(buf_1, buf_2, size), 0);
+    memmove(buf_1, buf_1 + 1, size - 1);
+    ASSERT_EQ(memcmp(buf_1, buf_2, size), 0);
+}
+
 TEST(string, memcpy) {
-    
-    unsigned i;
 
-    char src[8] = { 0xd, 0xe, 0xa, 0xd, 0xb, 0xe, 0xe, 0xf };
-    char dst[8] = { 0 };
+    char buf_1[8] = { 0 };
+    char buf_2[8] = { 0xd, 0xe, 0xa, 0xd, 0xb, 0xe, 0xe, 0xf };
 
-    unsigned size = sizeof(src) / sizeof(src[0]);
+    size_t size = sizeof(buf_1) / sizeof(buf_1[0]);
 
-    for (i = 0; i < size; ++i) {
-        ASSERT_EQ(dst[i], 0);
-    }
-
-    memcpy(dst, src, size);
-
-    for (i = 0; i < size; ++i) {
-        ASSERT_EQ(dst[i], src[i]);
-    }
+    ASSERT_NE(memcmp(buf_1, buf_2, size), 0);
+    memcpy(buf_1, buf_2, size);
+    ASSERT_EQ(memcmp(buf_1, buf_2, size), 0);
     
 }
