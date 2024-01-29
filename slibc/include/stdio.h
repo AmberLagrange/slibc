@@ -18,6 +18,8 @@
     Macros
 */
 
+#define NULL            ((void*)0)
+
 #define EOF             (-1)
 #define FOPEN_MAX       256
 #define FILENAME_MAX    256

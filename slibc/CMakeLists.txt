@@ -13,12 +13,15 @@ add_library(slibc SHARED
 
     src/signal/signal.c
 
-    src/stdio/getc.c
-    src/stdio/printf.c
+    src/stdio/direct_io.c
+    src/stdio/error_handling.c
+    src/stdio/file_access.c
+    src/stdio/file_operations.c
+    src/stdio/file_positioning.c
+    src/stdio/formatted_io.c
     src/stdio/put_internal.c
-    src/stdio/put.c
-    src/stdio/scanf.c
     src/stdio/stdio.c
+    src/stdio/unformatted_io.c
 
     src/stdlib/convert.c
     src/stdlib/malloc.c
