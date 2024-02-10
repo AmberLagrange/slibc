@@ -44,6 +44,8 @@ or manually uninstall the files described in ``install_manifest.txt``, which is 
 
 ``make install`` and ``make uninstall`` may require elevated permissions to run correctly.
 
+You may also need to set ``$PKG_CONFIG_PATH`` to the install directory of ``libslibc.pc`` and ``libslibc_start_main.pc`` (by default ``/usr/local/share/pkgconfig``).
+
 # Running
 
 There is an example program that can also be compiled and ran.
