@@ -73,9 +73,9 @@ size_t fwrite(const void *buffer, size_t size, size_t count, FILE *file);
     Unformatted input/output
 */
 
-int   fgetc  (FILE      *file);
-int   getc   (FILE      *file);
-char *fgets  (char      *str,  int   count, FILE *file);
+int   fgetc(                      FILE *file);
+int   getc (                      FILE *file);
+char *fgets(char *str, int count, FILE *file);
 
 int   fputc  (int         ch,  FILE *file);
 int   putc   (int         ch,  FILE *file);
@@ -87,7 +87,7 @@ char *gets   (char *str);
 int   putchar(int ch);
 int   puts   (const char *str);
 
-int   ungetc (int ch,          FILE *file);
+int   ungetc (int ch, FILE *file);
 
 /*
     Formatted input/output

@@ -10,6 +10,10 @@
 
 #define NULL ((void*)0)
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* String Manip */
 
 char  *strcpy (char *dst, const char *src);
@@ -43,5 +47,9 @@ void *memcpy (void *dst,       const void *src, size_t count);
 /* Misc */
 
 char *strerror(int errno);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* STRING_H */

@@ -188,6 +188,7 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
 
         if (c == '%') {
 
+            process_format:
             ++fmt;
 
             switch ((c = *fmt)) {
@@ -241,8 +242,17 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
                 count += __fputi_internal(va_int, 16, file);
                 break;
 
-            case 'l':
-                fputs("Format l not supported.\n", stderr);
+            /*
+            REALLY HACKY PLEASE DON'T ACTUALLY LEAVE THIS HERE
+            THIS IS JUST FOR GTEST FOR NOW
+            */
+            case '2':
+                goto process_format;
+
+            default:
+                fputs("Unimplemented format '", stderr);
+                fputc(c, stderr);
+                fputs("'. Will hopefully implement it later!\n", stderr);
                 abort();
             }
         } else {

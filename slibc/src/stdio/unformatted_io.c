@@ -7,13 +7,6 @@
 
 int fgetc(FILE *file) {
 
-    UNUSED(file);
-
-    return 0;
-}
-
-int getc(FILE *file) {
-
     int count;
     unsigned char c;
 
@@ -24,7 +17,11 @@ int getc(FILE *file) {
     }
 
     return (int)c;
+
+    return 0;
 }
+
+int getc(FILE *file) __attribute__((weak, alias("fgetc")));
 
 char *fgets(char *str, int count, FILE *file) {
 
@@ -47,15 +44,18 @@ int fputc(int c, FILE *file) {
 }
 
 int putc(int c, FILE *file) {
+
     return fputc(c, file);
 }
 
 int fputs(const char *str, FILE *file) {
+
     return write(file->fd, str, strlen(str));
 }
 
 
 int getchar(void) {
+
     return getc(stdin);
 }
 
@@ -67,6 +67,7 @@ char *gets(char *str) {
 }
 
 int putchar(int c) {
+
     return putc(c, stdout);
 }
 
