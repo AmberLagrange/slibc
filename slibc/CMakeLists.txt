@@ -35,6 +35,8 @@ add_library(slibc SHARED
     src/syscall/read.c
     src/syscall/syscall.c
     src/syscall/write.c
+
+    src/utils/stack_chk_fail.c
 )
 
 set(SLIBC_HEADERS
