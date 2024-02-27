@@ -3,7 +3,12 @@
 
 int main(void) {
 
-    printf("%c\n", tolower('C'));
+    int n = 123;
+
+    printf("Hello, %s\n", "World!");
+    printf("This should have padding (it doesn't): %5d\n", 5);
+    printf("123456789%n\n", &n);
+    printf("Wrote %d characters!\n", n);
 
     return 0;
 }

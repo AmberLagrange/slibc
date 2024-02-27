@@ -2,27 +2,16 @@
 
 #include <stdlib/convert.h>
 
-/*
-int __fputl_internal(int l, int base, FILE *file) {
+#include <signal.h>
+
+#define UNUSED(x) ((void)(x))
+
+int __fputi_internal(int val, int base, FILE *file, int is_unsigned) {
 
     int ret;
 
     char buf[MAX_INT_LENGTH] = {0};
-    char *str = __ltoa__internal(l, buf, MAX_INT_LENGTH, base, 0);
-
-    ret = fputs(str, file);
-    if (ret < 0) return ret;
-
-    return ret;
-}*/
-
-int __fputlu_internal(long l, int base, FILE *file) {
-
-    int ret;
-
-
-    char buf[MAX_INT_LENGTH] = {0};
-    char *str = __ltoa__internal(l, buf, MAX_INT_LENGTH, base, 1);
+    char *str = __itoa__internal(val, buf, MAX_INT_LENGTH, base, is_unsigned);
 
     ret = fputs(str, file);
     if (ret < 0) return ret;
@@ -30,12 +19,13 @@ int __fputlu_internal(long l, int base, FILE *file) {
     return ret;
 }
 
-int __fputi_internal(int i, int base, FILE *file) {
+int __fputl_internal(long val, int base, FILE *file, int is_unsigned) {
 
     int ret;
 
+
     char buf[MAX_INT_LENGTH] = {0};
-    char *str = __itoa__internal(i, buf, MAX_INT_LENGTH, base, 0);
+    char *str = __ltoa__internal(val, buf, MAX_INT_LENGTH, base, is_unsigned);
 
     ret = fputs(str, file);
     if (ret < 0) return ret;
@@ -43,15 +33,18 @@ int __fputi_internal(int i, int base, FILE *file) {
     return ret;
 }
 
-int __fputu_internal(unsigned u, int base, FILE *file) {
+int __fputf_internal(double val, FILE *file) {
 
-    int ret;
+    UNUSED(val);
+    UNUSED(file);
 
-    char buf[MAX_INT_LENGTH] = {0};
-    char *str = __itoa__internal(u, buf, MAX_INT_LENGTH, base, 1);
+    return -1;
+}
 
-    ret = fputs(str, file);
-    if (ret < 0) return ret;
+int __fputlf_internal(long double val, FILE *file) {
 
-    return ret;
+    UNUSED(val);
+    UNUSED(file);
+
+    return -1;
 }
