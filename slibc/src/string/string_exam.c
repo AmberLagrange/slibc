@@ -1,16 +1,16 @@
 #include <string.h>
 
-#define UNUSED(x) ((void)x)
+#define UNUSED(x) ((void)(x))
 
 size_t strlen(const char *str) {
     
-    size_t i = 0;
+    size_t len = 0;
 
-    while (str[i]) {
-        ++i;
+    while (str[len]) {
+        ++len;
     }
 
-    return i;
+    return len;
 }
 
 int strcmp(const char *lhs, const char *rhs) {
@@ -60,10 +60,10 @@ int strcoll(const char *lhs, const char *rhs) {
     return strcmp(lhs, rhs);
 }
 
-char *strchr(const char *str, int ch) {
+char *strchr(const char *str, int character) {
 
     while(*str) {
-        if (*str == (char)ch) {
+        if (*str == (char)character) {
             return (char*)str;
         }
 
@@ -73,12 +73,12 @@ char *strchr(const char *str, int ch) {
     return NULL;
 }
 
-char *strrchr(const char *str, int ch) {
+char *strrchr(const char *str, int character) {
 
     char *last = NULL;
 
     while(*str) {
-        if (*str == (char)ch) {
+        if (*str == (char)character) {
             last = (char*)str;
         }
 
@@ -90,8 +90,8 @@ char *strrchr(const char *str, int ch) {
 
 size_t strspn(const char *dst, const char *src) {
 
-    unsigned i;
-    int contains;
+    size_t index = 0;
+    int contains = 0;
 
     size_t count = 0;
     size_t src_len = strlen(src);
@@ -100,9 +100,9 @@ size_t strspn(const char *dst, const char *src) {
         
         contains = 0;
 
-        for (i = 0; i < src_len; ++i) {
+        for (index = 0; index < src_len; ++index) {
 
-            if (*dst == src[i]) {
+            if (*dst == src[index]) {
                 ++count;
                 contains = 1;
                 break;
@@ -121,8 +121,8 @@ size_t strspn(const char *dst, const char *src) {
 
 size_t strcspn(const char *dst, const char *src) {
 
-    unsigned i;
-    int contains;
+    size_t index = 0;
+    int contains = 0;
 
     size_t count = 0;
     size_t src_len = strlen(src);
@@ -131,9 +131,9 @@ size_t strcspn(const char *dst, const char *src) {
         
         contains = 0;
 
-        for (i = 0; i < src_len; ++i) {
+        for (index = 0; index < src_len; ++index) {
 
-            if (*dst == src[i]) {
+            if (*dst == src[index]) {
                 contains = 1;
                 break;
             }
@@ -152,16 +152,16 @@ size_t strcspn(const char *dst, const char *src) {
 
 char *strpbrk(const char *dst, const char *set) {
 
-    unsigned i;
+    size_t index = 0;
 
     char *loc = NULL;
     size_t set_len = strlen(set);
 
     while (*dst) {
 
-        for (i = 0; i < set_len; ++i) {
+        for (index = 0; index < set_len; ++index) {
 
-            if (*dst == set[i]) {
+            if (*dst == set[index]) {
                 loc = (char *)(dst);
                 break;
             }
@@ -179,8 +179,8 @@ char *strpbrk(const char *dst, const char *set) {
 
 char *strstr(const char *str, const char *substr) {
 
-    unsigned i;
-    int found;
+    size_t index = 0;
+    int found    = 1;
 
     char *loc = NULL;
     size_t substr_len = strlen(substr);
@@ -189,9 +189,9 @@ char *strstr(const char *str, const char *substr) {
 
         found = 1;
 
-        for (i = 0; i < substr_len; ++i) {
+        for (index = 0; index < substr_len; ++index) {
 
-            if (str[i] != substr[i]) {
+            if (str[index] != substr[index]) {
 
                 found = 0;
                 break;

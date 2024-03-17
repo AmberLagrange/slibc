@@ -4,8 +4,5 @@
 
 int munmap(void *addr, unsigned long len) {
 
-    int ret;
-    ret = __syscall_2(SYS_MUNMAP, (reg64)addr, (reg64)len);
-
-    return ret;
+    return (int)__syscall_2(SYS_MUNMAP, (reg64)addr, (reg64)len);
 }

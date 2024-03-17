@@ -1,6 +1,6 @@
 #include <string.h>
 
-#define UNUSED(x) ((void)x)
+#define UNUSED(x) ((void)(x))
 
 char *strcpy(char *dst, const char *src) {
 
@@ -29,31 +29,31 @@ char *strncpy(char *dst, const char *src, size_t count) {
 
 char *strcat(char *dst, const char *src) {
 
-    unsigned i;
+    size_t index = 0;
     unsigned dst_len = strlen(dst);
     unsigned src_len = strlen(src);
 
-    for (i = 0; i < src_len; ++i) {
-        dst[dst_len + i] = src[i];
+    for (; index < src_len; ++index) {
+        dst[dst_len + index] = src[index];
     }
 
-    dst[dst_len + i] = '\0';
+    dst[dst_len + index] = '\0';
 
     return dst;
 }
 
 char *strncat(char *dst, const char *src, size_t count) {
 
-    unsigned i;
+    size_t index = 0;
     unsigned dst_len = strlen(dst);
     unsigned src_len = strlen(src);
     src_len = (src_len < count) ? src_len : count;
 
-    for (i = 0; i < src_len; ++i) {
-        dst[dst_len + i] = src[i];
+    for (; index < src_len; ++index) {
+        dst[dst_len + index] = src[index];
     }
 
-    dst[dst_len + i] = '\0';
+    dst[dst_len + index] = '\0';
 
     return dst;
 }
@@ -64,9 +64,6 @@ TODO: Implement Locale
 
 size_t strxfrm(char *dst, const char *src, size_t count) {
 
-    UNUSED(dst);
-    UNUSED(src);
-    UNUSED(count);
-
+    strncpy(dst, src, count);
     return 0;
 }

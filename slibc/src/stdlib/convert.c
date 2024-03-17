@@ -5,38 +5,38 @@
 static const char NUMERALS[16] = "0123456789abcdef";
 
 /* TODO: Implement unused */
-#define UNUSED(x) (void)(x)
+#define UNUSED(x) ((void)(x))
 
-char *__itoa__internal(int i, char *buf, int len, int base, int is_unsigned) {
+char *__itoa__internal(int int_val, char *buf, size_t len, enum __radix_e radix, int is_unsigned) { /* NOLINT (bugprone-easily-swappable-parameters)*/
 
-    unsigned u;
+    unsigned unsigned_val = 0;
     int is_negative = 0;
     char *str = &(buf[len - 1]);
     buf[len] = '\0';
 
-    if (i == 0) {
+    if (int_val == 0) {
         *str = '0';
         return str;
     }
 
     if (is_unsigned) {
-        u = (unsigned)i;
+        unsigned_val = (unsigned)int_val;
 
-        while (u) {
+        while (unsigned_val) {
             --str;
-            *str = NUMERALS[u % base];
-            u /= base;
+            *str = NUMERALS[unsigned_val % radix];
+            unsigned_val /= radix;
         }
     } else {
-        if (i < 0) {
+        if (int_val < 0) {
             is_negative = 1;
-            i = -i;
+            int_val = -int_val;
         }
 
-        while (i) {
+        while (int_val) {
             --str;
-            *str = NUMERALS[i % base];
-            i /= base;
+            *str = NUMERALS[int_val % radix];
+            int_val /= (int)radix;
         }
 
         if (is_negative) {
@@ -48,37 +48,37 @@ char *__itoa__internal(int i, char *buf, int len, int base, int is_unsigned) {
     return str;
 }
 
-char *__ltoa__internal(long l, char *buf, int len, int base, int is_unsigned) {
+char *__ltoa__internal(long long_val, char *buf, size_t len, enum __radix_e radix, int is_unsigned) { /* NOLINT (bugprone-easily-swappable-parameters)*/
 
-    unsigned long lu;
+    unsigned long long_unsigned_val = 0;
     int is_negative = 0;
     char *str = &(buf[len - 1]);
     buf[len] = '\0';
 
-    if (l == 0) {
+    if (long_val == 0) {
         *str = '0';
         return str;
     }
 
     if (is_unsigned) {
 
-        lu = (unsigned long)l;
+        long_unsigned_val = (unsigned long)long_val;
 
-        while (lu) {
+        while (long_unsigned_val) {
             --str;
-            *str = NUMERALS[lu % base];
-            lu /= base;
+            *str = NUMERALS[long_unsigned_val % radix];
+            long_unsigned_val /= radix;
         }
     } else {
-        if (l < 0) {
+        if (long_val < 0) {
             is_negative = 1;
-            l = -l;
+            long_val = -long_val;
         }
 
-        while (l) {
+        while (long_val) {
             --str;
-            *str = NUMERALS[l % base];
-            l /= base;
+            *str = NUMERALS[long_val % radix];
+            long_val /= radix;
         }
 
         if (is_negative) {
@@ -93,21 +93,18 @@ char *__ltoa__internal(long l, char *buf, int len, int base, int is_unsigned) {
 double atof(const char *str) {
     UNUSED(str);
 
-    return 1234.5678;
+    return 0;
 }
 
 int atoi(const char *str) {
 
-    int num;
-    int len;
-    int i;
+    int num = 0;
+    size_t len = strlen(str);
+    size_t index = 0;
 
-    num = 0;
-    len = strlen(str);
-
-    for (i = 0; i < len; ++i) {
-        num *= 10;
-        num += str[i] - '0';
+    for (; index < len; ++index) {
+        num *= DEC_RADIX;
+        num += str[index] - '0';
     }
 
     return num;
@@ -116,28 +113,31 @@ int atoi(const char *str) {
 long atol(const char *str) {
     UNUSED(str);
     
-    return 0x1234;
+    return 0;
 }
 
-long strtol(const char *str, char **str_end, int base) {
-    UNUSED(str);
+/*
+TODO: Properly implement strtol
+*/
+
+long strtol(const char *str, char **str_end, int radix) {
     UNUSED(str_end);
-    UNUSED(base);
+    UNUSED(radix);
     
-    return 0x1234;
+    return atoi(str); /* NOLINT */
 }
 
-unsigned long strtoul(const char *str, char **str_end, int base) {
+unsigned long strtoul(const char *str, char **str_end, int radix) {
     UNUSED(str);
     UNUSED(str_end);
-    UNUSED(base);
+    UNUSED(radix);
     
-    return 0x1234;
+    return 0;
 }
 
 double strtod(const char *str, char **str_end) {
     UNUSED(str);
     UNUSED(str_end);
     
-    return 1234.5678;
+    return 0;
 }

@@ -28,19 +28,19 @@ size_t strlen (const char *str);
 int    strcmp (const char *lhs, const char *rhs);
 int    strncmp(const char *lhs, const char *rhs, size_t count);
 int    strcoll(const char *lhs, const char *rhs);
-char  *strchr (const char *str, int ch);
-char  *strrchr(const char *str, int ch);
+char  *strchr (const char *str, int character);
+char  *strrchr(const char *str, int character);
 size_t strspn (const char *dst, const char *src);
 size_t strcspn(const char *dst, const char *src);
 char  *strpbrk(const char *dst, const char *set);
 char  *strstr (const char *str, const char *substr);
-char  *strtok (char *str,       const char *token);
+char  *strtok (      char *str, const char *token);
 
 /* Char Array Manip */
 
-void *memchr (const void *ptr, int ch,          size_t count);
+void *memchr (const void *ptr, int character,   size_t count);
 int   memcmp (const void *lhs, const void *rhs, size_t count);
-void *memset (void *str,       int ch,          size_t count);
+void *memset (void *str,       int character,   size_t count);
 void *memmove(void *dst,       const void *src, size_t count);
 void *memcpy (void *dst,       const void *src, size_t count);
 

@@ -14,6 +14,7 @@ set_target_properties(slibc_start_main PROPERTIES
     C_EXTENSIONS OFF
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
+    C_CLANG_TIDY "${CMAKE_C_CLANG_TIDY}"
 )
 
 target_compile_options(slibc_start_main PRIVATE -Wall -Wextra -Wpedantic -Werror -nostdinc)

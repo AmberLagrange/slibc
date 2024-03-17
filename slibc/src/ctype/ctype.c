@@ -1,17 +1,24 @@
 #include <ctype.h>
 
-#define PRINT_MASK  (0x0001)
-#define GRAPH_MASK  (0x0002)
-#define PUNCT_MASK  (0x0004)
-#define ALNUM_MASK  (0x0008)
-#define XDIGIT_MASK (0x0010)
-#define DIGIT_MASK  (0x0020)
-#define ALPHA_MASK  (0x0040)
-#define LOWER_MASK  (0x0080)
-#define UPPER_MASK  (0x0100)
-#define SPACE_MASK  (0x0200)
-#define BLANK_MASK  (0x0400)
-#define CNTRL_MASK  (0x0800)
+enum __ctype_flags_e {      /* NOLINT(bugprone-reserved-identifier) */
+    PRINT_FLAG  = 0x0001,
+    GRAPH_FLAG  = 0x0002,
+    PUNCT_FLAG  = 0x0004,
+    ALNUM_FLAG  = 0x0008,
+    XDIGIT_FLAG = 0x0010,
+    DIGIT_FLAG  = 0x0020,
+    ALPHA_FLAG  = 0x0040,
+    LOWER_FLAG  = 0x0080,
+    UPPER_FLAG  = 0x0100,
+    SPACE_FLAG  = 0x0200,
+    BLANK_FLAG  = 0x0400,
+    CNTRL_FLAG  = 0x0800
+};
+
+enum __ctype_masks_e { /* NOLINT(bugprone-reserved-identifier) */
+    LOWER_MASK = 0x20,
+    UPPER_MASK = 0xDF
+};
 
 static const int ctypes[128] = {
     0x0800, 0x0800, 0x0800, 0x0800, 0x0800, 0x0800, 0x0800, 0x0800, /* 0x00 - 0x07 */
@@ -32,60 +39,58 @@ static const int ctypes[128] = {
     0x00cb, 0x00cb, 0x00cb, 0x0007, 0x0007, 0x0007, 0x0007, 0x0800  /* 0x78 - 0x7f */
 };
 
-int isalnum(int c) {
-    return ctypes[c] & ALNUM_MASK;
+int isalnum(int character) {
+    return ctypes[character] & ALNUM_FLAG;
 }
 
-int isalpha(int c) {
-    return ctypes[c] & ALPHA_MASK;
+int isalpha(int character) {
+    return ctypes[character] & ALPHA_FLAG;
 }
 
-int isblank(int c) {
-    return ctypes[c] & BLANK_MASK;
+int isblank(int character) {
+    return ctypes[character] & BLANK_FLAG;
 }
 
-int islower(int c) {
-    return ctypes[c] & LOWER_MASK;
+int islower(int character) {
+    return ctypes[character] & LOWER_FLAG;
 }
 
-int isupper(int c) {
-    return ctypes[c] & UPPER_MASK;
+int isupper(int character) {
+    return ctypes[character] & UPPER_FLAG;
 }
 
-#include <stdio.h>
-
-int isdigit(int c) {
-    return ctypes[c] & DIGIT_MASK;
+int isdigit(int character) {
+    return ctypes[character] & DIGIT_FLAG;
 }
 
-int isxdigit(int c) {
-    return ctypes[c] & XDIGIT_MASK;
+int isxdigit(int character) {
+    return ctypes[character] & XDIGIT_FLAG;
 }
 
-int iscntrl(int c) {
-    return ctypes[c] & CNTRL_MASK;
+int iscntrl(int character) {
+    return ctypes[character] & CNTRL_FLAG;
 }
 
-int isgraph(int c) {
-    return ctypes[c] & GRAPH_MASK;
+int isgraph(int character) {
+    return ctypes[character] & GRAPH_FLAG;
 }
 
-int isspace(int c) {
-    return ctypes[c] & SPACE_MASK;
+int isspace(int character) {
+    return ctypes[character] & SPACE_FLAG;
 }
 
-int isprint(int c) {
-    return ctypes[c] & PRINT_MASK;
+int isprint(int character) {
+    return ctypes[character] & PRINT_FLAG;
 }
 
-int ispunct(int c) {
-    return ctypes[c] & PUNCT_MASK;
+int ispunct(int character) {
+    return ctypes[character] & PUNCT_FLAG;
 }
 
-int toupper(int c) {
-    return islower(c) ? c - 32 : c;
+int toupper(int character) {
+    return isalpha(character) ? character & UPPER_MASK : character;
 }
 
-int tolower(int c) {
-    return isupper(c) ? c + 32: c;
+int tolower(int character) {
+    return isalpha(character) ? character | LOWER_MASK : character;
 }

@@ -3,12 +3,14 @@
 #include <mman/mman.h>
 #include <string.h>
 
-#define MAX_ALIGNMENT 16
+enum __alignment_e {   /* NOLINT(bugprone-reserved-identifier) */
+    MAX_ALIGNMENT = 16
+};
 
 void *malloc(unsigned long size) {
 
-    unsigned char *ptr;
-    unsigned long new_size;
+    unsigned char *ptr = NULL;
+    unsigned long new_size = 0;
 
     if (!size) {
         return NULL;
@@ -24,14 +26,12 @@ void *malloc(unsigned long size) {
 
 void *realloc(void *ptr, unsigned long size) {
 
-    unsigned long old_size;
-    void *new_ptr;
+    unsigned long old_size = *((unsigned char *)ptr - MAX_ALIGNMENT);
+    void *new_ptr = malloc(size);
 
-    old_size = *((unsigned char *)ptr - MAX_ALIGNMENT);
-
-    new_ptr = malloc(size);
-
-    if (!new_ptr) return NULL;
+    if (!new_ptr) {
+        return NULL;
+    }
 
     if (size < old_size) {
         memcpy(new_ptr, ptr, size);
@@ -46,7 +46,7 @@ void *realloc(void *ptr, unsigned long size) {
 
 void free(void *ptr) {
 
-    unsigned long size;
+    size_t size = 0;
 
     /* Freeing NULL shouldn't do anything */
     if (!ptr) {
@@ -55,6 +55,4 @@ void free(void *ptr) {
 
     size = *((unsigned char *)ptr - MAX_ALIGNMENT); /* Get the size stored before the pointer */
     munmap(ptr, size);
-
-    return;
 }

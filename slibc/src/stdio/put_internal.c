@@ -1,34 +1,35 @@
 #include <stdio/put_internal.h>
 
-#include <stdlib/convert.h>
-
 #include <signal.h>
 
 #define UNUSED(x) ((void)(x))
 
-int __fputi_internal(int val, int base, FILE *file, int is_unsigned) {
+int __fputi_internal(int val, enum __radix_e radix, FILE *file, int is_unsigned) {
 
-    int ret;
+    int ret = 0;
 
     char buf[MAX_INT_LENGTH] = {0};
-    char *str = __itoa__internal(val, buf, MAX_INT_LENGTH, base, is_unsigned);
+    char *str = __itoa__internal(val, buf, MAX_INT_LENGTH, radix, is_unsigned);
 
     ret = fputs(str, file);
-    if (ret < 0) return ret;
+    if (ret < 0) {
+        return ret;
+    }
 
     return ret;
 }
 
-int __fputl_internal(long val, int base, FILE *file, int is_unsigned) {
+int __fputl_internal(long val, enum __radix_e radix, FILE *file, int is_unsigned) {
 
-    int ret;
-
+    int ret = 0;
 
     char buf[MAX_INT_LENGTH] = {0};
-    char *str = __ltoa__internal(val, buf, MAX_INT_LENGTH, base, is_unsigned);
+    char *str = __ltoa__internal(val, buf, MAX_INT_LENGTH, radix, is_unsigned);
 
     ret = fputs(str, file);
-    if (ret < 0) return ret;
+    if (ret < 0) {
+        return ret;
+    }
 
     return ret;
 }

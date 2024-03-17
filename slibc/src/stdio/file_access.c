@@ -2,7 +2,7 @@
 
 #define UNUSED(x) ((void)(x))
 
-FILE *fopen(const char *filename, const char *mode) {
+FILE *fopen(const char *filename, const char *mode) { /* NOLINT(bugprone-easily-swappable-parameters) */
 
     UNUSED(filename);
     UNUSED(mode);
@@ -10,7 +10,7 @@ FILE *fopen(const char *filename, const char *mode) {
     return NULL;
 }
 
-FILE *freopen(const char *filename, const char *mode, FILE *file) {
+FILE *freopen(const char *filename, const char *mode, FILE *file) { /* NOLINT(bugprone-easily-swappable-parameters) */
 
     UNUSED(filename);
     UNUSED(mode);
@@ -34,13 +34,19 @@ int fflush(FILE *file) {
     return 0;
 }
 
-void setbuf(FILE *file, char *buffer) {
+/*
+TODO: Remove readability-non-const-parameter
+*/
+void setbuf(FILE *file, char *buffer) { /* NOLINT(readability-non-const-parameter) */
 
     UNUSED(file);
     UNUSED(buffer);
 }
 
-int setvbuf(FILE *file, char *buffer, int mode, size_t size) {
+/*
+TODO: Remove readability-non-const-parameter
+*/
+int setvbuf(FILE *file, char *buffer, int mode, size_t size) { /* NOLINT(bugprone-easily-swappable-parameters,readability-non-const-parameter) */
 
     UNUSED(file);
     UNUSED(buffer);

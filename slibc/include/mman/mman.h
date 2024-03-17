@@ -13,7 +13,7 @@
 #define MAP_ANONYMOUS   0x00000020
 #define MAP_STACK       0x00020000
 
-void *mmap(void *addr, unsigned long len, unsigned long prot, unsigned long flags, unsigned long fd, unsigned long offset);
+void *mmap(void *addr, unsigned long len, unsigned long prot, unsigned long flags, unsigned long file_descriptor, unsigned long offset);
 int munmap(void *addr, unsigned long len);
 
 #endif /* MMAN_H */

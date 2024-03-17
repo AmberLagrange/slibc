@@ -2,14 +2,14 @@
 
 #define UNUSED(x) ((void)(x))
 
-int remove(const char *pathname) {
+int remove(const char *pathname) { /* NOLINT(bugprone-easily-swappable-parameters) */
 
     UNUSED(pathname);
 
     return 0;
 }
 
-int rename(const char *old_filename, const char *new_filename) {
+int rename(const char *old_filename, const char *new_filename) { /* NOLINT(bugprone-easily-swappable-parameters) */
 
     UNUSED(old_filename);
     UNUSED(new_filename);
@@ -22,7 +22,10 @@ FILE *tmpfile(void) {
     return NULL;
 }
 
-char *tmpnam(char *filename) {
+/*
+TODO: Remove readability-non-const-parameter
+*/
+char *tmpnam(char *filename) { /* NOLINT(readability-non-const-parameter) */
 
     UNUSED(filename);
 

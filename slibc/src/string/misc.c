@@ -1,6 +1,6 @@
 #include <string.h>
 
-#define UNUSED(x) ((void)x)
+#define UNUSED(x) ((void)(x))
 
 char *strerror(int errno) {
 

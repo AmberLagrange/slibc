@@ -6,7 +6,7 @@ long ftell(FILE *file) {
 
     UNUSED(file);
 
-    return 0l;
+    return 0L;
 }
 
 int fgetpos(FILE *file, fpos_t *pos) {
@@ -17,7 +17,7 @@ int fgetpos(FILE *file, fpos_t *pos) {
     return 0;
 }
 
-int fseek(FILE *file, long offset, int origin) {
+int fseek(FILE *file, long offset, int origin) { /* NOLINT(bugprone-easily-swappable-parameters) */
 
     UNUSED(file);
     UNUSED(offset);

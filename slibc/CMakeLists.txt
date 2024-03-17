@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.24.2)
 project(slibc VERSION 1.0.1 DESCRIPTION "Educational C Standard Library Project")
 include(GNUInstallDirs)
 
+set(CMAKE_C_CLANG_TIDY clang-tidy)
+
 configure_file(slibc.pc.in slibc.pc @ONLY)
 
 add_library(slibc SHARED
@@ -55,6 +57,7 @@ set_target_properties(slibc PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
     PUBLIC_HEADER "${SLIBC_HEADERS}"
+    C_CLANG_TIDY "${CMAKE_C_CLANG_TIDY}"
 )
 
 target_compile_options(slibc PRIVATE -Wall -Wextra -Wpedantic -Werror -nostdinc)
