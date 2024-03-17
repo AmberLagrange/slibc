@@ -10,21 +10,19 @@ char *strcpy(char *dst, const char *src) {
 char *strncpy(char *dst, const char *src, size_t count) {
 
     size_t len = strlen(src);
-    char * orig_dst = memcpy(dst, src, count);
 
     if (count < len) {
-        return orig_dst;
+        memcpy(dst, src, count);
+    } else {
+        memcpy(dst, src, len);
+
+        while (len < count) {
+            dst[len++] = '\0';
+        }
+
     }
 
-    count -= len;
-    dst += len;
-
-    while (count > 0) {
-        *dst = '\0';
-        --count;
-    }
-
-    return orig_dst;
+    return dst;
 }
 
 char *strcat(char *dst, const char *src) {

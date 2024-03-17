@@ -20,6 +20,8 @@ TEST(string, strcpy) {
     ASSERT_EQ(buf[0], '\0');
 }
 
+#include <iostream>
+
 TEST(string, strncpy) {
 
     char buf[16];
