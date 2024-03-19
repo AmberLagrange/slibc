@@ -286,7 +286,7 @@ __attribute__((always_inline)) void __process_integer(int *count, enum __integer
 
             ret = __fputi_internal(va_int, DEC_RADIX, file, 0);
             if (ret < 0) {
-                *error = 1;
+                *error = ret;
                 return;
             }
 
@@ -300,7 +300,7 @@ __attribute__((always_inline)) void __process_integer(int *count, enum __integer
 
             ret = __fputl_internal(va_long, DEC_RADIX, file, 0);
             if (ret < 0) {
-                *error = 1;
+                *error = ret;
                 return;
             }
 
@@ -322,7 +322,7 @@ __attribute__((always_inline)) void __process_unsigned(int *count, enum __intege
 
             ret = __fputi_internal((int)va_unsigned, DEC_RADIX, file, 1);
             if (ret < 0) {
-                *error = 1;
+                *error = ret;
                 return;
             }
 
@@ -336,7 +336,7 @@ __attribute__((always_inline)) void __process_unsigned(int *count, enum __intege
 
             ret= __fputl_internal((long)va_long_unsigned, DEC_RADIX, file, 1);
             if (ret < 0) {
-                *error = 1;
+                *error = ret;
                 return;
             }
 
@@ -360,7 +360,7 @@ __attribute__((always_inline)) void __process_octal_and_hex(int *count, enum __i
 
                 ret = fputs(prefix, file);
                 if (ret < 0) {
-                    *error = 1;
+                    *error = ret;
                     return;
                 }
 
@@ -369,7 +369,7 @@ __attribute__((always_inline)) void __process_octal_and_hex(int *count, enum __i
 
             ret = __fputi_internal((int)va_unsigned, radix, file, 1);
             if (ret < 0) {
-                *error = 1;
+                *error = ret;
                 return;
             }
 
@@ -385,7 +385,7 @@ __attribute__((always_inline)) void __process_octal_and_hex(int *count, enum __i
 
                 ret = fputs(prefix, file);
                 if (ret < 0) {
-                    *error = 1;
+                    *error = ret;
                     return;
                 }
 
@@ -394,7 +394,7 @@ __attribute__((always_inline)) void __process_octal_and_hex(int *count, enum __i
 
             ret = __fputl_internal((long)va_long_unsigned, radix, file, 1);
             if (ret < 0) {
-                *error = 1;
+                *error = ret;
                 return;
             }
 
@@ -416,7 +416,7 @@ __attribute__((always_inline)) void __process_float(int *count, enum __integer_l
 
             ret = __fputf_internal(va_double, file);
             if (ret < 0) {
-                *error = 1;
+                *error = ret;
                 return;
             }
 
@@ -430,7 +430,7 @@ __attribute__((always_inline)) void __process_float(int *count, enum __integer_l
 
             ret = __fputlf_internal(va_long_double, file);
             if (ret < 0) {
-                *error = 1;
+                *error = ret;
                 return;
             }
 
@@ -446,7 +446,7 @@ __attribute__((always_inline)) void __process_char(int *count, FILE *file, va_li
     int ret = fputc(va_char, file);
 
     if (ret < 0) {
-        *error = 1;
+        *error = ret;
         return;
     }
 
@@ -459,7 +459,7 @@ __attribute__((always_inline)) void __process_str(int *count, FILE *file, va_lis
     int ret = fputs(va_str, file);
 
     if (ret < 0) {
-        *error = 1;
+        *error = ret;
         return;
     }
 
@@ -475,7 +475,7 @@ __attribute__((always_inline)) void __process_pointer(int *count, FILE *file, va
 
         ret = fputs("(nil)", file);
         if (ret < 0) {
-            *error = 1;
+            *error = ret;
             return;
         }
 
@@ -485,7 +485,7 @@ __attribute__((always_inline)) void __process_pointer(int *count, FILE *file, va
 
     ret = fputs("0x", file);
     if (ret < 0) {
-        *error = 1;
+        *error = ret;
         return;
     }
 
@@ -493,7 +493,7 @@ __attribute__((always_inline)) void __process_pointer(int *count, FILE *file, va
 
     ret = __fputl_internal((long)va_long_unsigned, HEX_RADIX, file, 1);
     if (ret < 0) {
-        *error = 1;
+        *error = ret;
         return;
     }
 
@@ -510,7 +510,7 @@ __attribute__((always_inline)) void __process_character(char character, int *cou
 
     int ret = putc(character, file);
     if (ret < 0) {
-        *error = 1;
+        *error = ret;
         return;
     }
 
@@ -601,6 +601,10 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
             }
         } else {
             __process_character(character, &count, file, &error);
+        }
+
+        if (error < 0) {
+            return error;
         }
 
         character = *++fmt;
