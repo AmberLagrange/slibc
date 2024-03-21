@@ -28,6 +28,7 @@ enable_testing()
 
 add_executable(tests src/tests.cc
                      src/ctype_tests.cc
+                     src/stdio_tests.cc
                      src/string_tests.cc)
 
 

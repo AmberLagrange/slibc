@@ -191,7 +191,6 @@ TEST(ctype, ispunct) {
 
 }
 
-
 TEST(ctype, tolower) {
 
     unsigned i;

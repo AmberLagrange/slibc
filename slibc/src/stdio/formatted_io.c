@@ -544,8 +544,6 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
             __process_precision(&character, &fmt, &precision);
             __process_length_mod(&character, &fmt, &length_mod);
 
-            /* process specifier */
-
             switch (character) {
                 case 'd':
                 case 'i':
