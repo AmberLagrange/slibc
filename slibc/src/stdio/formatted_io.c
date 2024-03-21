@@ -3,44 +3,46 @@
 #include <ctype.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#include <syscall/syscall.h>
 
 #include <stdio/put_internal.h>
 
+#include <stdlib/convert.h>
+
 #define UNUSED(x) ((void)(x))
 
-enum __max_buffer_e {       /* NOLINT(bugprone-reserved-identifier) */
+/* NOLINTBEGIN(bugprone-reserved-identifier) */
+enum __max_buffer_e {
     MAX_READ = 256
 };
 
-enum __justification_e {    /* NOLINT(bugprone-reserved-identifier) */
+enum __justification_e {
     RIGHT_JUSTIFIED,
     LEFT_JUSTIFIED
 };
 
-enum __prepend_sign_e {     /* NOLINT(bugprone-reserved-identifier) */
+enum __prepend_sign_e {
     PREPEND_SIGN_NEGATIVE,
     PREPEND_SIGN_ALWAYS,
     PREPEND_SIGN_SPACE
 };
 
-enum __hash_flag_e {        /* NOLINT(bugprone-reserved-identifier) */
+enum __hash_flag_e {
     HASH_FLAG_DISABLED = 0,
     HASH_FLAG_ENABLED  = 1
 };
 
-enum __left_pad_e {         /* NOLINT(bugprone-reserved-identifier) */
+enum __left_pad_e {
     LEFT_PAD_SPACE,
     LEFT_PAD_ZERO
 };
 
-enum __integer_length_e {   /* NOLINT(bugprone-reserved-identifier) */
+enum __integer_length_e {
     DEFAULT_LENGTH,
     SHORT_LENGTH,
     LONG_LENGTH
 };
 
-enum __precision_e {        /* NOLINT(bugprone-reserved-identifier) */
+enum __precision_e {
     DEFAULT_PRECISION = 6
 };
 
@@ -51,7 +53,7 @@ enum __precision_e {        /* NOLINT(bugprone-reserved-identifier) */
     TODO: Remove Abort after adding the rest of the format cases
 */
 
-void __internal_scan_int(FILE *file, int *dest) { /* NOLINT(bugprone-reserved-identifier) */
+void __internal_scan_int(FILE *file, int *dest) {
 
     char buf[MAX_READ];
     char character_read = '\0';
@@ -74,7 +76,7 @@ void __internal_scan_int(FILE *file, int *dest) { /* NOLINT(bugprone-reserved-id
     internal only, not technically part of ths spec
 */
 
-int __vfscanf_internal(FILE *file, const char *fmt, va_list args) { /* NOLINT(bugprone-reserved-identifier) */
+int __vfscanf_internal(FILE *file, const char *fmt, va_list args) {
 
     int *va_int_ptr = NULL;
     char character_read = '\0';
@@ -102,7 +104,8 @@ int __vfscanf_internal(FILE *file, const char *fmt, va_list args) { /* NOLINT(bu
     return 1;
 }
 
-int __vsscanf_internal(const char *buffer, const char *fmt, va_list args) { /* NOLINT(bugprone-reserved-identifier,bugprone-easily-swappable-parameters) */
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
+int __vsscanf_internal(const char *buffer, const char *fmt, va_list args) {
 
     UNUSED(buffer);
     UNUSED(fmt);
@@ -110,6 +113,7 @@ int __vsscanf_internal(const char *buffer, const char *fmt, va_list args) { /* N
 
     return 0;
 }
+/* NOLINTEND(bugprone-reserved-identifier) */
 
 int scanf(const char *fmt, ...) {
 
@@ -200,7 +204,8 @@ int vprintf(const char *fmt, va_list args) {
     return vfprintf(stdout, fmt, args);
 }
 
-__attribute__((always_inline)) void __process_flags(char *character, const char **fmt_ptr, enum __justification_e *text_justification, enum __prepend_sign_e *sign_prepend, enum __hash_flag_e *hash_flag, enum __left_pad_e *number_padding) { /* NOLINT(bugprone-reserved-identifier) */
+/* NOLINTBEGIN(bugprone-reserved-identifier) */
+__attribute__((always_inline)) void __process_flags(char *character, const char **fmt_ptr, enum __justification_e *text_justification, enum __prepend_sign_e *sign_prepend, enum __hash_flag_e *hash_flag, enum __left_pad_e *number_padding) {
 
     switch(*character) {
         case '-':
@@ -227,10 +232,12 @@ __attribute__((always_inline)) void __process_flags(char *character, const char 
             *number_padding = LEFT_PAD_ZERO;
             *character = *(++(*fmt_ptr));
             break;
+        default:
+            break;
     }
 }
 
-__attribute__((always_inline)) void __process_width(char *character, const char **fmt_ptr, int *width, va_list args) { /* NOLINT(bugprone-reserved-identifier) */
+__attribute__((always_inline)) void __process_width(char *character, const char **fmt_ptr, int *width, va_list args) {
 
     if (*character == '*') {
         *width = va_arg(args, int);
@@ -244,7 +251,7 @@ __attribute__((always_inline)) void __process_width(char *character, const char 
     }
 }
 
-__attribute__((always_inline)) void __process_precision(char *character, const char **fmt_ptr, enum __precision_e *precision) { /* NOLINT(bugprone-reserved-identifier) */
+__attribute__((always_inline)) void __process_precision(char *character, const char **fmt_ptr, enum __precision_e *precision) {
 
     if (*character == '.') {
         *character = *(++(*fmt_ptr));
@@ -258,7 +265,7 @@ __attribute__((always_inline)) void __process_precision(char *character, const c
     }
 }
 
-__attribute__((always_inline)) void __process_length_mod(char *character, const char **fmt_ptr, enum __integer_length_e *length_mod) { /* NOLINT(bugprone-reserved-identifier) */
+__attribute__((always_inline)) void __process_length_mod(char *character, const char **fmt_ptr, enum __integer_length_e *length_mod) {
 
     switch (*character) {
         case 'h':
@@ -271,10 +278,12 @@ __attribute__((always_inline)) void __process_length_mod(char *character, const 
             *length_mod = LONG_LENGTH;
             *character = *(++(*fmt_ptr));
             break;
+        default:
+            break;
     }
 }
 
-__attribute__((always_inline)) void __process_integer(int *count, enum __integer_length_e length_mod, FILE *file, va_list args, int *error) { /* NOLINT(bugprone-reserved-identifier) */
+__attribute__((always_inline)) void __process_integer(int *count, enum __integer_length_e length_mod, FILE *file, va_list args, int *error) {
 
     int ret = 0;
 
@@ -310,7 +319,7 @@ __attribute__((always_inline)) void __process_integer(int *count, enum __integer
     }
 }
 
-__attribute__((always_inline)) void __process_unsigned(int *count, enum __integer_length_e length_mod, FILE *file, va_list args, int *error) { /* NOLINT(bugprone-reserved-identifier) */
+__attribute__((always_inline)) void __process_unsigned(int *count, enum __integer_length_e length_mod, FILE *file, va_list args, int *error) {
 
     int ret = 0;
 
@@ -346,7 +355,7 @@ __attribute__((always_inline)) void __process_unsigned(int *count, enum __intege
     }
 }
 
-__attribute__((always_inline)) void __process_octal_and_hex(int *count, enum __integer_length_e length_mod, enum __hash_flag_e hash_flag, const char *prefix, enum __radix_e radix, FILE *file, va_list args, int *error) { /* NOLINT(bugprone-reserved-identifier) */
+__attribute__((always_inline)) void __process_octal_and_hex(int *count, enum __integer_length_e length_mod, enum __hash_flag_e hash_flag, const char *prefix, enum __radix_e radix, FILE *file, va_list args, int *error) {
 
     int ret = 0;
 
@@ -398,13 +407,13 @@ __attribute__((always_inline)) void __process_octal_and_hex(int *count, enum __i
                 return;
             }
 
-            count += ret;
+            *count += ret;
             break;
         }
     }
 }
 
-__attribute__((always_inline)) void __process_float(int *count, enum __integer_length_e length_mod, FILE *file, va_list args, int *error) { /* NOLINT(bugprone-reserved-identifier) */
+__attribute__((always_inline)) void __process_float(int *count, enum __integer_length_e length_mod, FILE *file, va_list args, int *error) {
 
     int ret = 0;
 
@@ -440,7 +449,7 @@ __attribute__((always_inline)) void __process_float(int *count, enum __integer_l
     }
 }
 
-__attribute__((always_inline)) void __process_char(int *count, FILE *file, va_list args, int *error) { /* NOLINT(bugprone-reserved-identifier) */
+__attribute__((always_inline)) void __process_char(int *count, FILE *file, va_list args, int *error) {
 
     char va_char = va_arg(args, int);
     int ret = fputc(va_char, file);
@@ -453,7 +462,7 @@ __attribute__((always_inline)) void __process_char(int *count, FILE *file, va_li
     *count += 1;
 }
 
-__attribute__((always_inline)) void __process_str(int *count, FILE *file, va_list args, int *error) { /* NOLINT(bugprone-reserved-identifier) */
+__attribute__((always_inline)) void __process_str(int *count, FILE *file, va_list args, int *error) {
 
     char *va_str = va_arg(args, char*);
     int ret = fputs(va_str, file);
@@ -466,7 +475,7 @@ __attribute__((always_inline)) void __process_str(int *count, FILE *file, va_lis
     *count += ret;
 }
 
-__attribute__((always_inline)) void __process_pointer(int *count, FILE *file, va_list args, int *error) { /* NOLINT(bugprone-reserved-identifier) */
+__attribute__((always_inline)) void __process_pointer(int *count, FILE *file, va_list args, int *error) {
 
     int ret = 0;
     unsigned long va_long_unsigned = (unsigned long)va_arg(args, void*);
@@ -500,13 +509,13 @@ __attribute__((always_inline)) void __process_pointer(int *count, FILE *file, va
     *count += ret;
 }
 
-__attribute__((always_inline)) void __process_count(int count, va_list args) { /* NOLINT(bugprone-reserved-identifier) */
+__attribute__((always_inline)) void __process_count(int count, va_list args) {
 
     int *va_int_ptr = va_arg(args, int*);
     *va_int_ptr = count;
 }
 
-__attribute__((always_inline)) void __process_character(char character, int *count, FILE *file, int *error) { /* NOLINT(bugprone-reserved-identifier) */
+__attribute__((always_inline)) void __process_character(char character, int *count, FILE *file, int *error) {
 
     int ret = putc(character, file);
     if (ret < 0) {
@@ -516,6 +525,7 @@ __attribute__((always_inline)) void __process_character(char character, int *cou
 
     *count += 1;
 }
+/* NOLINTEND(bugprone-reserved-identifier) */
 
 int vfprintf(FILE *file, const char *fmt, va_list args) {
 
@@ -595,6 +605,8 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
 
                 case '%':
                     __process_character('%', &count, file, &error);
+                    break;
+                default:
                     break;
             }
         } else {

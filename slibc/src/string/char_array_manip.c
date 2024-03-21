@@ -2,7 +2,8 @@
 
 #include <stdlib.h>
 
-void *memchr(const void *ptr, int character, size_t count) { /* NOLINT(bugprone-easily-swappable-parameters) */
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
+void *memchr(const void *ptr, int character, size_t count) {
 
     size_t index = 0;
     unsigned char *arr = NULL;
@@ -18,7 +19,8 @@ void *memchr(const void *ptr, int character, size_t count) { /* NOLINT(bugprone-
     return (void *)(arr);
 }
 
-int memcmp(const void *lhs, const void *rhs, size_t count) { /* NOLINT(bugprone-easily-swappable-parameters) */
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
+int memcmp(const void *lhs, const void *rhs, size_t count) {
 
     size_t index = 0;
 
@@ -38,7 +40,8 @@ int memcmp(const void *lhs, const void *rhs, size_t count) { /* NOLINT(bugprone-
     return 0;
 }
 
-void *memset(void *str, int character, size_t count) { /* NOLINT(bugprone-easily-swappable-parameters) */
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
+void *memset(void *str, int character, size_t count) {
 
     size_t index = 0;
     char *addr = str;
@@ -52,7 +55,8 @@ void *memset(void *str, int character, size_t count) { /* NOLINT(bugprone-easily
 }
 
 
-void *memmove(void *dst, const void *src, size_t count) { /* NOLINT(bugprone-easily-swappable-parameters) */
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
+void *memmove(void *dst, const void *src, size_t count) {
 
     char *tmp = malloc(count);
     memcpy(tmp, src, count);

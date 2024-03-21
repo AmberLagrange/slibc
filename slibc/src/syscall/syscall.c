@@ -2,8 +2,8 @@
 
 unsigned long __syscall_0(reg64 syscall) {
     
-    unsigned long ret; /* NOLINT(cppcoreguidelines-init-variables)*/         
-    __asm__ volatile ( /* NOLINT(hicpp-no-assembler)*/
+    unsigned long ret;       
+    __asm__ volatile (
         "movq %1, %%rax\n\t"
         "syscall\n\t"
         "mov %%rax, %0"
@@ -14,10 +14,11 @@ unsigned long __syscall_0(reg64 syscall) {
     return ret;
 }
 
-unsigned long __syscall_1(reg64 syscall, reg64 reg_rdi) { /* NOLINT(bugprone-easily-swappable-parameters) */
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
+unsigned long __syscall_1(reg64 syscall, reg64 reg_rdi) {
     
-    unsigned long ret; /* NOLINT(cppcoreguidelines-init-variables)*/         
-    __asm__ volatile ( /* NOLINT(hicpp-no-assembler)*/
+    unsigned long ret;      
+    __asm__ volatile (
         "movq %1, %%rax\n\t"
         "movq %2, %%rdi\n\t"
         "syscall\n\t"
@@ -30,10 +31,11 @@ unsigned long __syscall_1(reg64 syscall, reg64 reg_rdi) { /* NOLINT(bugprone-eas
     return ret;
 }
 
-unsigned long __syscall_2(reg64 syscall, reg64 reg_rdi, reg64 reg_rsi) { /* NOLINT(bugprone-easily-swappable-parameters) */
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
+unsigned long __syscall_2(reg64 syscall, reg64 reg_rdi, reg64 reg_rsi) {
     
-    unsigned long ret; /* NOLINT(cppcoreguidelines-init-variables)*/         
-    __asm__ volatile ( /* NOLINT(hicpp-no-assembler)*/
+    unsigned long ret;         
+    __asm__ volatile (
         "movq %1, %%rax\n\t"
         "movq %2, %%rdi\n\t"
         "movq %3, %%rsi\n\t"
@@ -48,10 +50,11 @@ unsigned long __syscall_2(reg64 syscall, reg64 reg_rdi, reg64 reg_rsi) { /* NOLI
     return ret;
 }
 
-unsigned long __syscall_3(reg64 syscall, reg64 reg_rdi, reg64 reg_rsi, reg64 reg_rdx) { /* NOLINT(bugprone-easily-swappable-parameters) */
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
+unsigned long __syscall_3(reg64 syscall, reg64 reg_rdi, reg64 reg_rsi, reg64 reg_rdx) {
     
-    unsigned long ret; /* NOLINT(cppcoreguidelines-init-variables)*/         
-    __asm__ volatile ( /* NOLINT(hicpp-no-assembler)*/
+    unsigned long ret;      
+    __asm__ volatile (
         "movq %1, %%rax\n\t"
         "movq %2, %%rdi\n\t"
         "movq %3, %%rsi\n\t"
@@ -68,10 +71,11 @@ unsigned long __syscall_3(reg64 syscall, reg64 reg_rdi, reg64 reg_rsi, reg64 reg
     return ret;
 }
 
-unsigned long __syscall_4(reg64 syscall, reg64 reg_rdi, reg64 reg_rsi, reg64 reg_rdx, reg64 reg_r10) { /* NOLINT(bugprone-easily-swappable-parameters) */
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
+unsigned long __syscall_4(reg64 syscall, reg64 reg_rdi, reg64 reg_rsi, reg64 reg_rdx, reg64 reg_r10) {
     
-    unsigned long ret; /* NOLINT(cppcoreguidelines-init-variables)*/         
-    __asm__ volatile ( /* NOLINT(hicpp-no-assembler)*/
+    unsigned long ret;        
+    __asm__ volatile (
         "movq %1, %%rax\n\t"
         "movq %2, %%rdi\n\t"
         "movq %3, %%rsi\n\t"
@@ -90,10 +94,11 @@ unsigned long __syscall_4(reg64 syscall, reg64 reg_rdi, reg64 reg_rsi, reg64 reg
     return ret;
 }
 
-unsigned long __syscall_5(reg64 syscall, reg64 reg_rdi, reg64 reg_rsi, reg64 reg_rdx, reg64 reg_r10, reg64 reg_r8) { /* NOLINT(bugprone-easily-swappable-parameters) */
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
+unsigned long __syscall_5(reg64 syscall, reg64 reg_rdi, reg64 reg_rsi, reg64 reg_rdx, reg64 reg_r10, reg64 reg_r8) {
     
-    unsigned long ret; /* NOLINT(cppcoreguidelines-init-variables)*/         
-    __asm__ volatile ( /* NOLINT(hicpp-no-assembler)*/
+    unsigned long ret;        
+    __asm__ volatile (
         "movq %1, %%rax\n\t"
         "movq %2, %%rdi\n\t"
         "movq %3, %%rsi\n\t"
@@ -114,10 +119,11 @@ unsigned long __syscall_5(reg64 syscall, reg64 reg_rdi, reg64 reg_rsi, reg64 reg
     return ret;
 }
 
-unsigned long __syscall_6(reg64 syscall, reg64 reg_rdi, reg64 reg_rsi, reg64 reg_rdx, reg64 reg_r10, reg64 reg_r8, reg64 reg_r9) { /* NOLINT(bugprone-easily-swappable-parameters) */
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
+unsigned long __syscall_6(reg64 syscall, reg64 reg_rdi, reg64 reg_rsi, reg64 reg_rdx, reg64 reg_r10, reg64 reg_r8, reg64 reg_r9) {
     
-    unsigned long ret; /* NOLINT(cppcoreguidelines-init-variables)*/         
-    __asm__ volatile ( /* NOLINT(hicpp-no-assembler)*/
+    unsigned long ret;        
+    __asm__ volatile (
         "movq %1, %%rax\n\t"
         "movq %2, %%rdi\n\t"
         "movq %3, %%rsi\n\t"

@@ -8,21 +8,21 @@ extern "C" {
 #define __THROW
 #endif
 
-int isalnum(int c)   __THROW;
-int isalpha(int c)   __THROW;
-int isblank(int c)   __THROW;
-int islower(int c)   __THROW;
-int isupper(int c)   __THROW;
-int isdigit(int c)   __THROW;
-int isxdigit(int c)  __THROW;
-int iscntrl(int c)   __THROW;
-int isgraph(int c)   __THROW;
-int isspace(int c)   __THROW;
-int isprint(int c)   __THROW;
-int ispunct(int c)   __THROW;
+int isalnum(int character)   __THROW;
+int isalpha(int character)   __THROW;
+int isblank(int character)   __THROW;
+int islower(int character)   __THROW;
+int isupper(int character)   __THROW;
+int isdigit(int character)   __THROW;
+int isxdigit(int character)  __THROW;
+int iscntrl(int character)   __THROW;
+int isgraph(int character)   __THROW;
+int isspace(int character)   __THROW;
+int isprint(int character)   __THROW;
+int ispunct(int character)   __THROW;
 
-int toupper(int c) __THROW;
-int tolower(int c) __THROW;
+int toupper(int character) __THROW;
+int tolower(int character) __THROW;
 
 #undef __THROW
 

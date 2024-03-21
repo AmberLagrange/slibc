@@ -1,6 +1,7 @@
 #include <stdio/put_internal.h>
 
-#include <signal.h>
+#include <stdio.h>
+#include <stdlib/convert.h>
 
 #define UNUSED(x) ((void)(x))
 

@@ -3,7 +3,8 @@
 #include <mman/mman.h>
 #include <string.h>
 
-enum __alignment_e {   /* NOLINT(bugprone-reserved-identifier) */
+/* NOLINTNEXTLINE(bugprone-reserved-identifier) */
+enum __alignment_e {
     MAX_ALIGNMENT = 16
 };
 

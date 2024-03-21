@@ -2,14 +2,16 @@
 
 #define UNUSED(x) ((void)(x))
 
-int remove(const char *pathname) { /* NOLINT(bugprone-easily-swappable-parameters) */
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
+int remove(const char *pathname) {
 
     UNUSED(pathname);
 
     return 0;
 }
 
-int rename(const char *old_filename, const char *new_filename) { /* NOLINT(bugprone-easily-swappable-parameters) */
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
+int rename(const char *old_filename, const char *new_filename) {
 
     UNUSED(old_filename);
     UNUSED(new_filename);

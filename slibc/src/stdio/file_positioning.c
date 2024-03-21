@@ -17,7 +17,8 @@ int fgetpos(FILE *file, fpos_t *pos) {
     return 0;
 }
 
-int fseek(FILE *file, long offset, int origin) { /* NOLINT(bugprone-easily-swappable-parameters) */
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
+int fseek(FILE *file, long offset, int origin) {
 
     UNUSED(file);
     UNUSED(offset);

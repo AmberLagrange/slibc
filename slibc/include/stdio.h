@@ -25,9 +25,11 @@
 #define FILENAME_MAX    256
 #define BUFSIZ          256
 
+/* NOLINTBEGIN(bugprone-reserved-identifier) */
 #define _IOFBF          1
 #define _IOLBF          2
 #define _IONBF          3
+/* NOLINTEND(bugprone-reserved-identifier) */
 
 #define SEEK_SET        4
 #define SEEK_CUR        5
@@ -41,6 +43,7 @@
     TODO: actually implement this properly
 */
 
+/* NOLINTBEGIN(bugprone-reserved-identifier) */
 typedef struct __FILE_IO {
     int fd;
 } FILE;
@@ -48,6 +51,7 @@ typedef struct __FILE_IO {
 typedef struct __FILE_POS {
     long pos;
 } fpos_t;
+/* NOLINTEND(bugprone-reserved-identifier) */
 
 /*
     File access
@@ -77,17 +81,17 @@ int   fgetc(                      FILE *file);
 int   getc (                      FILE *file);
 char *fgets(char *str, int count, FILE *file);
 
-int   fputc  (int         ch,  FILE *file);
-int   putc   (int         ch,  FILE *file);
+int   fputc  (int         character,  FILE *file);
+int   putc   (int         character,  FILE *file);
 int   fputs  (const char *str, FILE *file);
 
 int   getchar(void);
 char *gets   (char *str);
 
-int   putchar(int ch);
+int   putchar(int character);
 int   puts   (const char *str);
 
-int   ungetc (int ch, FILE *file);
+int   ungetc (int character, FILE *file);
 
 /*
     Formatted input/output
@@ -137,7 +141,8 @@ char *tmpnam (char *filename);
     Standard files
 */
 
-extern FILE *_Files[FOPEN_MAX];
+/* NOLINTNEXTLINE(bugprone-reserved-identifier) */
+extern FILE *_Files[FOPEN_MAX];   
 
 #define stdin  _Files[0]
 #define stdout _Files[1]

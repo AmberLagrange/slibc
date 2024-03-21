@@ -1,6 +1,7 @@
 #include <ctype.h>
 
-enum __ctype_flags_e {      /* NOLINT(bugprone-reserved-identifier) */
+/* NOLINTBEGIN(bugprone-reserved-identifier) */
+enum __ctype_flags_e {
     PRINT_FLAG  = 0x0001,
     GRAPH_FLAG  = 0x0002,
     PUNCT_FLAG  = 0x0004,
@@ -15,10 +16,11 @@ enum __ctype_flags_e {      /* NOLINT(bugprone-reserved-identifier) */
     CNTRL_FLAG  = 0x0800
 };
 
-enum __ctype_masks_e { /* NOLINT(bugprone-reserved-identifier) */
+enum __ctype_masks_e {
     LOWER_MASK = 0x20,
     UPPER_MASK = 0xDF
 };
+/* NOLINTEND(bugprone-reserved-identifier) */
 
 static const int ctypes[128] = {
     0x0800, 0x0800, 0x0800, 0x0800, 0x0800, 0x0800, 0x0800, 0x0800, /* 0x00 - 0x07 */
