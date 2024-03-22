@@ -19,7 +19,12 @@ void *malloc(unsigned long size) {
 
     new_size = size + MAX_ALIGNMENT;
 
-    ptr = mmap(0, new_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    ptr = mmap(NULL, new_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+
+    if ((long)ptr < 0) {
+        return (void *)(-1); /* NOLINT(performance-no-int-to-ptr) */
+    }
+
     *ptr = new_size;
 
     return ptr + MAX_ALIGNMENT;

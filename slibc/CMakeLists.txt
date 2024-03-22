@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24.2)
 
-project(slibc VERSION 1.0.1 DESCRIPTION "Educational C Standard Library Project")
+project(shatter-libc VERSION 0.0.1 DESCRIPTION "Educational C Standard Library Project")
 include(GNUInstallDirs)
 
 set(CMAKE_C_CLANG_TIDY clang-tidy)

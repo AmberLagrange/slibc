@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24.2)
 
-project(slibc_start_main VERSION 1.0.1 DESCRIPTION "Entry Point For slibc")
+project(slibc_start_main VERSION 0.0.1 DESCRIPTION "Entry Point For slibc")
 include(GNUInstallDirs)
 
 configure_file(slibc_start_main.pc.in slibc_start_main.pc @ONLY)
