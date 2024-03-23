@@ -21,7 +21,7 @@ jobs:
         CXX: clang++
     - uses: actions/checkout@v1
     - name: Install slibc
-      run: mkdir -p slibc/build && cd slibc/build && cmake -S .. -B . && sudo make install
+      run: mkdir -p build && cd build && cmake -S .. -B . && sudo make install
       env:
         CC: clang
         CXX: clang++

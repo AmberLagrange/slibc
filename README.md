@@ -15,7 +15,6 @@ Shatter Libc (``slibc``) is C89 compliant Standard Library written for education
 To build, simply run ``cmake`` in a build directory, then run ``make``
 
 ``` bash
-$ cd slibc
 $ mkdir build
 $ cd build
 $ cmake -S .. -B .
@@ -102,7 +101,22 @@ $ ./tests
 ```
 ### Note
 
-As the tests are in C++ and this is a C standard library, linking the programs in potentially override some C++ standard library code. If these symblols are not weak, this can lead to UB. Testing with clang++ appears to work for the time being, however g++ does not. This may be fixed in the future.
+As the tests are in C++ and this is a C standard library, linking the programs in potentially override some C++ standard library code. If these symblols are not weak, this can lead to UB. Testing with clang++ appears to work for the time being. This may be fixed in the future.
+
+# Documentation
+
+``slibc`` also allows for the creation of documenation using  [doxygen](https://github.com/doxygen/doxygen). To do so, simply run ``doxygen`` in the build directory of ``slibc`` after running ``cmake``.
+
+```bash
+$ mkdir build
+$ cd build
+$ cmake -S .. -B .
+$ doxygen
+```
+
+### Note
+
+Documentation is not complete.
 
 # Supported Platforms
 

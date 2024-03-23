@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.24.2)
 
-project(shatter-libc VERSION 0.0.1 DESCRIPTION "Educational C Standard Library Project")
+project(slibc VERSION 0.0.1 DESCRIPTION "Educational C Standard Library Project")
 include(GNUInstallDirs)
 
 set(CMAKE_C_CLANG_TIDY clang-tidy)
 
 configure_file(slibc.pc.in slibc.pc @ONLY)
+configure_file(Doxyfile.in Doxyfile @ONLY)
 
 add_library(slibc SHARED
     src/ctype/ctype.c
@@ -64,23 +65,23 @@ target_compile_options(slibc PRIVATE -Wall -Wextra -Wpedantic -Werror -nostdinc)
 target_link_options(slibc PRIVATE -nostdlib)
 
 target_include_directories(slibc PUBLIC
-    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-install(FILES ${CMAKE_BINARY_DIR}/slibc.pc
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/slibc.pc
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
 
 install(TARGETS slibc
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/slibc
     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/slibc)
 
-install(FILES ${CMAKE_SOURCE_DIR}/slibc.conf
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/slibc.conf
     DESTINATION /etc/ld.so.conf.d)
 
 install(CODE "execute_process(COMMAND ldconfig)")
 
 add_custom_target(uninstall
-    xargs rm < install_manifest.txt
+    xargs rm < ${CMAKE_CURRENT_BINARY_DIR}/install_manifest.txt
     COMMAND ldconfig)
 
 add_subdirectory(start_main)

@@ -17,6 +17,7 @@ void *malloc(unsigned long size) {
         return NULL;
     }
 
+    /* SCARY */
     new_size = size + MAX_ALIGNMENT;
 
     ptr = mmap(NULL, new_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
