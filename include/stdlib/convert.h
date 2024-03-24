@@ -9,7 +9,7 @@
 #endif
 
 /* NOLINTBEGIN(bugprone-reserved-identifier) */
-enum __radix_e {
+enum {
     OCT_RADIX = 8,
     DEC_RADIX = 10,
     HEX_RADIX = 16
@@ -25,7 +25,7 @@ enum __radix_e {
  * @param is_unsigned   If the integer is unsigned.
  * @return char*        Returns the address of the buffer written to.
  */
-char *__itoa__internal(int int_val, char *buf, size_t len, enum __radix_e radix, int is_unsigned);
+char *__itoa__internal(int int_val, char *buf, size_t len, int radix, int is_unsigned);
 
 /**
  * @brief               Internal use only. Convert a long integer into a string.
@@ -37,7 +37,7 @@ char *__itoa__internal(int int_val, char *buf, size_t len, enum __radix_e radix,
  * @param is_unsigned   If the long integer is unsigned.
  * @return char*        Returns the address of the buffer written to.
  */
-char *__ltoa__internal(long long_val, char *buf, size_t len, enum __radix_e radix, int is_unsigned);
+char *__ltoa__internal(long long_val, char *buf, size_t len, int radix, int is_unsigned);
 /* NOLINTEND(bugprone-reserved-identifier) */
 
 #endif /* CONVERT_H */

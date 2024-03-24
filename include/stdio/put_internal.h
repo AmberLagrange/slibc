@@ -4,7 +4,9 @@
 #include <stdio.h>
 #include <stdlib/convert.h>
 
-#define MAX_INT_LENGTH 256
+enum {
+    MAX_INT_LENGTH = 256
+};
 
 /* NOLINTBEGIN(bugprone-reserved-identifier) */
 /**
@@ -17,7 +19,7 @@
  * @param is_unsigned   If the integer is unsigned.
  * @return int          Returns the number of bytes written to the file. Returns a negative on error.
  */
-int __fputi_internal (int val, enum __radix_e radix, FILE *file, int is_unsigned);
+int __fputi_internal (int val, int radix, FILE *file, int is_unsigned);
 
 /**
  * @brief               Internal use only. Helper function for writing
@@ -29,7 +31,7 @@ int __fputi_internal (int val, enum __radix_e radix, FILE *file, int is_unsigned
  * @param is_unsigned   If the long integer is unsigned.
  * @return int          Returns the number of bytes written to the file. Returns a negative on error.
  */
-int __fputl_internal (long val, enum __radix_e radix, FILE *file, int is_unsigned);
+int __fputl_internal (long val, int radix, FILE *file, int is_unsigned);
 
 /**
  * @brief               Internal use only. Helper function for writing

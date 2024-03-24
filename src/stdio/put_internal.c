@@ -5,7 +5,7 @@
 
 #define UNUSED(x) ((void)(x))
 
-int __fputi_internal(int val, enum __radix_e radix, FILE *file, int is_unsigned) {
+int __fputi_internal(int val, int radix, FILE *file, int is_unsigned) {
 
     int ret = 0;
 
@@ -20,7 +20,7 @@ int __fputi_internal(int val, enum __radix_e radix, FILE *file, int is_unsigned)
     return ret;
 }
 
-int __fputl_internal(long val, enum __radix_e radix, FILE *file, int is_unsigned) {
+int __fputl_internal(long val, int radix, FILE *file, int is_unsigned) {
 
     int ret = 0;
 

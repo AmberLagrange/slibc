@@ -49,11 +49,11 @@ void setbuf(FILE *file, char *buffer) { /* NOLINT(readability-non-const-paramete
 TODO: Remove readability-non-const-parameter
 */
 /* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
-int setvbuf(FILE *file, char *buffer, int mode, size_t size) { /* NOLINT(readability-non-const-parameter) */
+int setvbuf(FILE *file, char *buffer, int type, size_t size) { /* NOLINT(readability-non-const-parameter) */
 
     UNUSED(file);
     UNUSED(buffer);
-    UNUSED(mode);
+    UNUSED(type);
     UNUSED(size);
 
     return 0;

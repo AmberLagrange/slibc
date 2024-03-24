@@ -1,7 +1,9 @@
 #ifndef SIGNAL_H
 #define SIGNAL_H
 
-#define SIG_ABORT 6
+enum {
+    SIG_ABORT = 6
+};
 
 /**
  * @brief       Raises a signal to the calling process.

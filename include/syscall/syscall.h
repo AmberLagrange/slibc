@@ -1,8 +1,10 @@
 #ifndef SYSCALL_H
 #define SYSCALL_H
 
-/* NOLINTNEXTLINE(bugprone-reserved-identifier) */
-enum __syscalls_e {
+typedef unsigned long int reg64;
+
+/* NOLINTBEGIN(bugprone-reserved-identifier) */
+enum {
     SYS_READ    = 0,
     SYS_WRITE   = 1,
     SYS_MMAP    = 9,
@@ -12,18 +14,6 @@ enum __syscalls_e {
     SYS_KILL    = 62
 };
 
-
-#define SYS_READ    0
-#define SYS_WRITE   1
-#define SYS_MMAP    9
-#define SYS_MUNMAP  11
-#define SYS_GET_PID 39
-#define SYS_EXIT    60
-#define SYS_KILL    62
-
-typedef unsigned long int reg64;
-
-/* NOLINTBEGIN(bugprone-reserved-identifier) */
 unsigned long __syscall_0(reg64 syscall);
 unsigned long __syscall_1(reg64 syscall, reg64 reg_rdi);
 unsigned long __syscall_2(reg64 syscall, reg64 reg_rdi, reg64 reg_rsi);

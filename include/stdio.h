@@ -20,23 +20,32 @@
 
 #define NULL            ((void*)0)
 
-#define EOF             (-1)
-#define FOPEN_MAX       256
-#define FILENAME_MAX    256
-#define BUFSIZ          256
+enum {
+    EOF             = -1,
+    FOPEN_MAX       = 256,
+    FILENAME_MAX    = 256,
+    BUFSIZ          = 256
+};
 
 /* NOLINTBEGIN(bugprone-reserved-identifier) */
-#define _IOFBF          1
-#define _IOLBF          2
-#define _IONBF          3
+enum {
+    _IOFBF,
+    _IOLBF,
+    _IONBF
+};
 /* NOLINTEND(bugprone-reserved-identifier) */
 
-#define SEEK_SET        4
-#define SEEK_CUR        5
-#define SEEK_END        6
+enum {
+    SEEK_SET,
+    SEEK_CUR,
+    SEEK_END
+};
 
-#define TMP_MAX         16
-#define L_tmpnam        256
+enum {
+    TMP_MAX     = 16,
+    L_tmpnam    = 256
+};
+
 
 /*
     Structs
@@ -64,7 +73,7 @@ int   fclose (FILE       *file);
 int   fflush (FILE       *file);
 
 void  setbuf (FILE       *file, char           *buffer);
-int   setvbuf(FILE       *file, char           *buffer, int mode, size_t size);
+int   setvbuf(FILE       *file, char           *buffer, int type, size_t size);
 
 /*
     Direct input/output

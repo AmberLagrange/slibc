@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.24.2)
 
-project(slibc VERSION 0.1.1 DESCRIPTION "Educational C Standard Library Project")
+set(SLIBC_VERSION 0.1.2)
+
+project(slibc VERSION ${SLIBC_VERSION} DESCRIPTION "Educational C Standard Library Project")
 include(GNUInstallDirs)
 
 set(CMAKE_C_CLANG_TIDY clang-tidy)

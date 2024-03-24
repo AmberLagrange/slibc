@@ -4,7 +4,7 @@
 #include <string.h>
 
 /* NOLINTNEXTLINE(bugprone-reserved-identifier) */
-enum __alignment_e {
+enum {
     MAX_ALIGNMENT = 16
 };
 

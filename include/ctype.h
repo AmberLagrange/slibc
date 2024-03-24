@@ -2,9 +2,11 @@
 #define CTYPE_H
 
 #ifdef __cplusplus
+/* NOLINTNEXTLINE(bugprone-reserved-identifier) */
 #define __THROW throw()
 extern "C" {
 #else
+/* NOLINTNEXTLINE(bugprone-reserved-identifier) */
 #define __THROW
 #endif
 
