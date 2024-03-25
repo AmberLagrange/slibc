@@ -1,20 +1,28 @@
 #ifndef MMAN_H
 #define MMAN_H
 
+/**
+ * @brief Memory protection of the memory requested from mmap.
+ * 
+ */
 enum {
-    PROT_NONE   = 0x00,
-    PROT_READ   = 0x01,
-    PROT_WRITE  = 0x02,
-    PROT_EXEC   = 0x04
+    PROT_NONE   = 0x00, /**< No access. */
+    PROT_READ   = 0x01, /**< May be read from. */
+    PROT_WRITE  = 0x02, /**< May be written to. */
+    PROT_EXEC   = 0x04  /**< May be executed. */
 };
 
+/**
+ * @brief Flags passed to mmap to specify behaviour of mmap.
+ * 
+ */
 enum {
-    MAP_SHARED      = 0x00000001,
-    MAP_PRIVATE     = 0x00000002,
-    MAP_FIXED       = 0x00000010,
-    MAP_ANON        = 0x00000020,
-    MAP_ANONYMOUS   = 0x00000020,
-    MAP_STACK       = 0x00020000
+    MAP_SHARED      = 0x00000001,    /**< Updates are visible to other processes using the same mapping region. */
+    MAP_PRIVATE     = 0x00000002,    /**< Updates are not visible to other processes. */
+    MAP_FIXED       = 0x00000010,    /**< Don't use addr as a hint and instead use it exactly. */
+    MAP_ANONYMOUS   = 0x00000020,    /**< Don't back the mapping with a file. */
+    MAP_ANON        = MAP_ANONYMOUS, /**< Same as MAP_ANONYYMOUS. Used for backwards compatibility. */
+    MAP_STACK       = 0x00020000     /**< The mapping is suitable for a process stack. */
 };
 
 /**

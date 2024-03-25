@@ -30,7 +30,7 @@ char *__itoa__internal(int int_val, char *buf, size_t len, int radix, int is_uns
 /**
  * @brief               Internal use only. Convert a long integer into a string.
  * 
- * @param int_val       The value of the long integer to convert.
+ * @param long_val       The value of the long integer to convert.
  * @param buf           The address to the buffer to write the long integer to.
  * @param len           The length of the buffer.
  * @param radix         The base to write the long integer in.

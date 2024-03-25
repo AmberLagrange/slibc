@@ -4,8 +4,12 @@
 #include <stdio.h>
 #include <stdlib/convert.h>
 
+/**
+ * @brief Max number of characters an integer can take up.
+ * 
+ */
 enum {
-    MAX_INT_LENGTH = 256
+    MAX_INT_LENGTH = 32 /**< The maximum length in characters a string representating a character can be. */
 };
 
 /* NOLINTBEGIN(bugprone-reserved-identifier) */
