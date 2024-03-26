@@ -30,4 +30,5 @@ jobs:
         port: ${{ secrets.SLIBC_PORT }}
         source: "build/docs"
         target: "docs"
+        overwrite:
         strip_components: 2
