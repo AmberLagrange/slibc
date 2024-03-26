@@ -1,0 +1,31 @@
+name: generate_docs
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Generates documents
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install Doxygen
+      run: sudo apt-get install doxygen
+
+    - uses: actions/checkout@v1
+    - name: Make documents
+      run: mkdir -p build && cd build && cmake -S .. -B . && doxygen
+          
+    - uses: appleboy/scp-action@v0.1.7
+      with:
+        host: slibc.amberlagrange.com
+        username: ${{ secrets.SLIBC_USER }}
+        key: ${{ secrets.SLIBC_SSH_KEY }}
+        port: ${{ secrets.SLIBC_PORT }}
+        source: docs/*
+        target: ~/docs
