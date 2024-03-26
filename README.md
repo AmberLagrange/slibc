@@ -1,5 +1,5 @@
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
-[![testing](https://github.com/AmberLagrange/slibc/actions/workflows/testing.yml/badge.svg)](https://github.com/AmberLagrange/slibc/actions/workflows/testing.yml)
+[![Tests](https://github.com/AmberLagrange/slibc/actions/workflows/tests.yml/badge.svg)](https://github.com/AmberLagrange/slibc/actions/workflows/tests.yml)
 
 # Shatter Libc
 
