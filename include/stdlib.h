@@ -85,12 +85,12 @@ void free (void *ptr);
  * @brief                   Abort the running process. Internally, calls raise(SIG_ABORT) 
  * 
  */
-__attribute__((noreturn)) void abort(void);
+void abort(void) __attribute__((noreturn));
 
 /**
  * @brief                   Exits the running process by calling the SYS_EXIT syscall and returning the status to the parent process.
  * 
  */
-__attribute__((noreturn)) void exit(int status);
+void exit(int status) __attribute__((noreturn));
 
 #endif /* STDLIB_H */
