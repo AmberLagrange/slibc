@@ -117,6 +117,7 @@ $ cd build
 $ cmake -S .. -B .
 $ doxygen
 ```
+Documentation is also hosted at [slibc.amberlagrange.com](https://slibc.amberlagrange.com).
 
 ### Note
 
