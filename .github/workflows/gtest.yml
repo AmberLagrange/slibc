@@ -12,7 +12,7 @@ jobs:
   build:
     name: Tests slibc
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Install Clang
       run: sudo apt-get install clang && export CC=clang && export CXX=clang++
@@ -24,6 +24,7 @@ jobs:
         CXX: clang++
 
     - uses: actions/checkout@v1
+    
     - name: Install slibc
       run: mkdir -p build && cd build && cmake -S .. -B . && sudo make install
       env:
