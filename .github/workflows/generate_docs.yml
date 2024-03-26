@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Generates documents
+    name: Generate documents
     runs-on: ubuntu-latest
 
     steps:
@@ -28,5 +28,5 @@ jobs:
         username: ${{ secrets.SLIBC_USER }}
         key: ${{ secrets.SLIBC_SSH_KEY }}
         port: ${{ secrets.SLIBC_PORT }}
-        source: "docs"
+        source: "./docs/*"
         target: "docs"
