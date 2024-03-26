@@ -28,6 +28,6 @@ jobs:
         username: ${{ secrets.SLIBC_USER }}
         key: ${{ secrets.SLIBC_SSH_KEY }}
         port: ${{ secrets.SLIBC_PORT }}
-        source: "./docs/*"
+        source: "build/docs"
         target: "docs"
         debug: true
