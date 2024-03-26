@@ -28,5 +28,5 @@ jobs:
         username: ${{ secrets.SLIBC_USER }}
         key: ${{ secrets.SLIBC_SSH_KEY }}
         port: ${{ secrets.SLIBC_PORT }}
-        source: docs
-        target: docs
+        source: "docs"
+        target: "docs"
