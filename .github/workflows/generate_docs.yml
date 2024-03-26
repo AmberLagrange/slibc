@@ -30,3 +30,4 @@ jobs:
         port: ${{ secrets.SLIBC_PORT }}
         source: "./docs/*"
         target: "docs"
+        debug: true
