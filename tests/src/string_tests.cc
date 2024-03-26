@@ -59,7 +59,7 @@ TEST(string, strcat) {
     ASSERT_EQ(strcmp(buf, hello_world), 0); 
 }
 
-TEST(string, DISABLED_strxfrm) {
+TEST(string, strxfrm) {
 
     FAIL();
 }
@@ -210,7 +210,7 @@ TEST(string, strstr) {
     ASSERT_EQ(strstr(str, missing), (char *)(NULL));
 }
 
-TEST(string, DISABLED_strtok) {
+TEST(string, strtok) {
     
     FAIL();
 }
@@ -298,7 +298,7 @@ TEST(string, memcpy) {
 
 /* Misc Tests */
 
-TEST(string, DISABLED_strerror) {
+TEST(string, strerror) {
 
     FAIL();
 }
