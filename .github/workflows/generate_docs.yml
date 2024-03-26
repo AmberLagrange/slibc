@@ -18,6 +18,8 @@ jobs:
       run: sudo apt-get install doxygen
 
     - uses: actions/checkout@v1
+      with:
+        submodules: recursive
     
     - name: Make documents
       run: mkdir -p build && cd build && cmake -S .. -B . && doxygen
