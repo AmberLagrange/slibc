@@ -7,7 +7,7 @@ static const char NUMERALS[16] = "0123456789abcdef";
 /* TODO: Implement unused */
 #define UNUSED(x) ((void)(x))
 
-char *__itoa__internal(int int_val, char *buf, size_t len, int radix, int is_unsigned) { /* NOLINT (bugprone-easily-swappable-parameters)*/
+char *__itoa_internal(int int_val, char *buf, size_t len, int radix, int is_unsigned) { /* NOLINT (bugprone-easily-swappable-parameters)*/
 
     unsigned unsigned_val = 0;
     int is_negative = 0;
@@ -48,7 +48,7 @@ char *__itoa__internal(int int_val, char *buf, size_t len, int radix, int is_uns
     return str;
 }
 
-char *__ltoa__internal(long long_val, char *buf, size_t len, int radix, int is_unsigned) { /* NOLINT (bugprone-easily-swappable-parameters)*/
+char *__ltoa_internal(long long_val, char *buf, size_t len, int radix, int is_unsigned) { /* NOLINT (bugprone-easily-swappable-parameters)*/
 
     unsigned long long_unsigned_val = 0;
     int is_negative = 0;

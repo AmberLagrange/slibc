@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24.2)
 
-set(SLIBC_VERSION 0.1.2)
+set(SLIBC_VERSION 0.1.3)
 
 project(slibc VERSION ${SLIBC_VERSION} DESCRIPTION "Educational C Standard Library Project")
 include(GNUInstallDirs)

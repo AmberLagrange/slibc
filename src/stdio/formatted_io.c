@@ -1,17 +1,18 @@
+#include "stdio/put_internal.h"
 #include <stdio.h>
 
 #include <ctype.h>
 #include <stdarg.h>
 #include <stdlib.h>
-
-#include <stdio/put_internal.h>
+#include <string.h>
 
 #include <stdlib/convert.h>
 
 #define UNUSED(x) ((void)(x))
 
 enum {
-    MAX_READ = 256
+    MAX_READ    = 256,
+    MAX_WRITE   = 256
 };
 
 enum {
@@ -284,9 +285,10 @@ __attribute__((always_inline)) void __process_length_mod(char *character, const 
     }
 }
 
-__attribute__((always_inline)) void __process_integer(int *count, int length_mod, FILE *file, va_list args, int *error) {
+__attribute__((always_inline)) void __process_integer(size_t *count, int length_mod, char *buffer, va_list args) {
 
-    int ret = 0;
+    char buf[MAX_INT_LENGTH] = {0};
+    char *integer_start;
 
     switch (length_mod) {
         case DEFAULT_LENGTH:
@@ -294,13 +296,9 @@ __attribute__((always_inline)) void __process_integer(int *count, int length_mod
                             
             int va_int = va_arg(args, int);
 
-            ret = __fputi_internal(va_int, DEC_RADIX, file, 0);
-            if (ret < 0) {
-                *error = ret;
-                return;
-            }
-
-            *count += ret;
+            integer_start = __itoa_internal(va_int, buf, MAX_INT_LENGTH, DEC_RADIX, 0);
+            strcat(buffer, integer_start);
+            *count += strlen(integer_start);
             break;
         }
 
@@ -308,13 +306,9 @@ __attribute__((always_inline)) void __process_integer(int *count, int length_mod
 
             long va_long = va_arg(args, long);
 
-            ret = __fputl_internal(va_long, DEC_RADIX, file, 0);
-            if (ret < 0) {
-                *error = ret;
-                return;
-            }
-
-            *count += ret;
+            integer_start = __ltoa_internal(va_long, buffer, MAX_INT_LENGTH, DEC_RADIX, 0);
+            strcat(buffer, integer_start);
+            *count += strlen(integer_start);
             break;
         }
 
@@ -323,9 +317,10 @@ __attribute__((always_inline)) void __process_integer(int *count, int length_mod
     }
 }
 
-__attribute__((always_inline)) void __process_unsigned(int *count, int length_mod, FILE *file, va_list args, int *error) {
+__attribute__((always_inline)) void __process_unsigned(size_t *count, int length_mod, char *buffer, va_list args) {
 
-    int ret = 0;
+    char buf[MAX_INT_LENGTH] =  {0};
+    char *unsigned_start;
 
     switch (length_mod) {
         case DEFAULT_LENGTH:
@@ -333,27 +328,18 @@ __attribute__((always_inline)) void __process_unsigned(int *count, int length_mo
 
             unsigned va_unsigned = va_arg(args, unsigned);
 
-            ret = __fputi_internal((int)va_unsigned, DEC_RADIX, file, 1);
-            if (ret < 0) {
-                *error = ret;
-                return;
-            }
-
-            *count += ret;
+            __itoa_internal((int)va_unsigned, buf, MAX_INT_LENGTH, DEC_RADIX, 1);
+            unsigned_start = strcat(buffer, buf);
+            *count += strlen(unsigned_start);
             break;
         }
 
         case LONG_LENGTH: {
 
             unsigned long va_long_unsigned = va_arg(args, unsigned long);
-
-            ret= __fputl_internal((long)va_long_unsigned, DEC_RADIX, file, 1);
-            if (ret < 0) {
-                *error = ret;
-                return;
-            }
-
-            *count += ret;
+            unsigned_start = __ltoa_internal(((long)va_long_unsigned), buf, MAX_INT_LENGTH, DEC_RADIX, 1);
+            strcat(buffer, unsigned_start);
+            *count += strlen(unsigned_start);
             break;
         }
 
@@ -363,9 +349,10 @@ __attribute__((always_inline)) void __process_unsigned(int *count, int length_mo
 }
 
 /* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
-__attribute__((always_inline)) void __process_octal_and_hex(int *count, int length_mod, int hash_flag, const char *prefix, int radix, FILE *file, va_list args, int *error) {
+__attribute__((always_inline)) void __process_octal_and_hex(size_t *count, int length_mod, int hash_flag, const char *prefix, int radix, char *buffer, va_list args) {
 
-    int ret = 0;
+    char buf[MAX_INT_LENGTH] =  {0};
+    char *integer_start;
 
     switch (length_mod) {
         case DEFAULT_LENGTH:
@@ -374,23 +361,13 @@ __attribute__((always_inline)) void __process_octal_and_hex(int *count, int leng
             unsigned va_unsigned = va_arg(args, unsigned);
 
             if (va_unsigned && hash_flag) {
-
-                ret = fputs(prefix, file);
-                if (ret < 0) {
-                    *error = ret;
-                    return;
-                }
-
-                *count += 1;
+                strcat(buffer, prefix);
+                *count += strlen(prefix);
             }
 
-            ret = __fputi_internal((int)va_unsigned, radix, file, 1);
-            if (ret < 0) {
-                *error = ret;
-                return;
-            }
-
-            *count += ret;
+            integer_start = __itoa_internal((int)va_unsigned, buf, MAX_INT_LENGTH, radix, 1);
+            strcat(buffer, integer_start);
+            *count += strlen(integer_start);
             break;
         }
 
@@ -400,22 +377,13 @@ __attribute__((always_inline)) void __process_octal_and_hex(int *count, int leng
 
             if (va_long_unsigned && hash_flag) {
 
-                ret = fputs(prefix, file);
-                if (ret < 0) {
-                    *error = ret;
-                    return;
-                }
-
-                *count += 1;
+                strcat(buffer, prefix);
+                *count += strlen(prefix);
             }
 
-            ret = __fputl_internal((long)va_long_unsigned, radix, file, 1);
-            if (ret < 0) {
-                *error = ret;
-                return;
-            }
-
-            *count += ret;
+            integer_start = __ltoa_internal((long)va_long_unsigned, buf, MAX_INT_LENGTH, radix, 1);
+            strcat(buffer, integer_start);
+            *count += strlen(integer_start);
             break;
         }
 
@@ -424,128 +392,85 @@ __attribute__((always_inline)) void __process_octal_and_hex(int *count, int leng
     }
 }
 
-__attribute__((always_inline)) void __process_float(int *count, int length_mod, FILE *file, va_list args, int *error) {
+/* NOLINTNEXTLINE(readability-non-const-parameter) */
+__attribute__((always_inline)) void __process_float(size_t *count, int length_mod, char *buffer, va_list args) {
 
-    int ret = 0;
-
-    switch (length_mod) {
-        case SHORT_LENGTH:
-        case DEFAULT_LENGTH: {
-
-            double va_double = va_arg(args, double);
-
-            ret = __fputf_internal(va_double, file);
-            if (ret < 0) {
-                *error = ret;
-                return;
-            }
-
-            *count += ret;
-            break;
-        }
-
-        case LONG_LENGTH: {
-
-            long double va_long_double = va_arg(args, long double);
-
-            ret = __fputlf_internal(va_long_double, file);
-            if (ret < 0) {
-                *error = ret;
-                return;
-            }
-
-            *count += ret;
-            break;
-        }
-
-        default:
-            break;
-    }
+    UNUSED(count);
+    UNUSED(length_mod);
+    UNUSED(buffer);
+    UNUSED(args);
 }
 
-__attribute__((always_inline)) void __process_char(int *count, FILE *file, va_list args, int *error) {
+__attribute__((always_inline)) void __process_char(size_t *count, char *buffer, va_list args) {
 
+    char buf[2];
     char va_char = va_arg(args, int);
-    int ret = fputc(va_char, file);
-
-    if (ret < 0) {
-        *error = ret;
-        return;
-    }
+    buf[0] = va_char;
+    buf[1] = '\0';
+    strcat(buffer, buf);
 
     *count += 1;
 }
 
-__attribute__((always_inline)) void __process_str(int *count, FILE *file, va_list args, int *error) {
+__attribute__((always_inline)) void __process_str(size_t *count, char *buffer, va_list args) {
 
     char *va_str = va_arg(args, char*);
-    int ret = fputs(va_str, file);
+    strcat(buffer, va_str);
 
-    if (ret < 0) {
-        *error = ret;
-        return;
-    }
-
-    *count += ret;
+    *count += strlen(va_str);
 }
 
-__attribute__((always_inline)) void __process_pointer(int *count, FILE *file, va_list args, int *error) {
+__attribute__((always_inline)) void __process_pointer(size_t *count, char *buffer, va_list args) {
 
-    int ret = 0;
+    char buf[MAX_INT_LENGTH] =  {0};
+    char *pointer_start;
+
     unsigned long va_long_unsigned = (unsigned long)va_arg(args, void*);
 
     if (!va_long_unsigned) {
 
-        ret = fputs("(nil)", file);
-        if (ret < 0) {
-            *error = ret;
-            return;
-        }
-
-        *count += ret;
+        strcat(buffer, "(nil)");
+        *count += strlen("(nil)");
         return;
     }
 
-    ret = fputs("0x", file);
-    if (ret < 0) {
-        *error = ret;
-        return;
-    }
+    strcat(buffer, "0x");
+    *count += strlen("0x");
 
-    *count += ret;
-
-    ret = __fputl_internal((long)va_long_unsigned, HEX_RADIX, file, 1);
-    if (ret < 0) {
-        *error = ret;
-        return;
-    }
-
-    *count += ret;
+    pointer_start = __ltoa_internal((long)va_long_unsigned, buf, MAX_INT_LENGTH, HEX_RADIX, 1);
+    strcat(buffer, pointer_start);
+    *count += strlen(pointer_start);
 }
 
-__attribute__((always_inline)) void __process_count(int count, va_list args) {
+__attribute__((always_inline)) void __process_count(size_t count, va_list args) {
 
     int *va_int_ptr = va_arg(args, int*);
-    *va_int_ptr = count;
+    *va_int_ptr = (int)count;
 }
 
-__attribute__((always_inline)) void __process_character(char character, int *count, FILE *file, int *error) {
+__attribute__((always_inline)) void __process_character(char character, size_t *count, char *buffer) {
 
-    int ret = putc(character, file);
-    if (ret < 0) {
-        *error = ret;
-        return;
-    }
-
+    char buf[2];
+    buf[0] = character;
+    buf[1] = '\0';
+    strcat(buffer, buf);
     *count += 1;
 }
 /* NOLINTEND(bugprone-reserved-identifier) */
 
 int vfprintf(FILE *file, const char *fmt, va_list args) {
 
-    int error = 0;
-    int width = 0;
-    int count = 0;
+    char buffer[MAX_WRITE] = {0};
+    int count = vsprintf(buffer, fmt, args);
+    fputs(buffer, file);
+
+    return count;
+}
+
+int vsprintf(char *buffer, const char *fmt, va_list args) {
+
+    int    width = 0;
+    size_t count = 0;
 
     int text_justification  = RIGHT_JUSTIFIED;
     int sign_prepend        = PREPEND_SIGN_NEGATIVE;
@@ -571,15 +496,15 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
             switch (character) {
                 case 'd':
                 case 'i':
-                    __process_integer(&count, length_mod, file, args, &error);
+                    __process_integer(&count, length_mod, buffer, args);
                     break;
 
                 case 'u':
-                    __process_unsigned(&count, length_mod, file, args, &error);
+                    __process_unsigned(&count, length_mod, buffer, args);
                     break;
 
                 case 'o':
-                    __process_octal_and_hex(&count, length_mod, hash_flag, "0", OCT_RADIX, file, args, &error);
+                    __process_octal_and_hex(&count, length_mod, hash_flag, "0", OCT_RADIX, buffer, args);
                     break;
                 
                 /*
@@ -587,11 +512,11 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
                 */
                 case 'x':
                 case 'X':
-                    __process_octal_and_hex(&count, length_mod, hash_flag, "0x", HEX_RADIX, file, args, &error);
+                    __process_octal_and_hex(&count, length_mod, hash_flag, "0x", HEX_RADIX, buffer, args);
                     break;
 
                 case 'f':
-                    __process_float(&count, length_mod, file, args, &error);
+                    __process_float(&count, length_mod, buffer, args);
                     break;
 
                 case 'e':
@@ -602,15 +527,15 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
                     break;
 
                 case 'c':
-                    __process_char(&count, file, args, &error);
+                    __process_char(&count, buffer, args);
                     break;
                 
                 case 's':
-                    __process_str(&count, file, args, &error);
+                    __process_str(&count, buffer, args);
                     break;
 
                 case 'p':
-                    __process_pointer(&count, file, args, &error);
+                    __process_pointer(&count, buffer, args);
                     break;
                 
                 case 'n':
@@ -618,17 +543,13 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
                     break;
 
                 case '%':
-                    __process_character('%', &count, file, &error);
+                    __process_character('%', &count, buffer);
                     break;
                 default:
                     break;
             }
         } else {
-            __process_character(character, &count, file, &error);
-        }
-
-        if (error < 0) {
-            return error;
+            __process_character(character, &count, buffer);
         }
 
         character = *++fmt;
@@ -640,17 +561,5 @@ int vfprintf(FILE *file, const char *fmt, va_list args) {
     UNUSED(width);
     UNUSED(precision);
 
-    return count;
-}
-
-/*
-TODO: Remove readability-non-const-parameter
-*/
-int vsprintf(char *buffer, const char *fmt, va_list args) { /* NOLINT(readability-non-const-parameter) */
-
-    UNUSED(buffer);
-    UNUSED(fmt);
-    UNUSED(args);
-
-    return 0;
+    return (int)count;
 }

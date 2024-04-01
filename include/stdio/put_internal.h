@@ -23,7 +23,7 @@ enum {
  * @param is_unsigned   If the integer is unsigned.
  * @return int          Returns the number of bytes written to the file. Returns a negative on error.
  */
-int __fputi_internal (int val, int radix, FILE *file, int is_unsigned);
+int __fputi_internal(int val, int radix, FILE *file, int is_unsigned);
 
 /**
  * @brief               Internal use only. Helper function for writing
@@ -35,7 +35,7 @@ int __fputi_internal (int val, int radix, FILE *file, int is_unsigned);
  * @param is_unsigned   If the long integer is unsigned.
  * @return int          Returns the number of bytes written to the file. Returns a negative on error.
  */
-int __fputl_internal (long val, int radix, FILE *file, int is_unsigned);
+int __fputl_internal(long val, int radix, FILE *file, int is_unsigned);
 
 /**
  * @brief               Internal use only. Helper function for writing
@@ -45,7 +45,7 @@ int __fputl_internal (long val, int radix, FILE *file, int is_unsigned);
  * @param file          The file to write the double to.
  * @return int          Returns the number of bytes written to the file. Returns a negative on error.
  */
-int __fputf_internal (double val, FILE *file);
+int __fputf_internal(double val, FILE *file);
 
 /**
  * @brief               Internal use only. Helper function for writing
