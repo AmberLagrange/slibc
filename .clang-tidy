@@ -2,5 +2,7 @@ Checks: '-*,bugprone-*,cert-err34-c,cert-flp30-c,misc-*,performance-*,readabilit
 CheckOptions:
     - key: bugprone-argument-comment.StrictMode
       value: 1
+    - key: readability-function-cognitive-complexity.IgnoreMacros
+      value: 1
 FormatStyle: 'file'
 HeaderFilterRegex: '.*'

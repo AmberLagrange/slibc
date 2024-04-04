@@ -12,9 +12,9 @@ char *strncpy(char *dst, const char *src, size_t count) {
     size_t len = strlen(src);
 
     if (count < len) {
-        memcpy(dst, src, count);
+        (void)memcpy(dst, src, count);
     } else {
-        memcpy(dst, src, len);
+        (void)memcpy(dst, src, len);
 
         while (len < count) {
             dst[len++] = '\0';
@@ -59,9 +59,8 @@ char *strncat(char *dst, const char *src, size_t count) {
 /*
 TODO: Implement Locale
 */
-
 size_t strxfrm(char *dst, const char *src, size_t count) {
 
-    strncpy(dst, src, count);
-    return 0;
+    (void)strncpy(dst, src, count);
+    return strlen(dst);
 }

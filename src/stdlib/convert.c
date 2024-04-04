@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdlib/convert.h>
@@ -50,7 +51,7 @@ char *__itoa_internal(int int_val, char *buf, size_t len, int radix, int is_unsi
 
 char *__ltoa_internal(long long_val, char *buf, size_t len, int radix, int is_unsigned) { /* NOLINT (bugprone-easily-swappable-parameters)*/
 
-    unsigned long long_unsigned_val = 0;
+    unsigned long long_unsigned_val = 0UL;
     int is_negative = 0;
     char *str = &(buf[len - 1]);
     buf[len] = '\0';
@@ -91,9 +92,9 @@ char *__ltoa_internal(long long_val, char *buf, size_t len, int radix, int is_un
 }
 
 double atof(const char *str) {
-    UNUSED(str);
 
-    return 0;
+    UNUSED(str);
+    return 0.0F;
 }
 
 int atoi(const char *str) {
@@ -111,33 +112,50 @@ int atoi(const char *str) {
 }
 
 long atol(const char *str) {
-    UNUSED(str);
     
-    return 0;
+    UNUSED(str);
+    return 0L;
 }
 
-/*
-TODO: Properly implement strtol
+/* TODO: Other bases
+         For now, just working in base 10
 */
-
 long strtol(const char *str, char **str_end, int radix) {
-    UNUSED(str_end);
-    UNUSED(radix);
-    
-    return atoi(str); /* NOLINT */
+
+    long value = 0L;
+    int is_negative = 0;
+
+    while(isspace(*str++)) {} /* Ignore leading whitespace */
+
+    if(*str == '-') {
+        is_negative = 1;
+        str++;
+    } else if (*str == '+') {
+        str++;
+    }
+
+    while(isdigit(*str)) {
+        value *= radix;
+        value += *str - '0';
+        ++str;
+    }
+
+    if(str_end) {
+        *str_end = (char *)str;
+    }
+
+    return (is_negative) ? -value : value;
 }
 
 unsigned long strtoul(const char *str, char **str_end, int radix) {
-    UNUSED(str);
-    UNUSED(str_end);
-    UNUSED(radix);
-    
-    return 0;
+
+    return (unsigned long)strtol(str, str_end, radix);
 }
 
 double strtod(const char *str, char **str_end) {
+
     UNUSED(str);
     UNUSED(str_end);
     
-    return 0;
+    return 0.0F;
 }

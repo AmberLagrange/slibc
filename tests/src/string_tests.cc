@@ -3,17 +3,27 @@
 
 #include <gtest/gtest-spi.h>
 
+enum {
+    BUFFER_SIZE = 16,
+    FILL_DATA   = 0xff,
+    D           = 0xd,
+    E           = 0xe,
+    A           = 0xa,
+    B           = 0xb,
+    F           = 0xf
+};
+
 /*
 String Manipulation Tests
 */
 
 TEST(string, strcpy) {
 
-    char buf[16];
+    char buf[BUFFER_SIZE];
     const char *hello_world = "Hello, World!";
     const char *empty       = "";
 
-    memset(buf, 0xff, sizeof(buf) / sizeof(buf[0]));
+    memset(buf, FILL_DATA, sizeof(buf) / sizeof(buf[0]));
 
     strcpy(buf, hello_world);
     ASSERT_EQ(strcmp(buf, hello_world), 0);
@@ -24,13 +34,13 @@ TEST(string, strcpy) {
 
 TEST(string, strncpy) {
 
-    char buf[16];
+    char buf[BUFFER_SIZE];
     const char *hello_world = "Hello, World!";
     const char *empty       = "";
 
     size_t len = strlen(hello_world);
 
-    memset(buf, 0xff, sizeof(buf) / sizeof(buf[0]));
+    memset(buf, FILL_DATA, sizeof(buf) / sizeof(buf[0]));
 
     strncpy(buf, hello_world, len + 1);
     ASSERT_EQ(strcmp(buf, hello_world), 0);
@@ -47,7 +57,7 @@ TEST(string, strncpy) {
 
 TEST(string, strcat) {
     
-    char buf[16] = "";
+    char buf[BUFFER_SIZE] = "";
     const char *hello       = "Hello,";
     const char *world       = " World!";
     const char *hello_world = "Hello, World!";
@@ -221,7 +231,7 @@ Char Array Manipulation Tests
 
 TEST(string, memchr) {
 
-    char buf[16] = {
+    char buf[BUFFER_SIZE] = {
         '0', '1', '2', '3',
         '4', '5', '6', '7',
         '8', '9', 'a', 'b',
@@ -254,19 +264,19 @@ TEST(string, memcmp) {
 
 TEST(string, memset) {
 
-    unsigned i;
+    unsigned index;
 
-    char buf[16] = { 0 };
+    char buf[BUFFER_SIZE] = { 0 };
     unsigned size = sizeof(buf) / sizeof(buf[0]);
 
-    for (i = 0; i < size; ++i) {
-        ASSERT_EQ(buf[i], 0);
+    for (index = 0; index < size; ++index) {
+        ASSERT_EQ(buf[index], 0);
     }
 
     memset(buf, 1, size);
 
-    for (i = 0; i < size; ++i) {
-        ASSERT_EQ(buf[i], 1);
+    for (index = 0; index < size; ++index) {
+        ASSERT_EQ(buf[index], 1);
     }
 
 }
@@ -285,8 +295,8 @@ TEST(string, memmove) {
 
 TEST(string, memcpy) {
 
-    char buf_1[8] = { 0 };
-    char buf_2[8] = { 0xd, 0xe, 0xa, 0xd, 0xb, 0xe, 0xe, 0xf };
+    char buf_1[BUFFER_SIZE / 2] = { 0 };
+    char buf_2[BUFFER_SIZE / 2] = { D, E, A, D, B, E, E, F };
 
     size_t size = sizeof(buf_1) / sizeof(buf_1[0]);
 

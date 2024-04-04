@@ -94,7 +94,7 @@ int __vfscanf_internal(FILE *file, const char *fmt, va_list args) {
                 break;
 
             default:
-                fprintf(stderr, "Format %%%c not supported yet!\n", character_read);
+                (void)fprintf(stderr, "Format %%%c not supported yet!\n", character_read);
                 abort();
             }
         }
@@ -206,265 +206,264 @@ int vprintf(const char *fmt, va_list args) {
 }
 
 /* NOLINTBEGIN(bugprone-reserved-identifier) */
-/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
-__attribute__((always_inline)) void __process_flags(char *character, const char **fmt_ptr, int *text_justification, int *sign_prepend, int *hash_flag, int *number_padding) {
+#define __PROCESS_FLAGS(character, fmt, text_justification, sign_prepend, hash_flag, number_padding)        \
+do {                                                                                                        \
+    switch(character) {                                                                                     \
+        case '-':                                                                                           \
+            (text_justification) = LEFT_JUSTIFIED;                                                          \
+            (character)          = *(fmt)++;                                                                \
+            break;                                                                                          \
+                                                                                                            \
+        case '+':                                                                                           \
+            (sign_prepend) = PREPEND_SIGN_ALWAYS;                                                           \
+            (character)    = *(fmt)++;                                                                      \
+            break;                                                                                          \
+                                                                                                            \
+        case ' ':                                                                                           \
+            (sign_prepend) = PREPEND_SIGN_SPACE;                                                            \
+            (character)    = *(fmt)++;                                                                      \
+            break;                                                                                          \
+                                                                                                            \
+        case '#':                                                                                           \
+            (hash_flag) = HASH_FLAG_ENABLED;                                                                \
+            (character) = *(fmt)++;                                                                         \
+            break;                                                                                          \
+                                                                                                            \
+        case '0':                                                                                           \
+            (number_padding) = LEFT_PAD_ZERO;                                                               \
+            (character)      = *(fmt)++;                                                                    \
+            break;                                                                                          \
+        default:                                                                                            \
+            break;                                                                                          \
+    }                                                                                                       \
+} while (0)
 
-    switch(*character) {
-        case '-':
-            *text_justification = LEFT_JUSTIFIED;
-            *character = *(++(*fmt_ptr));
-            break;
-            
-        case '+':
-            *sign_prepend = PREPEND_SIGN_ALWAYS;
-            *character = *(++(*fmt_ptr));
-            break;
+#define __PROCESS_WIDTH(character, fmt, width, args)                                                        \
+do {                                                                                                        \
+    if ((character) == '*') {                                                                               \
+        (width)     = va_arg(args, int);                                                                    \
+        (character) = *(fmt)++;                                                                             \
+    } else {                                                                                                \
+        while (isdigit(character)) {                                                                        \
+            (width)    *= DEC_RADIX;                                                                        \
+            (width)    += ((character) - '0');                                                              \
+            (character) = *(fmt)++;                                                                         \
+        }                                                                                                   \
+    }                                                                                                       \
+} while (0)
 
-        case ' ':
-            *sign_prepend = PREPEND_SIGN_SPACE;
-            *character = *(++(*fmt_ptr));
-            break;
+#define __PROCESS_PRECISION(character, fmt, precision)                                                      \
+do {                                                                                                        \
+    if ((character) == '.') {                                                                               \
+        (character) = *(fmt)++;                                                                             \
+        (precision) = 0;                                                                                    \
+                                                                                                            \
+        while (isdigit(character)) {                                                                        \
+            (precision) *= DEC_RADIX;                                                                       \
+            (precision) += ((character) - '0');                                                             \
+            (character) = *(fmt)++;                                                                         \
+        }                                                                                                   \
+    }                                                                                                       \
+} while (0)
 
-        case '#':
-            *hash_flag = HASH_FLAG_ENABLED;
-            *character = *(++(*fmt_ptr));
-            break;
+#define __PROCESS_LENGTH_MOD(character, fmt, length_mod)                                                    \
+do {                                                                                                        \
+    switch (character) {                                                                                    \
+        case 'h':                                                                                           \
+            (length_mod) = SHORT_LENGTH;                                                                    \
+            (character)  = *(fmt)++;                                                                        \
+            break;                                                                                          \
+                                                                                                            \
+        case 'l':                                                                                           \
+        case 'L':                                                                                           \
+            (length_mod) = LONG_LENGTH;                                                                     \
+            (character)  = *(fmt)++;                                                                        \
+            break;                                                                                          \
+        default:                                                                                            \
+            break;                                                                                          \
+    }                                                                                                       \
+} while (0)
 
-        case '0':
-            *number_padding = LEFT_PAD_ZERO;
-            *character = *(++(*fmt_ptr));
-            break;
-        default:
-            break;
-    }
-}
+#define __PROCESS_INTEGER(count, length_mod, buffer, args)                                                  \
+do {                                                                                                        \
+    char buf[MAX_INT_LENGTH] = {0};                                                                         \
+    char *integer_start;                                                                                    \
+                                                                                                            \
+    switch (length_mod) {                                                                                   \
+        case DEFAULT_LENGTH:                                                                                \
+        case SHORT_LENGTH: {                                                                                \
+                                                                                                            \
+            int va_int = va_arg(args, int);                                                                 \
+                                                                                                            \
+            integer_start = __itoa_internal(va_int, buf, MAX_INT_LENGTH, DEC_RADIX, 0);                     \
+            (void)strcat(buffer, integer_start);                                                            \
+            (count) += strlen(integer_start);                                                               \
+            break;                                                                                          \
+        }                                                                                                   \
+                                                                                                            \
+        case LONG_LENGTH: {                                                                                 \
+                                                                                                            \
+            long va_long = va_arg(args, long);                                                              \
+                                                                                                            \
+            integer_start = __ltoa_internal(va_long, buffer, MAX_INT_LENGTH, DEC_RADIX, 0);                 \
+            (void)strcat(buffer, integer_start);                                                            \
+            (count) += strlen(integer_start);                                                               \
+            break;                                                                                          \
+        }                                                                                                   \
+                                                                                                            \
+        default:                                                                                            \
+            break;                                                                                          \
+    }                                                                                                       \
+} while (0)
 
-__attribute__((always_inline)) void __process_width(char *character, const char **fmt_ptr, int *width, va_list args) {
+#define __PROCESS_UNSIGNED(count, length_mod, buffer, args)                                                 \
+do {                                                                                                        \
+    char buf[MAX_INT_LENGTH] =  {0};                                                                        \
+    char *unsigned_start;                                                                                   \
+                                                                                                            \
+    switch (length_mod) {                                                                                   \
+        case DEFAULT_LENGTH:                                                                                \
+        case SHORT_LENGTH: {                                                                                \
+                                                                                                            \
+            unsigned va_unsigned = va_arg(args, unsigned);                                                  \
+                                                                                                            \
+            unsigned_start = __itoa_internal((int)va_unsigned, buf, MAX_INT_LENGTH, DEC_RADIX, 1);          \
+            (void)strcat(buffer, buf);                                                                      \
+            (count) += strlen(unsigned_start);                                                              \
+            break;                                                                                          \
+        }                                                                                                   \
+                                                                                                            \
+        case LONG_LENGTH: {                                                                                 \
+                                                                                                            \
+            unsigned long va_long_unsigned = va_arg(args, unsigned long);                                   \
+            unsigned_start = __ltoa_internal(((long)va_long_unsigned), buf, MAX_INT_LENGTH, DEC_RADIX, 1);  \
+            (void)strcat(buffer, unsigned_start);                                                           \
+            (count) += strlen(unsigned_start);                                                              \
+            break;                                                                                          \
+        }                                                                                                   \
+                                                                                                            \
+        default:                                                                                            \
+            break;                                                                                          \
+    }                                                                                                       \
+} while (0)
 
-    if (*character == '*') {
-        *width = va_arg(args, int);
-        *character = *(++(*fmt_ptr));
-    } else {
-        while (isdigit(*character)) {
-            *width *= DEC_RADIX;
-            *width += (*character - '0');
-            *character = *(++(*fmt_ptr));
-        }
-    }
-}
+#define __PROCESS_OCTAL_AND_HEX(count, length_mod, hash_flag, prefix, radix, buffer, args)                  \
+do {                                                                                                        \
+    char buf[MAX_INT_LENGTH] =  {0};                                                                        \
+    char *integer_start;                                                                                    \
+                                                                                                            \
+    switch (length_mod) {                                                                                   \
+        case DEFAULT_LENGTH:                                                                                \
+        case SHORT_LENGTH: {                                                                                \
+                                                                                                            \
+            unsigned va_unsigned = va_arg(args, unsigned);                                                  \
+                                                                                                            \
+            if (va_unsigned && (hash_flag)) {                                                               \
+                (void)strcat(buffer, prefix);                                                               \
+                (count) += strlen(prefix);                                                                  \
+            }                                                                                               \
+                                                                                                            \
+            integer_start = __itoa_internal((int)va_unsigned, buf, MAX_INT_LENGTH, radix, 1);               \
+            (void)strcat(buffer, integer_start);                                                            \
+            (count) += strlen(integer_start);                                                               \
+            break;                                                                                          \
+        }                                                                                                   \
+                                                                                                            \
+        case LONG_LENGTH: {                                                                                 \
+                                                                                                            \
+            unsigned long va_long_unsigned = va_arg(args, unsigned long);                                   \
+                                                                                                            \
+            if (va_long_unsigned && (hash_flag)) {                                                          \
+                                                                                                            \
+                (void)strcat(buffer, prefix);                                                               \
+                (count) += strlen(prefix);                                                                  \
+            }                                                                                               \
+                                                                                                            \
+            integer_start = __ltoa_internal((long)va_long_unsigned, buf, MAX_INT_LENGTH, radix, 1);         \
+            (void)strcat(buffer, integer_start);                                                            \
+            (count) += strlen(integer_start);                                                               \
+            break;                                                                                          \
+        }                                                                                                   \
+                                                                                                            \
+        default:                                                                                            \
+            break;                                                                                          \
+    }                                                                                                       \
+} while (0)
 
-__attribute__((always_inline)) void __process_precision(char *character, const char **fmt_ptr, int *precision) {
 
-    if (*character == '.') {
-        *character = *(++(*fmt_ptr));
-        *precision = 0;
+#define __PROCESS_FLOAT(count, length_mod, buffer, args)                                                    \
+do {                                                                                                        \
+    UNUSED(count);                                                                                          \
+    UNUSED(length_mod);                                                                                     \
+    UNUSED(buffer);                                                                                         \
+    UNUSED(args);                                                                                           \
+} while (0)
 
-        while (isdigit(*character)) {
-            *precision *= DEC_RADIX;
-            *precision += (*character - '0');
-            *character = *(++(*fmt_ptr));
-        }
-    }
-}
+#define __PROCESS_CHAR(count, buffer, args)                                                                 \
+do {                                                                                                        \
+    char buf[2];                                                                                            \
+    char va_char = va_arg(args, int);                                                                       \
+    buf[0] = va_char;                                                                                       \
+    buf[1] = '\0';                                                                                          \
+    (void)strcat(buffer, buf);                                                                              \
+    (count) += 1;                                                                                           \
+} while (0)
 
-__attribute__((always_inline)) void __process_length_mod(char *character, const char **fmt_ptr, int *length_mod) {
+#define __PROCESS_STR(count, buffer, args)                                                                  \
+do {                                                                                                        \
+    char *va_str = va_arg(args, char*);                                                                     \
+    (void)strcat(buffer, va_str);                                                                           \
+    (count) += strlen(va_str);                                                                              \
+} while (0)
 
-    switch (*character) {
-        case 'h':
-            *length_mod = SHORT_LENGTH;
-            *character = *(++(*fmt_ptr));
-            break;
+#define __PROCESS_POINTER(count, buffer, args)                                                              \
+do {                                                                                                        \
+    char buf[MAX_INT_LENGTH] =  {0};                                                                        \
+    char *pointer_start;                                                                                    \
+                                                                                                            \
+    unsigned long va_long_unsigned = (unsigned long)va_arg(args, void*);                                    \
+                                                                                                            \
+    if (!va_long_unsigned) {                                                                                \
+                                                                                                            \
+        (void)strcat(buffer, "(nil)");                                                                      \
+        (count) += strlen("(nil)");                                                                         \
+        break;                                                                                              \
+    }                                                                                                       \
+                                                                                                            \
+    (void)strcat(buffer, "0x");                                                                             \
+    (count) += strlen("0x");                                                                                \
+                                                                                                            \
+    pointer_start = __ltoa_internal((long)va_long_unsigned, buf, MAX_INT_LENGTH, HEX_RADIX, 1);             \
+    (void)strcat(buffer, pointer_start);                                                                    \
+    (count) += strlen(pointer_start);                                                                       \
+} while (0)
 
-        case 'l':
-        case 'L':
-            *length_mod = LONG_LENGTH;
-            *character = *(++(*fmt_ptr));
-            break;
-        default:
-            break;
-    }
-}
+#define __PROCESS_COUNT(count, args)                                                                        \
+do {                                                                                                        \
+    int *va_int_ptr = va_arg(args, int*);                                                                   \
+    *va_int_ptr = (int)(count);                                                                             \
+} while (0)
 
-__attribute__((always_inline)) void __process_integer(size_t *count, int length_mod, char *buffer, va_list args) {
-
-    char buf[MAX_INT_LENGTH] = {0};
-    char *integer_start;
-
-    switch (length_mod) {
-        case DEFAULT_LENGTH:
-        case SHORT_LENGTH: {
-                            
-            int va_int = va_arg(args, int);
-
-            integer_start = __itoa_internal(va_int, buf, MAX_INT_LENGTH, DEC_RADIX, 0);
-            strcat(buffer, integer_start);
-            *count += strlen(integer_start);
-            break;
-        }
-
-        case LONG_LENGTH: {
-
-            long va_long = va_arg(args, long);
-
-            integer_start = __ltoa_internal(va_long, buffer, MAX_INT_LENGTH, DEC_RADIX, 0);
-            strcat(buffer, integer_start);
-            *count += strlen(integer_start);
-            break;
-        }
-
-        default:
-            break;
-    }
-}
-
-__attribute__((always_inline)) void __process_unsigned(size_t *count, int length_mod, char *buffer, va_list args) {
-
-    char buf[MAX_INT_LENGTH] =  {0};
-    char *unsigned_start;
-
-    switch (length_mod) {
-        case DEFAULT_LENGTH:
-        case SHORT_LENGTH: {
-
-            unsigned va_unsigned = va_arg(args, unsigned);
-
-            __itoa_internal((int)va_unsigned, buf, MAX_INT_LENGTH, DEC_RADIX, 1);
-            unsigned_start = strcat(buffer, buf);
-            *count += strlen(unsigned_start);
-            break;
-        }
-
-        case LONG_LENGTH: {
-
-            unsigned long va_long_unsigned = va_arg(args, unsigned long);
-            unsigned_start = __ltoa_internal(((long)va_long_unsigned), buf, MAX_INT_LENGTH, DEC_RADIX, 1);
-            strcat(buffer, unsigned_start);
-            *count += strlen(unsigned_start);
-            break;
-        }
-
-        default:
-            break;
-    }
-}
-
-/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters) */
-__attribute__((always_inline)) void __process_octal_and_hex(size_t *count, int length_mod, int hash_flag, const char *prefix, int radix, char *buffer, va_list args) {
-
-    char buf[MAX_INT_LENGTH] =  {0};
-    char *integer_start;
-
-    switch (length_mod) {
-        case DEFAULT_LENGTH:
-        case SHORT_LENGTH: {
-
-            unsigned va_unsigned = va_arg(args, unsigned);
-
-            if (va_unsigned && hash_flag) {
-                strcat(buffer, prefix);
-                *count += strlen(prefix);
-            }
-
-            integer_start = __itoa_internal((int)va_unsigned, buf, MAX_INT_LENGTH, radix, 1);
-            strcat(buffer, integer_start);
-            *count += strlen(integer_start);
-            break;
-        }
-
-        case LONG_LENGTH: {
-
-            unsigned long va_long_unsigned = va_arg(args, unsigned long);
-
-            if (va_long_unsigned && hash_flag) {
-
-                strcat(buffer, prefix);
-                *count += strlen(prefix);
-            }
-
-            integer_start = __ltoa_internal((long)va_long_unsigned, buf, MAX_INT_LENGTH, radix, 1);
-            strcat(buffer, integer_start);
-            *count += strlen(integer_start);
-            break;
-        }
-
-        default:
-            break;
-    }
-}
-
-/* NOLINTNEXTLINE(readability-non-const-parameter) */
-__attribute__((always_inline)) void __process_float(size_t *count, int length_mod, char *buffer, va_list args) {
-
-    UNUSED(count);
-    UNUSED(length_mod);
-    UNUSED(buffer);
-    UNUSED(args);
-}
-
-__attribute__((always_inline)) void __process_char(size_t *count, char *buffer, va_list args) {
-
-    char buf[2];
-    char va_char = va_arg(args, int);
-    buf[0] = va_char;
-    buf[1] = '\0';
-    strcat(buffer, buf);
-
-    *count += 1;
-}
-
-__attribute__((always_inline)) void __process_str(size_t *count, char *buffer, va_list args) {
-
-    char *va_str = va_arg(args, char*);
-    strcat(buffer, va_str);
-
-    *count += strlen(va_str);
-}
-
-__attribute__((always_inline)) void __process_pointer(size_t *count, char *buffer, va_list args) {
-
-    char buf[MAX_INT_LENGTH] =  {0};
-    char *pointer_start;
-
-    unsigned long va_long_unsigned = (unsigned long)va_arg(args, void*);
-
-    if (!va_long_unsigned) {
-
-        strcat(buffer, "(nil)");
-        *count += strlen("(nil)");
-        return;
-    }
-
-    strcat(buffer, "0x");
-    *count += strlen("0x");
-
-    pointer_start = __ltoa_internal((long)va_long_unsigned, buf, MAX_INT_LENGTH, HEX_RADIX, 1);
-    strcat(buffer, pointer_start);
-    *count += strlen(pointer_start);
-}
-
-__attribute__((always_inline)) void __process_count(size_t count, va_list args) {
-
-    int *va_int_ptr = va_arg(args, int*);
-    *va_int_ptr = (int)count;
-}
-
-__attribute__((always_inline)) void __process_character(char character, size_t *count, char *buffer) {
-
-    char buf[2];
-    buf[0] = character;
-    buf[1] = '\0';
-    strcat(buffer, buf);
-    *count += 1;
-}
+#define __PROCESS_CHARACTER(character, count, buffer)                                                       \
+do {                                                                                                        \
+    char buf[2];                                                                                            \
+    buf[0] = character;                                                                                     \
+    buf[1] = '\0';                                                                                          \
+    (void)strcat(buffer, buf);                                                                              \
+    (count) += 1;                                                                                           \
+} while (0)
 /* NOLINTEND(bugprone-reserved-identifier) */
 
 int vfprintf(FILE *file, const char *fmt, va_list args) {
 
     char buffer[MAX_WRITE] = {0};
-    int count = vsprintf(buffer, fmt, args);
-    fputs(buffer, file);
+    int count_vsprintf = vsprintf(buffer, fmt, args);
+    int count_fputs    = fputs(buffer, file);
 
-    return count;
+    /* TODO: Check counts are the same */
+    UNUSED(count_fputs);
+
+    return count_vsprintf;
 }
 
 int vsprintf(char *buffer, const char *fmt, va_list args) {
@@ -488,23 +487,23 @@ int vsprintf(char *buffer, const char *fmt, va_list args) {
 
             character = *++fmt;
 
-            __process_flags(&character, &fmt, &text_justification, &sign_prepend, &hash_flag, &number_padding);
-            __process_width(&character, &fmt, &width, args);
-            __process_precision(&character, &fmt, &precision);
-            __process_length_mod(&character, &fmt, &length_mod);
+            __PROCESS_FLAGS(character, fmt, text_justification, sign_prepend, hash_flag, number_padding);
+            __PROCESS_WIDTH(character, fmt, width, args);
+            __PROCESS_PRECISION(character, fmt, precision);
+            __PROCESS_LENGTH_MOD(character, fmt, length_mod);
 
             switch (character) {
                 case 'd':
                 case 'i':
-                    __process_integer(&count, length_mod, buffer, args);
+                    __PROCESS_INTEGER(count, length_mod, buffer, args);
                     break;
 
                 case 'u':
-                    __process_unsigned(&count, length_mod, buffer, args);
+                    __PROCESS_UNSIGNED(count, length_mod, buffer, args);
                     break;
 
                 case 'o':
-                    __process_octal_and_hex(&count, length_mod, hash_flag, "0", OCT_RADIX, buffer, args);
+                    __PROCESS_OCTAL_AND_HEX(count, length_mod, hash_flag, "0", OCT_RADIX, buffer, args);
                     break;
                 
                 /*
@@ -512,11 +511,11 @@ int vsprintf(char *buffer, const char *fmt, va_list args) {
                 */
                 case 'x':
                 case 'X':
-                    __process_octal_and_hex(&count, length_mod, hash_flag, "0x", HEX_RADIX, buffer, args);
+                    __PROCESS_OCTAL_AND_HEX(count, length_mod, hash_flag, "0x", HEX_RADIX, buffer, args);
                     break;
 
                 case 'f':
-                    __process_float(&count, length_mod, buffer, args);
+                    __PROCESS_FLOAT(count, length_mod, buffer, args);
                     break;
 
                 case 'e':
@@ -527,29 +526,29 @@ int vsprintf(char *buffer, const char *fmt, va_list args) {
                     break;
 
                 case 'c':
-                    __process_char(&count, buffer, args);
+                    __PROCESS_CHAR(count, buffer, args);
                     break;
                 
                 case 's':
-                    __process_str(&count, buffer, args);
+                    __PROCESS_STR(count, buffer, args);
                     break;
 
                 case 'p':
-                    __process_pointer(&count, buffer, args);
+                    __PROCESS_POINTER(count, buffer, args);
                     break;
                 
                 case 'n':
-                    __process_count(count, args);
+                    __PROCESS_COUNT(count, args);
                     break;
 
                 case '%':
-                    __process_character('%', &count, buffer);
+                    __PROCESS_CHARACTER('%', count, buffer);
                     break;
                 default:
                     break;
             }
         } else {
-            __process_character(character, &count, buffer);
+            __PROCESS_CHARACTER(character, count, buffer);
         }
 
         character = *++fmt;

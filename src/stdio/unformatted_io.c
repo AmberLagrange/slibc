@@ -35,11 +35,13 @@ char *fgets(char *str, int count, FILE *file) { /* NOLINT(readability-non-const-
 
 int fputc(int character, FILE *file) {
 
-    unsigned char written = (unsigned char)character;
+    unsigned char char_written = (unsigned char)character;
+    int num_written = write(file->fd, (char *)(&char_written), 1);
 
-    write(file->fd, (char *)(&written), 1);
+    /* TODO: Check that num_written is 1 */
+    UNUSED(num_written);
 
-    return written;
+    return char_written;
 }
 
 int putc(int character, FILE *file) {

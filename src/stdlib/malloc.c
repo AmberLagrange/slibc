@@ -3,7 +3,6 @@
 #include <mman/mman.h>
 #include <string.h>
 
-/* NOLINTNEXTLINE(bugprone-reserved-identifier) */
 enum {
     MAX_ALIGNMENT = 16
 };
@@ -11,7 +10,7 @@ enum {
 void *malloc(unsigned long size) {
 
     unsigned char *ptr = NULL;
-    unsigned long new_size = 0;
+    unsigned long new_size = 0UL;
 
     if (!size) {
         return NULL;
@@ -41,9 +40,9 @@ void *realloc(void *ptr, unsigned long size) {
     }
 
     if (size < old_size) {
-        memcpy(new_ptr, ptr, size);
+        (void)memcpy(new_ptr, ptr, size);
     } else {
-        memcpy(new_ptr, ptr, old_size);
+        (void)memcpy(new_ptr, ptr, old_size);
     }
 
     free(ptr);
@@ -61,5 +60,5 @@ void free(void *ptr) {
     }
 
     size = *((unsigned char *)ptr - MAX_ALIGNMENT); /* Get the size stored before the pointer */
-    munmap(ptr, size);
+    (void)munmap(ptr, size);
 }

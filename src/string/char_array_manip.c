@@ -59,8 +59,8 @@ void *memset(void *str, int character, size_t count) {
 void *memmove(void *dst, const void *src, size_t count) {
 
     char *tmp = malloc(count);
-    memcpy(tmp, src, count);
-    memcpy(dst, tmp, count);
+    (void)memcpy(tmp, src, count);
+    (void)memcpy(dst, tmp, count);
     free(tmp);
 
     return dst;
