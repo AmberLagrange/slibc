@@ -30,7 +30,7 @@ jobs:
         CC: clang
 
     - name: Run Tests
-      run: tests/build/tests
+      run: tests/build/tests 2> /dev/null
       env:
         CC: clang
         CXX: clang++
