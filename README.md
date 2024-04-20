@@ -93,7 +93,7 @@ to not link with ``stdlib``. The ``execute_process`` is there in the event addit
 
 ## Tests
 
-In the ``tests`` directory there is a series of tests using the [GoogleTest](https://github.com/google/googletest) framework. Testing these yourself is done similary to building and executing the example program.
+In the ``tests`` directory there is a series of tests for each off the standard library functions. Testing these yourself is done similary to building and executing the example program.
 
 ```bash
 $ cd tests
@@ -105,7 +105,7 @@ $ ./tests
 ```
 ### Note
 
-As the tests are in C++ and this is a C standard library, linking the programs in potentially override some C++ standard library code. If these symblols are not weak, this can lead to UB. Testing with ``clang++`` appears to work for the time being. This may be fixed in the future.
+Testing is incomplete/
 
 ## Documentation
 

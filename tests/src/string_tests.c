@@ -1,7 +1,6 @@
-#include <string.h>
-#include <gtest/gtest.h>
+#include "tests.h"
 
-#include <gtest/gtest-spi.h>
+#include <string.h>
 
 enum {
     BUFFER_SIZE = 16,
@@ -17,11 +16,13 @@ enum {
 String Manipulation Tests
 */
 
-TEST(string, strcpy) {
+int test_string_strcpy(void) {
 
     char buf[BUFFER_SIZE];
     const char *hello_world = "Hello, World!";
     const char *empty       = "";
+
+    printf("strcpy:\t\t\t\t");
 
     memset(buf, FILL_DATA, sizeof(buf) / sizeof(buf[0]));
 
@@ -30,15 +31,19 @@ TEST(string, strcpy) {
 
     strcpy(buf, empty);
     ASSERT_EQ(buf[0], '\0');
+
+    PASSED;
 }
 
-TEST(string, strncpy) {
+int test_string_strncpy(void) {
 
     char buf[BUFFER_SIZE];
     const char *hello_world = "Hello, World!";
     const char *empty       = "";
 
     size_t len = strlen(hello_world);
+
+    printf("strncpy:\t\t\t");
 
     memset(buf, FILL_DATA, sizeof(buf) / sizeof(buf[0]));
 
@@ -53,47 +58,61 @@ TEST(string, strncpy) {
     strncpy(buf, empty, 2);
     ASSERT_EQ(buf[0], '\0');
     ASSERT_EQ(buf[1], '\0');
+
+    PASSED;
 }
 
-TEST(string, strcat) {
+int test_string_strcat(void) {
     
     char buf[BUFFER_SIZE] = "";
     const char *hello       = "Hello,";
     const char *world       = " World!";
     const char *hello_world = "Hello, World!";
 
+    printf("strcat:\t\t\t\t");
+
     strcat(buf, hello);
     ASSERT_EQ(strcmp(buf, hello), 0);
 
     strcat(buf, world);
-    ASSERT_EQ(strcmp(buf, hello_world), 0); 
+    ASSERT_EQ(strcmp(buf, hello_world), 0);
+
+    PASSED;
 }
 
-TEST(string, DISABLED_strxfrm) {
+int test_string_strxfrm(void) {
 
-    FAIL();
+    printf("strxfrm:\t\t\t");
+
+    DISABLED;
 }
 
 /*
 String Examination Tests
 */
 
-TEST(string, strlen) {
+int test_string_strlen(void) {
 
     const char *hello_world = "Hello, World!";
     const char *empty       = "";
 
+    printf("strlen:\t\t\t\t");
+
     ASSERT_EQ(strlen(hello_world), 13);
     ASSERT_EQ(strlen(empty), 0);
+
+    PASSED;
 }
 
-TEST(string, strcmp) {
+int test_string_strcmp(void) {
 
     const char *hello         = "Hello,";
     const char *world         = " World";
     const char *hello_world   = "Hello, World!";
     const char *hello_world_2 = "Hello, World!";
     const char *empty         = "";
+    
+    printf("strcmp:\t\t\t\t");
 
     ASSERT_LT(strcmp(empty, hello), 0);
     ASSERT_GT(strcmp(world, empty), 0);
@@ -102,9 +121,11 @@ TEST(string, strcmp) {
     ASSERT_GT(strcmp(hello, world), 0);
 
     ASSERT_EQ(strcmp(hello_world, hello_world_2), 0);
+
+    PASSED;
 }
 
-TEST(string, strncmp) {
+int test_string_strncmp(void) {
 
     const char *hello         = "Hello,";
     const char *world         = " World";
@@ -114,6 +135,8 @@ TEST(string, strncmp) {
 
     size_t len_1 = strlen(hello);
     size_t len_2 = strlen(hello_world);
+
+    printf("strncmp:\t\t\t");
 
     ASSERT_LT(strncmp(space, hello, 1), 0);
     ASSERT_EQ(strncmp(space, world, 1), 0);
@@ -125,15 +148,19 @@ TEST(string, strncmp) {
     ASSERT_GT(strncmp(hello, world, len_1), 0);
 
     ASSERT_EQ(strncmp(hello_world, hello_world_2, len_2), 0);
+
+    PASSED;
 }
 
-TEST(string, strcoll) {
+int test_string_strcoll(void) {
     
     const char *hello         = "Hello,";
     const char *world         = " World";
     const char *hello_world   = "Hello, World!";
     const char *hello_world_2 = "Hello, World!";
     const char *empty         = "";
+
+    printf("strcoll:\t\t\t");
 
     ASSERT_LT(strcoll(empty, hello), 0);
     ASSERT_GT(strcoll(world, empty), 0);
@@ -142,27 +169,37 @@ TEST(string, strcoll) {
     ASSERT_GT(strcoll(hello, world), 0);
 
     ASSERT_EQ(strcoll(hello_world, hello_world_2), 0);
+
+    PASSED;
 }
 
-TEST(string, strchr) {
+int test_string_strchr(void) {
 
     const char *hello_world = "Hello, World!";
+
+    printf("strchr:\t\t\t\t");
 
     ASSERT_EQ(strchr(hello_world, 'H'), (char *)(hello_world));
     ASSERT_EQ(strchr(hello_world, 'l'), (char *)(hello_world + 2));
     ASSERT_EQ(strchr(hello_world, '.'), (char *)(NULL));
+
+    PASSED;
 }
 
-TEST(string, strrchr) {
+int test_string_strrchr(void) {
 
     const char *hello_world = "Hello, World!";
+
+    printf("strrchr:\t\t\t");
 
     ASSERT_EQ(strrchr(hello_world, 'H'), (char *)(hello_world));
     ASSERT_EQ(strrchr(hello_world, 'l'), (char *)(hello_world + 10));
     ASSERT_EQ(strrchr(hello_world, '.'), (char *)(NULL));
+
+    PASSED;
 }
 
-TEST(string, strspn) {
+int test_string_strspn(void) {
     
     const char *str             = "lowercase and numbers 12345";
     const char *lower_and_space = "abcdefghijklmnopqrstuvwxyz ";
@@ -171,13 +208,17 @@ TEST(string, strspn) {
 
     size_t len = strlen(str);
 
+    printf("strspn:\t\t\t\t");
+
     ASSERT_EQ(strspn(str, lower_and_space), 22);
     ASSERT_EQ(strspn(str, lower_no_space), 9);
     ASSERT_EQ(strspn(str, missing), 0);
     ASSERT_EQ(strspn(str, str), len);
+
+    PASSED;
 }
 
-TEST(string, strcspn) {
+int test_string_strcspn(void) {
     
     const char *str     = "Hello, World!";
     const char *lower   = "abcdefghijklmnopqrstuvwxyz";
@@ -186,13 +227,17 @@ TEST(string, strcspn) {
 
     size_t len = strlen(str);
 
+    printf("strcspn:\t\t\t");
+
     ASSERT_EQ(strcspn(str, lower), 1);
     ASSERT_EQ(strcspn(str, space), 6);
     ASSERT_EQ(strcspn(str, missing), len);
     ASSERT_EQ(strcspn(str, str), 0);
+
+    PASSED;
 }
 
-TEST(string, strpbrk) {
+int test_string_strpbrk(void) {
 
     const char *str     = "Hello, World!";
     const char *world_1 = ", World!";
@@ -201,12 +246,16 @@ TEST(string, strpbrk) {
     const char *brk_2   = " ";
     const char *missing = ".";
 
+    printf("strpbrk:\t\t\t");
+
     ASSERT_EQ(strcmp(strpbrk(str, brk_1), world_1), 0);
     ASSERT_EQ(strcmp(strpbrk(str, brk_2), world_2), 0);
     ASSERT_EQ(strpbrk(str, missing), (char *)(NULL));
+
+    PASSED;
 }
 
-TEST(string, strstr) {
+int test_string_strstr(void) {
 
     const char *str       = "One Two One Three";
     const char *one       = "One";
@@ -214,22 +263,28 @@ TEST(string, strstr) {
     const char *one_three = "One Three";
     const char *missing   = "Four";
 
+    printf("strstr:\t\t\t\t");
+
     ASSERT_EQ(strcmp(strstr(str, one), str), 0);
     ASSERT_EQ(strcmp(strstr(str, one_two), str), 0);
     ASSERT_EQ(strcmp(strstr(str, one_three), one_three), 0);
     ASSERT_EQ(strstr(str, missing), (char *)(NULL));
+
+    PASSED;
 }
 
-TEST(string, DISABLED_strtok) {
+int test_string_strtok(void) {
     
-    FAIL();
+    printf("strtok:\t\t\t\t");
+
+    DISABLED;
 }
 
 /*
 Char Array Manipulation Tests
 */
 
-TEST(string, memchr) {
+int test_string_memchr(void) {
 
     char buf[BUFFER_SIZE] = {
         '0', '1', '2', '3',
@@ -240,14 +295,18 @@ TEST(string, memchr) {
 
     unsigned size = sizeof(buf) / sizeof(buf[0]);
 
+    printf("memchr:\t\t\t\t");
+
     ASSERT_EQ(memchr(buf, '0', size    ), (char *)(buf + 0));
     ASSERT_EQ(memchr(buf, '8', size    ), (char *)(buf + 8));
     ASSERT_EQ(memchr(buf, 'f', size    ), (char *)(buf + 15));
     ASSERT_EQ(memchr(buf, 'f', size - 1), (char *)(NULL));
     ASSERT_EQ(memchr(buf, ' ', size    ), (char *)(NULL));
+
+    PASSED;
 }
 
-TEST(string, memcmp) {
+int test_string_memcmp(void) {
 
     char buf_1[4] = { 0, 1, 2, 3 };
     char buf_2[4] = { 0, 1, 2, 3 };
@@ -255,19 +314,25 @@ TEST(string, memcmp) {
 
     size_t size = sizeof(buf_1) / sizeof(buf_1[0]);
 
+    printf("memcmp:\t\t\t\t");
+
     ASSERT_EQ(memcmp(buf_1, buf_2, size), 0);
     ASSERT_GT(memcmp(buf_1, buf_3, size), 0);
     ASSERT_LT(memcmp(buf_3, buf_2, size), 0);
 
     ASSERT_EQ(memcmp(buf_1, buf_3, 1), 0);
+
+    PASSED;
 }
 
-TEST(string, memset) {
+int test_string_memset(void) {
 
     unsigned index;
 
     char buf[BUFFER_SIZE] = { 0 };
     unsigned size = sizeof(buf) / sizeof(buf[0]);
+
+    printf("memset:\t\t\t\t");
 
     for (index = 0; index < size; ++index) {
         ASSERT_EQ(buf[index], 0);
@@ -279,36 +344,79 @@ TEST(string, memset) {
         ASSERT_EQ(buf[index], 1);
     }
 
+    PASSED;
 }
 
-TEST(string, memmove) {
+int test_string_memmove(void) {
 
     char buf_1[4] = { 0, 1, 2, 3 };
     char buf_2[4] = { 1, 2, 3, 3 };
 
     size_t size = sizeof(buf_1) / sizeof(buf_1[0]);
 
+    printf("memmove:\t\t\t");
+
     ASSERT_NE(memcmp(buf_1, buf_2, size), 0);
     memmove(buf_1, buf_1 + 1, size - 1);
     ASSERT_EQ(memcmp(buf_1, buf_2, size), 0);
+
+    PASSED;
 }
 
-TEST(string, memcpy) {
+int test_string_memcpy(void) {
 
     char buf_1[BUFFER_SIZE / 2] = { 0 };
     char buf_2[BUFFER_SIZE / 2] = { D, E, A, D, B, E, E, F };
 
     size_t size = sizeof(buf_1) / sizeof(buf_1[0]);
 
+    printf("memcpy:\t\t\t\t");
+
     ASSERT_NE(memcmp(buf_1, buf_2, size), 0);
     memcpy(buf_1, buf_2, size);
     ASSERT_EQ(memcmp(buf_1, buf_2, size), 0);
     
+    PASSED;
 }
 
 /* Misc Tests */
 
-TEST(string, DISABLED_strerror) {
+int test_string_strerror(void) {
 
-    FAIL();
+    printf("strerror:\t\t\t");
+
+    DISABLED;
+}
+
+int run_string_tests(void) {
+
+    int ret = 0;
+
+    printf("string:\n");
+
+    ret += test_string_strcpy();
+    ret += test_string_strncpy();
+    ret += test_string_strcat();
+    ret += test_string_strxfrm();
+    ret += test_string_strlen();
+    ret += test_string_strcmp();
+    ret += test_string_strncmp();
+    ret += test_string_strcoll();
+    ret += test_string_strchr();
+    ret += test_string_strrchr();
+    ret += test_string_strspn();
+    ret += test_string_strcspn();
+    ret += test_string_strpbrk();
+    ret += test_string_strstr();
+    ret += test_string_strtok();
+    ret += test_string_memchr();
+    ret += test_string_memcmp();
+    ret += test_string_memset();
+    ret += test_string_memmove();
+    ret += test_string_memcpy();
+    ret += test_string_strerror();
+
+    printf("\n");
+
+    return ret;
 }

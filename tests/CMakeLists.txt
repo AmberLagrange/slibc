@@ -1,20 +1,9 @@
 cmake_minimum_required(VERSION 3.24.2)
-
 project(slibc_tests)
 
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-include(FetchContent)
-FetchContent_Declare(
-    googletest
-    URL https://github.com/google/googletest/archive/8760db154aec99c70cb487d99aead838212d4986.zip
-)
-
-FetchContent_MakeAvailable(googletest)
-
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(SHATTER_LIBC REQUIRED slibc)
+pkg_check_modules(SHATTER_LIBC            REQUIRED slibc)
+pkg_check_modules(SHATTER_LIBC_START_MAIN REQUIRED slibc_start_main)
 
 execute_process(
     COMMAND pkg-config slibc --libs
@@ -22,21 +11,29 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${SHATTER_LIBC_TLIBS}")
+execute_process(
+    COMMAND pkg-config slibc_start_main --libs
+    OUTPUT_VARIABLE SHATTER_LIBC_START_MAIN_LIBS
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
 
-enable_testing()
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${SHATTER_LIBC_LIBS} ${SHATTER_LIBC_START_MAIN_LIBS}")
 
-add_executable(tests src/tests.cc
-                     src/ctype_tests.cc
-                     src/stdio_tests.cc
-                     src/stdlib_tests.cc
-                     src/string_tests.cc)
+add_executable(slibc_tests
+    src/tests.c
+    src/ctype_tests.c
+    src/stdio_tests.c
+    src/stdlib_tests.c
+    src/string_tests.c)
 
 
-target_compile_options(tests PRIVATE ${SHATTER_LIBC_TCFLAGS} -Wall -Wextra -Wpedantic -Werror)
+target_compile_options(slibc_tests PRIVATE ${SHATTER_LIBC_CFLAGS} ${SHATTER_LIBC_START_MAIN_CFLAGS} -Wall -Wextra -Wpedantic -Werror)
+set_target_properties(slibc_tests PROPERTIES
+    C_STANDARD 90
+    C_EXTENSIONS OFF
+    OUTPUT_NAME tests
+)
 
-target_link_directories(tests PRIVATE ${SHATTER_LIBC_LIBRARY_DIRS})
-target_link_libraries(tests GTest::gtest_main ${SHATTER_LIBC_LIBRARIES})
-
-include(GoogleTest)
-gtest_discover_tests(tests)
+target_link_directories(slibc_tests PRIVATE ${SHATTER_LIBC_LIBRARY_DIRS} ${SHATTER_LIBC_START_MAIN_LIBRARY_DIRS})
+target_include_directories(slibc_tests PRIVATE ${SHATTER_LIBC_INCLUDE_DIRS})
+target_link_libraries(slibc_tests PRIVATE ${SHATTER_LIBC_LIBRARIES} ${SHATTER_LIBC_START_MAIN_LIBRARIES})

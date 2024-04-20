@@ -147,6 +147,33 @@ long strtol(const char *str, char **str_end, int radix) {
     return (is_negative) ? -value : value;
 }
 
+long test_strtol(const char *str, char **str_end, int radix) {
+
+    long value = 0L;
+    int is_negative = 0;
+
+    while(isspace(*str++)) {} /* Ignore leading whitespace */
+
+    if(*str == '-') {
+        is_negative = 1;
+        str++;
+    } else if (*str == '+') {
+        str++;
+    }
+
+    while(isdigit(*str)) {
+        value *= radix;
+        value += *str - '0';
+        ++str;
+    }
+
+    if(str_end) {
+        *str_end = (char *)str;
+    }
+
+    return (is_negative) ? -value : value;
+}
+
 unsigned long strtoul(const char *str, char **str_end, int radix) {
 
     return (unsigned long)strtol(str, str_end, radix);
