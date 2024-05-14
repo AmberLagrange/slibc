@@ -2,7 +2,8 @@
 
 #include <stdlib.h>
 
-int test_stdlib_strtol(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_stdlib_strtol(int *passed, int *failed, int *disabled) {
 
     const char *number       = "1234";
     const char *negative     = "-4567";
@@ -10,7 +11,7 @@ int test_stdlib_strtol(void) {
     const char *hello_world  = "Hello, World!\n";
     char *after_number;
 
-    printf("strtol:\t");
+    printf("strtol:\t\t\t\t");
 
     ASSERT_EQ(strtol(number, NULL, 10), 1234);
     ASSERT_EQ(strtol(negative, NULL, 10), -4567);
@@ -18,17 +19,15 @@ int test_stdlib_strtol(void) {
     ASSERT_EQ(strtol(hello_world, &after_number, 10), 0);
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int run_stdlib_tests(void) {
-
-    int ret = 0;
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void run_stdlib_tests(int *passed, int *failed, int *disabled) {
 
     printf("stdlib:\n");
 
-    /* ret += test_stdlib_strtol(); */
+    test_stdlib_strtol(passed, failed, disabled);
 
     printf("\n");
-
-    return ret;
 }

@@ -78,7 +78,8 @@ static const int flag_arr[NUM_ASCII] = {
     0x00cb, 0x00cb, 0x00cb, 0x0007, 0x0007, 0x0007, 0x0007, 0x0800  /* 0x78 - 0x7f */
 };
 
-int test_ctype_isalnum(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_ctype_isalnum(int *passed, int *failed, int *disabled) {
 
     int index;
 
@@ -89,9 +90,11 @@ int test_ctype_isalnum(void) {
     }
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_ctype_isalpha(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_ctype_isalpha(int *passed, int *failed, int *disabled) {
 
     int index;
 
@@ -102,9 +105,11 @@ int test_ctype_isalpha(void) {
     }
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_ctype_isblank(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_ctype_isblank(int *passed, int *failed, int *disabled) {
 
     int index;
 
@@ -115,9 +120,11 @@ int test_ctype_isblank(void) {
     }
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_ctype_islower(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_ctype_islower(int *passed, int *failed, int *disabled) {
 
     int index;
 
@@ -128,9 +135,11 @@ int test_ctype_islower(void) {
     }
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_ctype_isupper(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_ctype_isupper(int *passed, int *failed, int *disabled) {
 
     int index;
 
@@ -141,9 +150,11 @@ int test_ctype_isupper(void) {
     }
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_ctype_isdigit(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_ctype_isdigit(int *passed, int *failed, int *disabled) {
 
     int index;
 
@@ -154,9 +165,11 @@ int test_ctype_isdigit(void) {
     }
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_ctype_isxdigit(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_ctype_isxdigit(int *passed, int *failed, int *disabled) {
 
     int index;
 
@@ -167,9 +180,11 @@ int test_ctype_isxdigit(void) {
     }
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_ctype_iscntrl(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_ctype_iscntrl(int *passed, int *failed, int *disabled) {
 
     int index;
 
@@ -180,9 +195,11 @@ int test_ctype_iscntrl(void) {
     }
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_ctype_isgraph(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_ctype_isgraph(int *passed, int *failed, int *disabled) {
 
     int index;
 
@@ -193,9 +210,11 @@ int test_ctype_isgraph(void) {
     }
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_ctype_isspace(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_ctype_isspace(int *passed, int *failed, int *disabled) {
 
     int index;
 
@@ -206,9 +225,11 @@ int test_ctype_isspace(void) {
     }
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_ctype_isprint(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_ctype_isprint(int *passed, int *failed, int *disabled) {
 
     int index;
 
@@ -219,9 +240,11 @@ int test_ctype_isprint(void) {
     }
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_ctype_ispunct(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_ctype_ispunct(int *passed, int *failed, int *disabled) {
 
     int index;
 
@@ -232,9 +255,11 @@ int test_ctype_ispunct(void) {
     }
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_ctype_tolower(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_ctype_tolower(int *passed, int *failed, int *disabled) {
 
     int index;
 
@@ -245,9 +270,11 @@ int test_ctype_tolower(void) {
     }
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_ctype_toupper(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_ctype_toupper(int *passed, int *failed, int *disabled) {
 
     int index;
 
@@ -258,30 +285,27 @@ int test_ctype_toupper(void) {
     }
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int run_ctype_tests(void) {
-
-    int ret = 0;
+void run_ctype_tests(int *passed, int *failed, int *disabled) {
 
     printf("ctype:\n");
 
-    ret += test_ctype_isalnum();
-    ret += test_ctype_isalpha();
-    ret += test_ctype_isblank();
-    ret += test_ctype_islower();
-    ret += test_ctype_isupper();
-    ret += test_ctype_isdigit();
-    ret += test_ctype_isxdigit();
-    ret += test_ctype_iscntrl();
-    ret += test_ctype_isgraph();
-    ret += test_ctype_isspace();
-    ret += test_ctype_isprint();
-    ret += test_ctype_ispunct();
-    ret += test_ctype_tolower();
-    ret += test_ctype_toupper();
+    test_ctype_isalnum(passed, failed, disabled);
+    test_ctype_isalpha(passed, failed, disabled);
+    test_ctype_isblank(passed, failed, disabled);
+    test_ctype_islower(passed, failed, disabled);
+    test_ctype_isupper(passed, failed, disabled);
+    test_ctype_isdigit(passed, failed, disabled);
+    test_ctype_isxdigit(passed, failed, disabled);
+    test_ctype_iscntrl(passed, failed, disabled);
+    test_ctype_isgraph(passed, failed, disabled);
+    test_ctype_isspace(passed, failed, disabled);
+    test_ctype_isprint(passed, failed, disabled);
+    test_ctype_ispunct(passed, failed, disabled);
+    test_ctype_tolower(passed, failed, disabled);
+    test_ctype_toupper(passed, failed, disabled);
 
     printf("\n");
-
-    return ret;
 }

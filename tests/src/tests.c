@@ -2,18 +2,22 @@
 
 int main(void) {
 
-    int ret = 0;
+    int passed   = 0;
+    int failed   = 0;
+    int disabled = 0;
 
-    ret += run_ctype_tests();
-    ret += run_stdio_tests();
-    ret += run_stdlib_tests();
-    ret += run_string_tests();
+    run_ctype_tests(&passed, &failed, &disabled);
+    run_stdio_tests(&passed, &failed, &disabled);
+    run_stdlib_tests(&passed, &failed, &disabled);
+    run_string_tests(&passed, &failed, &disabled);
 
-    if (ret) {
-        printf("%d %sFAILED%s test%s!\n", ret, RED, RESET, (ret > 1) ? "s" : "");
-    } else {
+    if (failed) {
+        printf("%d %sFAILED%s test%s!\n", failed, RED, RESET, (failed > 1) ? "s" : "");
+    } else if (!disabled) {
         printf("All tests %sPASSED%s!\n", GREEN, RESET);
+    } else {
+        printf("%d tests %sPASSED%s! %d tests %sDISABLED%s!\n", passed, GREEN, RESET, disabled, YELLOW, RESET);
     }
 
-    return ret;
+    return failed;
 }

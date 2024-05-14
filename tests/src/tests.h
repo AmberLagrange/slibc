@@ -5,9 +5,17 @@
 #define GREEN   "\033[32m"
 #define YELLOW  "\033[33m"
 
-#define PASSED   do { printf("%sPASSED%s\n",    GREEN, RESET); return 0; } while (0)
-#define FAILED   do { printf("%sFAILED%s\n",      RED, RESET); return 1; } while (0)
-#define DISABLED do { printf("%sDISABLED%s\n", YELLOW, RESET); return 0; } while (0)
+enum {
+    PASS,
+    FAIL,
+    NA
+};
+
+#define PASSED   do { printf("%sPASSED%s\n",    GREEN, RESET); *(passed)   += 1; return; } while (0)
+#define FAILED   do { printf("%sFAILED%s\n",      RED, RESET); *(failed)   += 1; return; } while (0)
+#define DISABLED do { printf("%sDISABLED%s\n", YELLOW, RESET); *(disabled) += 1; return;   } while (0)
+
+#define UNUSED(x) ((void)(x))
 
 #define ASSERT_EQ(lhs, rhs)                     \
     do {                                        \
@@ -51,7 +59,7 @@
         }                                       \
     } while(0)
 
-int run_stdlib_tests(void);
-int run_ctype_tests(void);
-int run_stdio_tests(void);
-int run_string_tests(void);
+void run_stdlib_tests(int *passed, int *failed, int *disabled);
+void run_ctype_tests(int *passed, int *failed, int *disabled);
+void run_stdio_tests(int *passed, int *failed, int *disabled);
+void run_string_tests(int *passed, int *failed, int *disabled);

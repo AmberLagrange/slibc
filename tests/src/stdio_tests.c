@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 
-int test_stdio_fputc(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_stdio_fputc(int *passed, int *failed, int *disabled) {
 
     char character = 'h';
 
@@ -12,9 +13,11 @@ int test_stdio_fputc(void) {
     ASSERT_EQ(fputc(character, stderr), character);
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_stdio_printf_n_specifier(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_stdio_printf_n_specifier(int *passed, int *failed, int *disabled) {
 
     unsigned count;
     const char *hello_world = "Hello, World!\n";
@@ -29,18 +32,15 @@ int test_stdio_printf_n_specifier(void) {
     ASSERT_EQ(count, strlen(empty));
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int run_stdio_tests(void) {
-
-    int ret = 0;
+void run_stdio_tests(int *passed, int *failed, int *disabled) {
 
     printf("stdio:\n");
 
-    ret += test_stdio_fputc();
-    ret += test_stdio_printf_n_specifier();
+    test_stdio_fputc(passed, failed, disabled);
+    test_stdio_printf_n_specifier(passed, failed, disabled);
 
     printf("\n");
-
-    return ret;
 }

@@ -125,13 +125,15 @@ long strtol(const char *str, char **str_end, int radix) {
     long value = 0L;
     int is_negative = 0;
 
-    while(isspace(*str++)) {} /* Ignore leading whitespace */
+    while(isspace(*str)) { /* Ignore leading whitespace */
+        ++str;
+    } 
 
     if(*str == '-') {
         is_negative = 1;
-        str++;
+        ++str;
     } else if (*str == '+') {
-        str++;
+        ++str;
     }
 
     while(isdigit(*str)) {

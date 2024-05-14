@@ -16,7 +16,8 @@ enum {
 String Manipulation Tests
 */
 
-int test_string_strcpy(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_strcpy(int *passed, int *failed, int *disabled) {
 
     char buf[BUFFER_SIZE];
     const char *hello_world = "Hello, World!";
@@ -33,9 +34,11 @@ int test_string_strcpy(void) {
     ASSERT_EQ(buf[0], '\0');
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_strncpy(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_strncpy(int *passed, int *failed, int *disabled) {
 
     char buf[BUFFER_SIZE];
     const char *hello_world = "Hello, World!";
@@ -60,9 +63,11 @@ int test_string_strncpy(void) {
     ASSERT_EQ(buf[1], '\0');
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_strcat(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_strcat(int *passed, int *failed, int *disabled) {
     
     char buf[BUFFER_SIZE] = "";
     const char *hello       = "Hello,";
@@ -78,20 +83,25 @@ int test_string_strcat(void) {
     ASSERT_EQ(strcmp(buf, hello_world), 0);
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_strxfrm(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_strxfrm(int *passed, int *failed, int *disabled) {
 
     printf("strxfrm:\t\t\t");
 
     DISABLED;
+    UNUSED(passed);
+    UNUSED(failed);
 }
 
 /*
 String Examination Tests
 */
 
-int test_string_strlen(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_strlen(int *passed, int *failed, int *disabled) {
 
     const char *hello_world = "Hello, World!";
     const char *empty       = "";
@@ -102,9 +112,11 @@ int test_string_strlen(void) {
     ASSERT_EQ(strlen(empty), 0);
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_strcmp(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_strcmp(int *passed, int *failed, int *disabled) {
 
     const char *hello         = "Hello,";
     const char *world         = " World";
@@ -123,9 +135,11 @@ int test_string_strcmp(void) {
     ASSERT_EQ(strcmp(hello_world, hello_world_2), 0);
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_strncmp(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_strncmp(int *passed, int *failed, int *disabled) {
 
     const char *hello         = "Hello,";
     const char *world         = " World";
@@ -150,9 +164,11 @@ int test_string_strncmp(void) {
     ASSERT_EQ(strncmp(hello_world, hello_world_2, len_2), 0);
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_strcoll(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_strcoll(int *passed, int *failed, int *disabled) {
     
     const char *hello         = "Hello,";
     const char *world         = " World";
@@ -171,9 +187,11 @@ int test_string_strcoll(void) {
     ASSERT_EQ(strcoll(hello_world, hello_world_2), 0);
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_strchr(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_strchr(int *passed, int *failed, int *disabled) {
 
     const char *hello_world = "Hello, World!";
 
@@ -184,9 +202,11 @@ int test_string_strchr(void) {
     ASSERT_EQ(strchr(hello_world, '.'), (char *)(NULL));
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_strrchr(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_strrchr(int *passed, int *failed, int *disabled) {
 
     const char *hello_world = "Hello, World!";
 
@@ -197,9 +217,11 @@ int test_string_strrchr(void) {
     ASSERT_EQ(strrchr(hello_world, '.'), (char *)(NULL));
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_strspn(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_strspn(int *passed, int *failed, int *disabled) {
     
     const char *str             = "lowercase and numbers 12345";
     const char *lower_and_space = "abcdefghijklmnopqrstuvwxyz ";
@@ -216,9 +238,11 @@ int test_string_strspn(void) {
     ASSERT_EQ(strspn(str, str), len);
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_strcspn(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_strcspn(int *passed, int *failed, int *disabled) {
     
     const char *str     = "Hello, World!";
     const char *lower   = "abcdefghijklmnopqrstuvwxyz";
@@ -235,9 +259,11 @@ int test_string_strcspn(void) {
     ASSERT_EQ(strcspn(str, str), 0);
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_strpbrk(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_strpbrk(int *passed, int *failed, int *disabled) {
 
     const char *str     = "Hello, World!";
     const char *world_1 = ", World!";
@@ -253,9 +279,11 @@ int test_string_strpbrk(void) {
     ASSERT_EQ(strpbrk(str, missing), (char *)(NULL));
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_strstr(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_strstr(int *passed, int *failed, int *disabled) {
 
     const char *str       = "One Two One Three";
     const char *one       = "One";
@@ -271,20 +299,25 @@ int test_string_strstr(void) {
     ASSERT_EQ(strstr(str, missing), (char *)(NULL));
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_strtok(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_strtok(int *passed, int *failed, int *disabled) {
     
     printf("strtok:\t\t\t\t");
 
     DISABLED;
+    UNUSED(passed);
+    UNUSED(failed);
 }
 
 /*
 Char Array Manipulation Tests
 */
 
-int test_string_memchr(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_memchr(int *passed, int *failed, int *disabled) {
 
     char buf[BUFFER_SIZE] = {
         '0', '1', '2', '3',
@@ -304,9 +337,11 @@ int test_string_memchr(void) {
     ASSERT_EQ(memchr(buf, ' ', size    ), (char *)(NULL));
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_memcmp(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_memcmp(int *passed, int *failed, int *disabled) {
 
     char buf_1[4] = { 0, 1, 2, 3 };
     char buf_2[4] = { 0, 1, 2, 3 };
@@ -323,9 +358,11 @@ int test_string_memcmp(void) {
     ASSERT_EQ(memcmp(buf_1, buf_3, 1), 0);
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_memset(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_memset(int *passed, int *failed, int *disabled) {
 
     unsigned index;
 
@@ -345,9 +382,11 @@ int test_string_memset(void) {
     }
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_memmove(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_memmove(int *passed, int *failed, int *disabled) {
 
     char buf_1[4] = { 0, 1, 2, 3 };
     char buf_2[4] = { 1, 2, 3, 3 };
@@ -361,9 +400,11 @@ int test_string_memmove(void) {
     ASSERT_EQ(memcmp(buf_1, buf_2, size), 0);
 
     PASSED;
+    UNUSED(disabled);
 }
 
-int test_string_memcpy(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_memcpy(int *passed, int *failed, int *disabled) {
 
     char buf_1[BUFFER_SIZE / 2] = { 0 };
     char buf_2[BUFFER_SIZE / 2] = { D, E, A, D, B, E, E, F };
@@ -377,46 +418,46 @@ int test_string_memcpy(void) {
     ASSERT_EQ(memcmp(buf_1, buf_2, size), 0);
     
     PASSED;
+    UNUSED(disabled);
 }
 
 /* Misc Tests */
 
-int test_string_strerror(void) {
+/* NOLINTNEXTLINE(bugprone-easily-swappable-parameters, readability-non-const-parameter) */
+void test_string_strerror(int *passed, int *failed, int *disabled) {
 
     printf("strerror:\t\t\t");
 
     DISABLED;
+    UNUSED(passed);
+    UNUSED(failed);
 }
 
-int run_string_tests(void) {
-
-    int ret = 0;
+void run_string_tests(int *passed, int *failed, int *disabled) {
 
     printf("string:\n");
 
-    ret += test_string_strcpy();
-    ret += test_string_strncpy();
-    ret += test_string_strcat();
-    ret += test_string_strxfrm();
-    ret += test_string_strlen();
-    ret += test_string_strcmp();
-    ret += test_string_strncmp();
-    ret += test_string_strcoll();
-    ret += test_string_strchr();
-    ret += test_string_strrchr();
-    ret += test_string_strspn();
-    ret += test_string_strcspn();
-    ret += test_string_strpbrk();
-    ret += test_string_strstr();
-    ret += test_string_strtok();
-    ret += test_string_memchr();
-    ret += test_string_memcmp();
-    ret += test_string_memset();
-    ret += test_string_memmove();
-    ret += test_string_memcpy();
-    ret += test_string_strerror();
+    test_string_strcpy(passed, failed, disabled);
+    test_string_strncpy(passed, failed, disabled);
+    test_string_strcat(passed, failed, disabled);
+    test_string_strxfrm(passed, failed, disabled);
+    test_string_strlen(passed, failed, disabled);
+    test_string_strcmp(passed, failed, disabled);
+    test_string_strncmp(passed, failed, disabled);
+    test_string_strcoll(passed, failed, disabled);
+    test_string_strchr(passed, failed, disabled);
+    test_string_strrchr(passed, failed, disabled);
+    test_string_strspn(passed, failed, disabled);
+    test_string_strcspn(passed, failed, disabled);
+    test_string_strpbrk(passed, failed, disabled);
+    test_string_strstr(passed, failed, disabled);
+    test_string_strtok(passed, failed, disabled);
+    test_string_memchr(passed, failed, disabled);
+    test_string_memcmp(passed, failed, disabled);
+    test_string_memset(passed, failed, disabled);
+    test_string_memmove(passed, failed, disabled);
+    test_string_memcpy(passed, failed, disabled);
+    test_string_strerror(passed, failed, disabled);
 
     printf("\n");
-
-    return ret;
 }
