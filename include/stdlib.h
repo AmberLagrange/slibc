@@ -37,8 +37,6 @@ long atol(const char *str);
  */
 long strtol(const char *str, char **str_end, int radix);
 
-long test_strtol(const char *str, char **str_end, int radix);
-
 /**
  * @brief                   Parses an unsigned long integer from a given string in a chosen base.
  * 
