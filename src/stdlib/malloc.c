@@ -12,10 +12,6 @@ void *malloc(unsigned long size) {
     unsigned char *ptr = NULL;
     unsigned long new_size = 0UL;
 
-    if (!size) {
-        return NULL;
-    }
-
     /* SCARY */
     new_size = size + MAX_ALIGNMENT;
 
